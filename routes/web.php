@@ -12,5 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
+});
+
+Route::get('/clear-all-cache',function(){
+   
+    Artisan::call('view:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('route:clear');
+    Artisan::call('clear-compiled');
+    
+    return "All cache clear";
+    
+});
+
+Auth::routes();
+
+Route::group(['middleware' => ['auth']], function() {
+
+	Route::get('/home', 'HomeController@index')->name('home');
+	
 });
