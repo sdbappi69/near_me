@@ -1,0 +1,5 @@
+<?php
+
+/**
+ *	Biography Helper  
+ */

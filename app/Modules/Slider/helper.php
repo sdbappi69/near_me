@@ -1,0 +1,5 @@
+<?php
+
+/**
+ *	Slider Helper  
+ */
