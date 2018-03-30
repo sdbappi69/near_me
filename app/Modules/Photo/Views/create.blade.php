@@ -30,23 +30,23 @@
 			            			{{ Form::text('product_id', Input::old('product_id'), array('class' => 'form-control input-lg', 'placeholder' => 'Product id')) }}
 			            		</div>
 			            		<div class="form-group">
-			            			{{ Form::label('status', 'Status*') }}
-			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], Input::old('status'), ['class' => 'form-control input-lg', 'required' => 'required']) !!}
+			            			{{ Form::label('price', 'Price') }}
+			            			{{ Form::text('price', Input::old('price'), array('class' => 'form-control input-lg', 'placeholder' => 'Price')) }}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('description', 'Description') }}
-			            			{{ Form::textarea('description', Input::old('description'), array('class' => 'form-control input-lg', 'placeholder' => 'Description', 'rows' => '3')) }}
+			            			{{ Form::textarea('description', Input::old('description'), array('class' => 'form-control input-lg', 'placeholder' => 'Description', 'rows' => '7')) }}
 			            		</div>
 		              		</div>
 
 		              		<div class="col-xs-6">
 			            		<div class="form-group">
 			            			{{ Form::label('thumbnail_size_id', 'Thumbnail image size*') }}
-			            			{!! Form::select('thumbnail_size_id[]', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('thumbnail_size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('size_id', 'Full image size*') }}
-			            			{!! Form::select('size_id[]', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('iamges', 'Images*') }}
@@ -55,11 +55,15 @@
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('album_ids', 'Albums*') }}
-			            			{!! Form::select('album_ids', $albums, $default_album->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'album_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
+			            			{!! Form::select('album_ids[]', $albums, $default_album->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'album_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('category_ids', 'Categories*') }}
-			            			{!! Form::select('category_ids', $categories, $default_category->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'category_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
+			            			{!! Form::select('category_ids[]', $categories, $default_category->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'category_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
+			            		</div>
+			            		<div class="form-group">
+			            			{{ Form::label('status', 'Status*') }}
+			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], Input::old('status'), ['class' => 'form-control input-lg', 'required' => 'required']) !!}
 			            		</div>
 		              		</div>
 
@@ -82,7 +86,7 @@
     	
     	$(document).ready(function () {
 		    // page_select(menu_class, sub_menu_class, title, sub_title)
-        	page_select('photo-add', 'photo', 'Photos', 'Add');
+        	page_select('photos-add', 'photos', 'Photos', 'Add');
 		});
 
     </script>

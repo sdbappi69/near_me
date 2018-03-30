@@ -44,6 +44,9 @@
     .col-xs-3{
       margin-bottom: 5px;
     }
+    .img-view{
+      cursor: pointer;
+    }
   </style>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">

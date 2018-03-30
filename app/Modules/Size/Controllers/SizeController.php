@@ -93,7 +93,6 @@ class SizeController extends Controller
                 $size->width = $request->width;
                 $size->height = $request->height;
                 $size->default = $default;
-                $size->created_by = Auth::id();
                 $size->updated_by = Auth::id();
                 $size->save();
 

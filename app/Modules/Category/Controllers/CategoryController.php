@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Modules\Size\Models\Size;
 use App\Modules\Category\Models\Category;
+use App\Modules\Photo\Models\PhotoCategory;
+use App\Modules\Photo\Models\Photo;
 
 use Validator;
 use DB;
@@ -165,7 +167,12 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        return view("Category::edit", compact('category', 'sizes'));
+        $photos = Photo::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $current_photos = array();
+        foreach($category->photos AS $data){
+            $current_photos[] = $data->photo_id;
+        }
+        return view("Category::edit", compact('category', 'sizes', 'photos', 'current_photos'));
     }
 
     /**
@@ -221,7 +228,6 @@ class CategoryController extends Controller
                     $category->image = $fileName;
                 }
 
-                $category->created_by = Auth::id();
                 $category->updated_by = Auth::id();
                 $category->save();
 
@@ -393,5 +399,188 @@ class CategoryController extends Controller
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    public function photo_up($photo_id, $category_id){
+        try {
+            DB::beginTransaction();
+
+                $temp_photo = PhotoCategory::where('photo_id', $photo_id)->where('category_id', $category_id)->first();
+                $exchange_photo = PhotoCategory::where('category_id', $category_id)->where('priority', '<', $temp_photo->priority)->orderBy('priority', 'desc')->first();
+
+                if($exchange_photo && $temp_photo){
+                    $photo_priority = $temp_photo->priority;
+                    $exchange_photo_priority = $exchange_photo->priority;
+
+                    $temp_photo->priority = 0;
+                    $temp_photo->save();
+
+                    $exchange_photo->priority = $photo_priority;
+                    $exchange_photo->save();
+
+                    $photo = PhotoCategory::where('photo_id', $photo_id)->where('category_id', $category_id)->first();
+                    $photo->priority = $exchange_photo_priority;
+                    $photo->save();
+
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully updated the photo',
+                    );
+
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That photo can't be up",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect::back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to up the photo',
+            );
+            Session::flash('message', $message);
+            return Redirect::back();
+        }
+    }
+
+    public function photo_down($photo_id, $category_id){
+        try {
+            DB::beginTransaction();
+
+                $temp_photo = PhotoCategory::where('photo_id', $photo_id)->where('category_id', $category_id)->first();
+                $exchange_photo = PhotoCategory::where('category_id', $category_id)->where('priority', '>', $temp_photo->priority)->orderBy('priority', 'asc')->first();
+
+                if($exchange_photo && $temp_photo){
+                    $photo_priority = $temp_photo->priority;
+                    $exchange_photo_priority = $exchange_photo->priority;
+
+                    $temp_photo->priority = 0;
+                    $temp_photo->save();
+
+                    $exchange_photo->priority = $photo_priority;
+                    $exchange_photo->save();
+
+                    $photo = PhotoCategory::where('photo_id', $photo_id)->where('category_id', $category_id)->first();
+                    $photo->priority = $exchange_photo_priority;
+                    $photo->save();
+
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully updated the photo',
+                    );
+
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That photo can't be down",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect::back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to down the photo',
+            );
+            Session::flash('message', $message);
+            return Redirect::back();
+        }
+    }
+
+    public function photos(Request $request){
+
+        $validation = Validator::make($request->all(), [
+            'category_id' => 'required',
+            'photo_ids' => 'sometimes',
+        ]);
+
+        if($validation->fails()) {
+            return Redirect::back()->withErrors($validation)->withInput();
+        }
+
+        try {
+            DB::beginTransaction();
+
+                if($request->has('photo_ids')){
+
+                    $photo_categories = PhotoCategory::where('category_id', $request->category_id)->get();
+
+                    $old_photos = array();
+                    foreach ($photo_categories as $photo_category) {
+                        $old_photos[] = $photo_category->photo_id;
+
+                        if(!in_array($photo_category->photo_id, $request->photo_ids)){
+                            $photo_category_delete = PhotoCategory::where('photo_id', $photo_category->photo_id)->where('category_id', $request->category_id)->delete();
+                        }
+                    }
+
+                    foreach ($request->photo_ids as $photo_id) {
+
+                        if(!in_array($photo_id, $old_photos)){
+
+                            $last_photo_category_count = PhotoCategory::orderBy('priority', 'desc')->count();
+                            if($last_photo_category_count > 0){
+                                $last_photo_category = PhotoCategory::orderBy('priority', 'desc')->first();
+                                $category_priority = $last_photo_category->priority + 1;
+                            }else{
+                                $category_priority = 1;
+                            }
+
+                            $photo_category = new PhotoCategory;
+                            $photo_category->photo_id = $photo_id;
+                            $photo_category->category_id = $request->category_id;
+                            $photo_category->priority = $category_priority;
+                            $photo_category->created_at = date("Y-m-d H:i:s");
+                            $photo_category->updated_by = Auth::id();
+                            $photo_category->created_by = Auth::id();
+                            $photo_category->save();
+                        }
+                    }
+
+                }else{
+                    $photo_category_delete = PhotoCategory::where('category_id', $request->category_id)->delete();
+                }
+
+            DB::commit();
+
+            $message = array(
+                'class' => 'success',
+                'title' => 'Success',
+                'text' => 'The photos are updated',
+            );
+            Session::flash('message', $message);
+            return Redirect::Back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to update photos',
+            );
+            Session::flash('message', $message);
+            return Redirect::Back();
+        }
+
     }
 }

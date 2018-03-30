@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Modules\Size\Models\Size;
 use App\Modules\Photo\Models\Photo;
+use App\Modules\Photo\Models\PhotoAlbum;
+use App\Modules\Photo\Models\PhotoCategory;
 use App\Modules\Album\Models\Album;
 use App\Modules\Category\Models\Category;
 
@@ -80,7 +82,6 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->all();
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -110,16 +111,6 @@ class PhotoController extends Controller
                         $priority = 1;
                     }
 
-                    $rules = [
-                        'image' => 'required|image|mimes:jpeg,bmp,png|size:5000' //5MB Max Size
-                    ];
-
-                    $v = Validator::make($image, $rules);
-
-                    if ($v->fails()) {
-                        return redirect()->back()->withInput()->withErrors($v);
-                    }
-
                     $photo = new Photo;
                     $photo->name = $request->name;
                     $photo->product_id = $request->product_id;
@@ -129,19 +120,71 @@ class PhotoController extends Controller
                     $photo->size_id = $request->size_id;
                     $photo->priority = $priority;
 
-                    $thumb_size = Size::findOrFail($request->thumbnail_size_id);
-                    $size = Size::findOrFail($request->size_id);
-                    $extension = $request->file('image')->getClientOriginalExtension();
+                    $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
+                    $size = Size::where('id', $request->size_id)->first();
+                    $extension = $image->getClientOriginalExtension();
+
+                    if(!in_array($extension, array("jpeg","jpg","bmp","png"))){
+                        DB::rollBack();
+                        $message = array(
+                            'class' => 'warning',
+                            'title' => 'Failed',
+                            'text' => "File type is not supported. please provide jpeg, jpg, bmp or png",
+                        );
+                        Session::flash('message', $message);
+                        return Redirect::back();
+                    }
+
                     $fileName = str_replace(' ', '-', strtolower($request->name)).'-'.time().'.'.$extension;
                     $thumb_url = 'uploads/photos/thumb/';
                     $url = 'uploads/photos/full/';
-                    $thumb = Image::make($request->file('images'))->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
-                    $img = Image::make($request->file('images'))->resize($size->width, $size->height)->save($url.$fileName);
+                    $thumb = Image::make($image)->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
+                    $img = Image::make($image)->resize($size->width, $size->height)->save($url.$fileName);
                     $photo->image = $fileName;
 
                     $photo->created_by = Auth::id();
                     $photo->updated_by = Auth::id();
                     $photo->save();
+
+                    foreach ($request->album_ids as $album_id) {
+
+                        $last_photo_album_count = PhotoAlbum::orderBy('priority', 'desc')->count();
+                        if($last_photo_album_count > 0){
+                            $last_photo_album = PhotoAlbum::orderBy('priority', 'desc')->first();
+                            $album_priority = $last_photo_album->priority + 1;
+                        }else{
+                            $album_priority = 1;
+                        }
+
+                        $photo_album = new PhotoAlbum;
+                        $photo_album->photo_id = $photo->id;
+                        $photo_album->album_id = $album_id;
+                        $photo_album->priority = $album_priority;
+                        $photo_album->created_at = date("Y-m-d H:i:s");
+                        $photo_album->created_by = Auth::id();
+                        $photo_album->updated_by = Auth::id();
+                        $photo_album->save();
+                    }
+
+                    foreach ($request->category_ids as $category_id) {
+
+                        $last_photo_category_count = PhotoCategory::orderBy('priority', 'desc')->count();
+                        if($last_photo_category_count > 0){
+                            $last_photo_category = PhotoCategory::orderBy('priority', 'desc')->first();
+                            $category_priority = $last_photo_category->priority + 1;
+                        }else{
+                            $category_priority = 1;
+                        }
+
+                        $photo_category = new PhotoCategory;
+                        $photo_category->photo_id = $photo->id;
+                        $photo_category->category_id = $category_id;
+                        $photo_category->priority = $category_priority;
+                        $photo_category->created_at = date("Y-m-d H:i:s");
+                        $photo_category->created_by = Auth::id();
+                        $photo_category->updated_by = Auth::id();
+                        $photo_category->save();
+                    }
 
                 }
 
@@ -150,13 +193,14 @@ class PhotoController extends Controller
             $message = array(
                 'class' => 'success',
                 'title' => 'Success',
-                'text' => 'A new photo is created',
+                'text' => 'New photos are uploaded',
             );
             Session::flash('message', $message);
             return Redirect('/photos');
 
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
@@ -188,7 +232,20 @@ class PhotoController extends Controller
     {
         $photo = Photo::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        return view("Photo::edit", compact('photo', 'sizes'));
+        $albums = Album::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+
+        $default_albums = array();
+        foreach ($photo->albums as $photo_album) {
+            $default_albums[] = $photo_album->album_id;
+        }
+
+        $default_categories = array();
+        foreach ($photo->categories as $photo_category) {
+            $default_categories[] = $photo_category->category_id;
+        }
+
+        return view("Photo::edit", compact('photo', 'sizes', 'albums', 'categories', 'default_albums', 'default_categories'));
     }
 
     /**
@@ -202,9 +259,13 @@ class PhotoController extends Controller
     {
         $validation = Validator::make($request->all(), [
             'name' => 'required',
+            'product_id' => 'sometimes',
             'status' => 'required',
             'description' => 'sometimes',
             'thumbnail_size_id' => 'required',
+            'size_id' => 'required',
+            'album_ids' => 'required',
+            'category_ids' => 'required',
             'image' => 'sometimes|image|max:5000'
         ]);
 
@@ -215,38 +276,96 @@ class PhotoController extends Controller
         try {
             DB::beginTransaction();
 
-                $current_default_query = Photo::whereDefault(true);
-                if($current_default_query->count() == 0){
-                    $default = 1;
-                }else if($request->default == 1){
-                    $current_default = $current_default_query->first();
-                    $current_default->default = 0;
-                    $current_default->save();
-                    $default = 1;
-                }else{
-                    $default = 0;
-                }
-
                 $photo = Photo::findOrFail($id);
                 $photo->name = $request->name;
+                $photo->product_id = $request->product_id;
                 $photo->status = $request->status;
                 $photo->description = $request->description;
-                $photo->default = $default;
 
                 if($request->hasFile('image')){
                     $photo->thumbnail_size_id = $request->thumbnail_size_id;
+                    $photo->size_id = $request->size_id;
 
-                    $size = Size::findOrFail($request->thumbnail_size_id);
+                    $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
+                    $size = Size::where('id', $request->size_id)->first();
                     $extension = $request->file('image')->getClientOriginalExtension();
+
                     $fileName = str_replace(' ', '-', strtolower($request->name)).'-'.time().'.'.$extension;
-                    $url = 'uploads/photos/thumb/';
+                    $thumb_url = 'uploads/photos/thumb/';
+                    $url = 'uploads/photos/full/';
+                    $thumb = Image::make($request->file('image'))->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
                     $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
                     $photo->image = $fileName;
                 }
 
-                $photo->created_by = Auth::id();
                 $photo->updated_by = Auth::id();
                 $photo->save();
+
+                $old_albums = array();
+                foreach ($photo->albums as $photo_album) {
+                    $old_albums[] = $photo_album->album_id;
+
+                    if(!in_array($photo_album->album_id, $request->album_ids)){
+                        $photo_album_delete = PhotoAlbum::where('photo_id', $id)->where('album_id', $photo_album->album_id)->delete();
+                    }
+                }
+
+                foreach ($request->album_ids as $album_id) {
+
+                    if(!in_array($album_id, $old_albums)){
+                        
+                        $last_photo_album_count = PhotoAlbum::orderBy('priority', 'desc')->count();
+                        if($last_photo_album_count > 0){
+                            $last_photo_album = PhotoAlbum::orderBy('priority', 'desc')->first();
+                            $album_priority = $last_photo_album->priority + 1;
+                        }else{
+                            $album_priority = 1;
+                        }
+
+                        $photo_album = new PhotoAlbum;
+                        $photo_album->photo_id = $photo->id;
+                        $photo_album->album_id = $album_id;
+                        $photo_album->priority = $album_priority;
+                        $photo_album->created_at = date("Y-m-d H:i:s");
+                        $photo_album->updated_by = Auth::id();
+                        $photo_album->created_by = Auth::id();
+                        $photo_album->save();
+
+                    }
+                    
+                }
+
+                $old_categories = array();
+                foreach ($photo->categories as $photo_category) {
+                    $old_categories[] = $photo_category->category_id;
+
+                    if(!in_array($photo_category->category_id, $request->category_ids)){
+                        $photo_category_delete = PhotoCategory::where('photo_id', $id)->where('category_id', $photo_category->category_id)->delete();
+                    }
+                }
+
+                foreach ($request->category_ids as $category_id) {
+
+                    if(!in_array($category_id, $old_categories)){
+
+                        $last_photo_category_count = PhotoCategory::orderBy('priority', 'desc')->count();
+                        if($last_photo_category_count > 0){
+                            $last_photo_category = PhotoCategory::orderBy('priority', 'desc')->first();
+                            $category_priority = $last_photo_category->priority + 1;
+                        }else{
+                            $category_priority = 1;
+                        }
+
+                        $photo_category = new PhotoCategory;
+                        $photo_category->photo_id = $photo->id;
+                        $photo_category->category_id = $category_id;
+                        $photo_category->priority = $category_priority;
+                        $photo_category->created_at = date("Y-m-d H:i:s");
+                        $photo_category->updated_by = Auth::id();
+                        $photo_category->created_by = Auth::id();
+                        $photo_category->save();
+                    }
+                }
 
             DB::commit();
 
@@ -260,6 +379,7 @@ class PhotoController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
+            // dd($e->getMessage());
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
@@ -281,7 +401,9 @@ class PhotoController extends Controller
         try {
             DB::beginTransaction();
 
-                $photo = Photo::whereDefault(false)->where('id', $id)->delete();
+                $photo_album_delete = PhotoAlbum::where('photo_id', $id)->delete();
+                $photo_category_delete = PhotoCategory::where('photo_id', $id)->delete();
+                $photo = Photo::where('id', $id)->delete();
 
                 if($photo){
                     $message = array(
@@ -290,6 +412,7 @@ class PhotoController extends Controller
                         'text' => 'Successfully deleted the photo',
                     );
                 }else{
+                    DB::rollBack();
                     $message = array(
                         'class' => 'warning',
                         'title' => 'Failed',
@@ -304,6 +427,7 @@ class PhotoController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
+            // dd($e->getMessage());
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',

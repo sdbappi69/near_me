@@ -84,7 +84,7 @@
 		                		<tr>
 		                			<td>
 				                  		<div class="user-block">
-						                    <img class="img-circle img-bordered-sm" src="{{ url('uploads/photos/thumb').'/'.$photo->image }}" alt="{{ $photo->name }}">
+						                    <img data-toggle="modal" data-target="#view-{{ $photo->id }}" class="img-circle img-bordered-sm img-view" src="{{ url('uploads/photos/thumb').'/'.$photo->image }}" alt="{{ $photo->name }}">
 						                </div>
 				                  	</td>
 				                  	<td>{{ $photo->name }}</td>
@@ -108,6 +108,7 @@
 					                    </div>
 				                  	</td>
 				                </tr>
+
 		                	@endforeach
 		                @endIf
 
@@ -125,6 +126,30 @@
 	    </div>
 
     </section>
+
+    @if(count($photos) > 0)
+		@foreach($photos AS $photo)
+
+			<div class="modal fade" id="view-{{ $photo->id }}">
+	          	<div class="modal-dialog" style="width: {{ $photo->size->width + 30 }}px;">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		                  <span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">{{ $photo->name }}</h4>
+		              </div>
+		              <div class="modal-body">
+		              		<img src="{{ url('uploads/photos/full').'/'.$photo->image }}" alt="{{ $photo->name }}">
+		              </div>
+		            </div>
+		            <!-- /.modal-content -->
+	          	</div>
+	          	<!-- /.modal-dialog -->
+	        </div>
+	        <!-- /.modal -->
+
+		@endforeach
+	@endIf
 
     <script type="text/javascript">
     	$(document).ready(function () {
