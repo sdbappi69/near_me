@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'photos', 'enctype' => 'multipart/form-data')) }}
+		            {{ Form::open(array('url' => 'panel/photos', 'enctype' => 'multipart/form-data')) }}
 
 		              	<div class="box-body">
 
@@ -66,7 +66,6 @@
 			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], Input::old('status'), ['class' => 'form-control input-lg', 'required' => 'required']) !!}
 			            		</div>
 		              		</div>
-
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">

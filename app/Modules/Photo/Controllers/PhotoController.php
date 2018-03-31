@@ -196,7 +196,7 @@ class PhotoController extends Controller
                 'text' => 'New photos are uploaded',
             );
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -207,7 +207,7 @@ class PhotoController extends Controller
                 'text' => 'Failed to create new photo',
             );
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
         }
     }
 
@@ -375,7 +375,7 @@ class PhotoController extends Controller
                 'text' => 'The photo is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -386,7 +386,7 @@ class PhotoController extends Controller
                 'text' => 'Failed to update photo',
             );
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
         }
     }
 
@@ -423,7 +423,7 @@ class PhotoController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -434,7 +434,7 @@ class PhotoController extends Controller
                 'text' => 'Failed to delete the photo',
             );
             Session::flash('message', $message);
-            return Redirect('/photos');
+            return Redirect('/panel/photos');
         }
     }
 

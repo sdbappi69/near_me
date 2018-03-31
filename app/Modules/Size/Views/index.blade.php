@@ -52,7 +52,7 @@
 		            <h3 class="box-title">Size</h3>
 
 		            <div class="box-tools">
-		                <a href="{{ url('sizes/create') }}" class="btn btn-block btn-success">
+		                <a href="{{ url('panel/sizes/create') }}" class="btn btn-block btn-success">
 		                	<i class="fa fa-plus"></i> Create new
 		                </a>
 	              	</div>
@@ -80,10 +80,10 @@
 				                  	<td>@if($size->status == 1) Active @else Inactive @endIf</td>
 				                  	<td>
 				                  		<div class="btn-group">
-					                      	{{ Form::open(array('url' => 'sizes/'.$size->id)) }}
+					                      	{{ Form::open(array('url' => 'panel/sizes/'.$size->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
-							                    <!-- <a href="{{ url('sizes/'.$size->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('sizes/'.$size->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+							                    <!-- <a href="{{ url('panel/sizes/'.$size->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
+					                      		<a href="{{ url('panel/sizes/'.$size->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
 							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
 							                {{ Form::close() }}
 					                    </div>

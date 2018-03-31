@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'albums', 'enctype' => 'multipart/form-data')) }}
+		            {{ Form::open(array('url' => 'panel/albums', 'enctype' => 'multipart/form-data')) }}
 
 		              	<div class="box-body">
 

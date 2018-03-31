@@ -18,9 +18,13 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{ URL::asset('dist/css/skins/_all-skins.min.css') }}">
-
+  <!-- Select2 -->
   <link rel="stylesheet" href="{{ URL::asset('assets/select2/dist/css/select2.min.css') }}">
-
+  <!-- bootstrap datepicker -->
+  <link rel="stylesheet" href="{{ URL::asset('assets/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
+  <!-- bootstrap wysihtml5 - text editor -->
+  <link rel="stylesheet" href="{{ URL::asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
+  <!-- Animation -->
   <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -182,8 +186,12 @@
 <script src="{{ URL::asset('dist/js/adminlte.min.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ URL::asset('dist/js/demo.js') }}"></script>
-
+<!-- Select2 -->
 <script src="{{ URL::asset('assets/select2/dist/js/select2.full.min.js') }}"></script>
+<!-- bootstrap datepicker -->
+<script src="{{ URL::asset('assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+<!-- Bootstrap WYSIHTML5 -->
+<script src="{{ URL::asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 
 <script>
   $(document).ready(function () {
@@ -191,8 +199,20 @@
 
     //Initialize Select2 Elements
     $('.select2').select2();
+
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
+
+    //bootstrap WYSIHTML5 - text editor
+    $('.textarea').wysihtml5({
+      toolbar: {
+        "image": false, // Button to insert an image.
+      }
+    });
     
-  })
+  });
 
   // Page Select
   function page_select(menu_class, sub_menu_class, title, sub_title){

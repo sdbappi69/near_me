@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['module' => 'Photo', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Photo\Controllers'], function() {
+Route::group(['module' => 'Photo', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Photo\Controllers', 'prefix' => 'panel'], function() {
 
     Route::resource('photos', 'PhotoController');
 

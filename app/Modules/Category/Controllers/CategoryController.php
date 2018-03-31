@@ -132,7 +132,7 @@ class CategoryController extends Controller
                 'text' => 'A new category is created',
             );
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -142,7 +142,7 @@ class CategoryController extends Controller
                 'text' => 'Failed to create new category',
             );
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
         }
     }
 
@@ -239,7 +239,7 @@ class CategoryController extends Controller
                 'text' => 'The category is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -249,7 +249,7 @@ class CategoryController extends Controller
                 'text' => 'Failed to update category',
             );
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
         }
     }
 
@@ -283,7 +283,7 @@ class CategoryController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -293,7 +293,7 @@ class CategoryController extends Controller
                 'text' => 'Failed to delete the category',
             );
             Session::flash('message', $message);
-            return Redirect('/categories');
+            return Redirect('/panel/categories');
         }
     }
 

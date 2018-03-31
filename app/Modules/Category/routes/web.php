@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['module' => 'Category', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Category\Controllers'], function() {
+Route::group(['module' => 'Category', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Category\Controllers', 'prefix' => 'panel'], function() {
 
     Route::resource('categories', 'CategoryController');
 

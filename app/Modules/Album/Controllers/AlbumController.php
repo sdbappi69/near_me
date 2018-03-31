@@ -132,7 +132,7 @@ class AlbumController extends Controller
                 'text' => 'A new album is created',
             );
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -142,7 +142,7 @@ class AlbumController extends Controller
                 'text' => 'Failed to create new album',
             );
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
         }
     }
 
@@ -239,7 +239,7 @@ class AlbumController extends Controller
                 'text' => 'The album is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -249,7 +249,7 @@ class AlbumController extends Controller
                 'text' => 'Failed to update album',
             );
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
         }
     }
 
@@ -283,7 +283,7 @@ class AlbumController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -293,7 +293,7 @@ class AlbumController extends Controller
                 'text' => 'Failed to delete the album',
             );
             Session::flash('message', $message);
-            return Redirect('/albums');
+            return Redirect('/panel/albums');
         }
     }
 

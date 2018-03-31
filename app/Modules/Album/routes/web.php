@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['module' => 'Album', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Album\Controllers'], function() {
+Route::group(['module' => 'Album', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\Album\Controllers', 'prefix' => 'panel'], function() {
 
     Route::resource('albums', 'AlbumController');
 

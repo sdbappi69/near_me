@@ -104,7 +104,7 @@ class SizeController extends Controller
                 'text' => 'A new size is created',
             );
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -114,7 +114,7 @@ class SizeController extends Controller
                 'text' => 'Failed to create new size',
             );
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
         }
     }
 
@@ -193,7 +193,7 @@ class SizeController extends Controller
                 'text' => 'The size is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -203,7 +203,7 @@ class SizeController extends Controller
                 'text' => 'Failed to update size',
             );
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
         }
     }
 
@@ -237,7 +237,7 @@ class SizeController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -247,7 +247,7 @@ class SizeController extends Controller
                 'text' => 'This size is already in use',
             );
             Session::flash('message', $message);
-            return Redirect('/sizes');
+            return Redirect('/panel/sizes');
         }
     }
 }

@@ -14,7 +14,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($category, array('url' => '/categories/'.$category->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
+		            {!! Form::model($category, array('url' => 'panel/categories/'.$category->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
 
 		              	<div class="box-body">
 
@@ -55,7 +55,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		              		<a href="{{ url('categories') }}" class="btn btn-default">Cancel</a>
+		              		<a href="{{ url('panel/categories') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -104,8 +104,8 @@
 				                  	<td>@if($data->photo->status == 1) Active @else Inactive @endIf</td>
 				                  	<td>
 				                  		@if($data->photo->status == 1)
-					                  		<a href="{{ url('categories/'.$data->photo->id.'/'.$category->id.'/photo-up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('categories/'.$data->photo->id.'/'.$category->id.'/photo-down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		<a href="{{ url('panel/categories/'.$data->photo->id.'/'.$category->id.'/photo-up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+					                  		<a href="{{ url('panel/categories/'.$data->photo->id.'/'.$category->id.'/photo-down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
 				                  		@endIf
 				                  	</td>
 				                </tr>
@@ -157,7 +157,7 @@
                 <h4 class="modal-title">All photos</h4>
               </div>
 
-              {{ Form::open(array('url' => 'categories/photos')) }}
+              {{ Form::open(array('url' => 'panel/categories/photos')) }}
 
               		{{ Form::hidden('category_id', $category->id) }}
 

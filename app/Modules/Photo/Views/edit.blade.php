@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($photo, array('url' => '/photos/'.$photo->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
+		            {!! Form::model($photo, array('url' => 'panel/photos/'.$photo->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
 
 		              	<div class="box-body">
 
@@ -70,7 +70,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		              		<a href="{{ url('photos') }}" class="btn btn-default">Cancel</a>
+		              		<a href="{{ url('panel/photos') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -86,7 +86,7 @@
     	
     	$(document).ready(function () {
 		    // page_select(menu_class, sub_menu_class, title, sub_title)
-        	page_select('photos-manage', 'photos', 'Sizes', 'update');
+        	page_select('photos-manage', 'photos', 'Photos', 'update');
 		});
 
     </script>

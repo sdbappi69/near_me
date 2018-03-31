@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/panel', function () {
     return redirect('/login');
 });
 
@@ -32,6 +32,6 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function() {
 
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/panel/home', 'HomeController@index')->name('home');
 	
 });

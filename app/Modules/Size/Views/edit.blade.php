@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($size, array('url' => '/sizes/'.$size->id, 'method' => 'put')) !!}
+		            {!! Form::model($size, array('url' => 'panel/sizes/'.$size->id, 'method' => 'put')) !!}
 
 		              	<div class="box-body">
 
@@ -49,7 +49,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		              		<a href="{{ url('sizes') }}" class="btn btn-default">Cancel</a>
+		              		<a href="{{ url('panel/sizes') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->

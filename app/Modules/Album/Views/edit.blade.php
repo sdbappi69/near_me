@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($album, array('url' => '/albums/'.$album->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
+		            {!! Form::model($album, array('url' => 'panel/albums/'.$album->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
 
 		              	<div class="box-body">
 
@@ -54,7 +54,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		              		<a href="{{ url('albums') }}" class="btn btn-default">Cancel</a>
+		              		<a href="{{ url('panel/albums') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -102,8 +102,8 @@
 				                  	<td>@if($data->photo->status == 1) Active @else Inactive @endIf</td>
 				                  	<td>
 				                  		@if($data->photo->status == 1)
-					                  		<a href="{{ url('albums/'.$data->photo->id.'/'.$album->id.'/photo-up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('albums/'.$data->photo->id.'/'.$album->id.'/photo-down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		<a href="{{ url('panel/albums/'.$data->photo->id.'/'.$album->id.'/photo-up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+					                  		<a href="{{ url('panel/albums/'.$data->photo->id.'/'.$album->id.'/photo-down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
 				                  		@endIf
 				                  	</td>
 				                </tr>
@@ -155,7 +155,7 @@
                 <h4 class="modal-title">All photos</h4>
               </div>
 
-              {{ Form::open(array('url' => 'albums/photos')) }}
+              {{ Form::open(array('url' => 'panel/albums/photos')) }}
 
               		{{ Form::hidden('album_id', $album->id) }}
 

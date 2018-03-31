@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'sizes')) }}
+		            {{ Form::open(array('url' => 'panel/sizes')) }}
 
 		              	<div class="box-body">
 

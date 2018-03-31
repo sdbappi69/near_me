@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'categories', 'enctype' => 'multipart/form-data')) }}
+		            {{ Form::open(array('url' => 'panel/categories', 'enctype' => 'multipart/form-data')) }}
 
 		              	<div class="box-body">
 
