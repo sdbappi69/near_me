@@ -21,7 +21,7 @@
 		              		<!-- if there are creation errors, they will show here -->
 							@include('partials.errors')
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 		              			<div class="form-group">
 			            			{{ Form::label('name', 'Name*') }}
 			            			{{ Form::text('name', null, array('class' => 'form-control input-lg', 'required' => 'required', 'placeholder' => 'Name')) }}
@@ -36,7 +36,7 @@
 			            		</div>
 		              		</div>
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 			            		<div class="form-group">
 			            			{{ Form::label('description', 'Description') }}
 			            			{{ Form::text('description', null, array('class' => 'form-control input-lg', 'placeholder' => 'Description')) }}
@@ -78,7 +78,7 @@
 	              	</div>
 	            </div>
 	            <!-- /.box-header -->
-	            <div class="box-body table-responsiveusers">
+	            <div class="box-body table-responsive">
 	              	<table class="table table-striped">
 
 		                <tr>
@@ -161,7 +161,7 @@
 
               		{{ Form::hidden('category_id', $category->id) }}
 
-	              	<div class="modal-body table-responsiveusers">
+	              	<div class="modal-body table-responsive">
 	              		
 	              		<table class="table table-striped">
 

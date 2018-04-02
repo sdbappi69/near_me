@@ -20,7 +20,7 @@
 		              		<!-- if there are creation errors, they will show here -->
 							@include('partials.errors')
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 		              			<div class="form-group">
 			            			{{ Form::label('display_name', 'Display Name') }}
 			            			{{ Form::text('display_name', Input::old('display_name'), array('class' => 'form-control', 'id' => 'display_name', 'required' => 'required')) }}
@@ -35,7 +35,7 @@
 			            		</div>
 		              		</div>
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 				            		
 	              				<table class="table table-striped">
 					                <tr>

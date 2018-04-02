@@ -20,7 +20,7 @@
 		              		<!-- if there are creation errors, they will show here -->
 							@include('partials.errors')
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 		              			<div class="form-group">
 			            			{{ Form::label('name', 'Name*') }}
 			            			{{ Form::text('name', null, array('class' => 'form-control input-lg', 'required' => 'required', 'placeholder' => 'Name')) }}
@@ -39,7 +39,7 @@
 			            		</div>
 		              		</div>
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 			            		<div class="form-group">
 			            			{{ Form::label('thumbnail_size_id', 'Thumbnail image size') }}
 			            			{!! Form::select('thumbnail_size_id', $sizes, null, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}

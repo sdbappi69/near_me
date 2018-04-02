@@ -1,7 +1,7 @@
 <?php
 
-Route::group(['module' => 'SocialNetwork', 'middleware' => ['web'], 'namespace' => 'App\Modules\SocialNetwork\Controllers'], function() {
+Route::group(['module' => 'SocialNetwork', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\SocialNetwork\Controllers', 'prefix' => 'panel'], function() {
 
-    Route::resource('SocialNetwork', 'SocialNetworkController');
+    Route::resource('socials', 'SocialNetworkController');
 
 });

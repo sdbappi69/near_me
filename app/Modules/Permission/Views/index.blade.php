@@ -16,15 +16,15 @@
 		            {!! Form::open(array('method' => 'get')) !!}
 
 		              	<div class="box-body">
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['display_name'])) { $_GET['display_name'] = null; } ?>
 		            			<input value="{{ $_GET['display_name'] }}" class="form-control input-lg" name="display_name" type="text" placeholder="Display Name">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['name'])) { $_GET['name'] = null; } ?>
 		            			<input value="{{ $_GET['name'] }}" class="form-control input-lg" name="name" type="text" placeholder="Name">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['description'])) { $_GET['description'] = null; } ?>
 		            			<input value="{{ $_GET['description'] }}" class="form-control input-lg" name="description" type="text" placeholder="Description">
 		            		</div>
@@ -54,7 +54,7 @@
 	              	</div>
 	            </div>
 	            <!-- /.box-header -->
-	            <div class="box-body table-responsiveusers">
+	            <div class="box-body table-responsive">
 	              	<table class="table table-striped">
 
 		                <tr>

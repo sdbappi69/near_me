@@ -15,7 +15,7 @@
 
 	              	<div class="box-body">
 
-	              		<div class="col-xs-6">
+	              		<div class="col-md-6">
 
 	              			<table class="table table-striped">
 
@@ -38,7 +38,7 @@
 
 				        </div>
 
-	              		<div class="col-xs-6">
+	              		<div class="col-md-6">
 			            		
               				<table class="table table-striped">
 				                <tr>

@@ -16,19 +16,19 @@
 		            {!! Form::open(array('method' => 'get')) !!}
 
 		              	<div class="box-body">
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['name'])) { $_GET['name'] = null; } ?>
 		            			<input value="{{ $_GET['name'] }}" class="form-control input-lg" name="name" type="text" placeholder="Name">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['description'])) { $_GET['description'] = null; } ?>
 		            			<input value="{{ $_GET['description'] }}" class="form-control input-lg" name="description" type="text" placeholder="Description">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['thumbnail_size_id'])) { $_GET['thumbnail_size_id'] = null; } ?>
 		            			{!! Form::select('thumbnail_size_id', ['' => 'Thumbnail image size']+$sizes, $_GET['thumbnail_size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id']) !!}
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['status'])) { $_GET['status'] = null; } ?>
 		            			{!! Form::select('status', ['' => 'Status', '1' => 'Active', '0' => 'Inactive'], $_GET['status'], ['class' => 'form-control input-lg', 'id' => 'status']) !!}
 		            		</div>
@@ -58,7 +58,7 @@
 	              	</div>
 	            </div>
 	            <!-- /.box-header -->
-	            <div class="box-body table-responsiveusers">
+	            <div class="box-body table-responsive">
 	              	<table class="table table-striped">
 
 		                <tr>

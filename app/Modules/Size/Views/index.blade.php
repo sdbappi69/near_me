@@ -16,19 +16,19 @@
 		            {!! Form::open(array('method' => 'get')) !!}
 
 		              	<div class="box-body">
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['name'])) { $_GET['name'] = null; } ?>
 		            			<input value="{{ $_GET['name'] }}" class="form-control input-lg" name="name" type="text" placeholder="Name">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['width'])) { $_GET['width'] = null; } ?>
 		            			<input value="{{ $_GET['width'] }}" class="form-control input-lg" name="width" type="text" placeholder="Width">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['height'])) { $_GET['height'] = null; } ?>
 		            			<input value="{{ $_GET['height'] }}" class="form-control input-lg" name="height" type="text" placeholder="Height">
 		            		</div>
-		            		<div class="col-xs-3">
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['status'])) { $_GET['status'] = null; } ?>
 		            			{!! Form::select('status', ['' => 'Status', '1' => 'Active', '0' => 'Inactive'], $_GET['status'], ['class' => 'form-control input-lg', 'id' => 'status']) !!}
 		            		</div>
@@ -58,7 +58,7 @@
 	              	</div>
 	            </div>
 	            <!-- /.box-header -->
-	            <div class="box-body table-responsiveusers">
+	            <div class="box-body table-responsive">
 	              	<table class="table table-striped">
 
 		                <tr>

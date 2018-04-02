@@ -20,7 +20,7 @@
 		              		<!-- if there are creation errors, they will show here -->
 							@include('partials.errors')
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 
 		              			<img class="profile-user-img img-responsive img-circle" src="{{ url('/').'/uploads/users/'.$user->image }}" alt="{{ $user->name }}"><br>
 
@@ -43,7 +43,7 @@
 			            		</div>
 		              		</div>
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 				            		
 	              				<table class="table table-striped">
 					                <tr>

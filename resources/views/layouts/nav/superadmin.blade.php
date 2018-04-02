@@ -199,7 +199,7 @@
 
 
 <li class="header">Site Settings</li>
-<li class="treeview nav slider">
+<li class="treeview nav sliders">
     <a href="#">
       <i class="fa fa-map"></i> <span>Sliders</span>
       <span class="pull-right-container">
@@ -207,8 +207,8 @@
       </span>
     </a>
     <ul class="treeview-menu">
-      <li class="nav slider-add"><a href="{{ url('panel/slider/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
-      <li class="nav slider-manage"><a href="{{ url('panel/slider') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
+      <li class="nav sliders-add"><a href="{{ url('panel/sliders/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
+      <li class="nav sliders-manage"><a href="{{ url('panel/sliders') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
     </ul>
 </li>
 <li class="treeview nav themes">
@@ -223,7 +223,7 @@
       <li class="nav themes-manage"><a href="{{ url('panel/themes') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
     </ul>
 </li>
-<li class="treeview nav social">
+<li class="treeview nav socials">
     <a href="#">
       <i class="fa fa-share-alt"></i> <span>Social Networks</span>
       <span class="pull-right-container">
@@ -231,8 +231,8 @@
       </span>
     </a>
     <ul class="treeview-menu">
-      <li class="nav social-add"><a href="{{ url('panel/social/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
-      <li class="nav social-manage"><a href="{{ url('panel/social') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
+      <li class="nav socials-add"><a href="{{ url('panel/socials/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
+      <li class="nav socials-manage"><a href="{{ url('panel/socials') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
     </ul>
 </li>
 <li class="nav setting"><a href="{{ url('panel/setting') }}"><i class="fa fa-cog"></i> <span>Setting</span></a></li>

@@ -234,7 +234,7 @@ class SaleController extends Controller
                 $photo->price = $request->price;
                 $photo->status = $request->status;
                 $photo->description = $request->description;
-                $photo->description = $request->category_id;
+                $photo->category_id = $request->category_id;
 
                 if($request->hasFile('image')){
                     $photo->thumbnail_size_id = $request->thumbnail_size_id;

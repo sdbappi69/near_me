@@ -20,7 +20,7 @@
 		              		<!-- if there are creation errors, they will show here -->
 							@include('partials.errors')
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 		              			<div class="form-group">
 			            			{{ Form::label('image', 'Image') }}
 			            			{{ Form::file('image', Input::old('image'), array('class' => 'form-control', 'id' => 'image')) }}
@@ -44,7 +44,7 @@
 			            		</div>
 		              		</div>
 
-		              		<div class="col-xs-6">
+		              		<div class="col-md-6">
 				            		
 	              				<table class="table table-striped">
 					                <tr>

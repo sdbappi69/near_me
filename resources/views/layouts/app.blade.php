@@ -45,7 +45,7 @@
     .header{
       text-transform: uppercase;
     }
-    .col-xs-3{
+    .col-md-3{
       margin-bottom: 5px;
     }
     .img-view{
