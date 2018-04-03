@@ -170,7 +170,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> 1.0.0
     </div>
-    <strong>Copyright &copy; {{ date('Y') }} <a href="https://planet0088.website">Planet0088</a>.</strong> All rights
+    <strong>Copyright &copy; {{ date('Y') }} <a href="{{ url('/') }}">{{ config('app.name') }}</a>.</strong> All rights
     reserved.
   </footer>
 </div>

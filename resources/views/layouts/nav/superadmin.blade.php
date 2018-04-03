@@ -235,4 +235,4 @@
       <li class="nav socials-manage"><a href="{{ url('panel/socials') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
     </ul>
 </li>
-<li class="nav setting"><a href="{{ url('panel/setting') }}"><i class="fa fa-cog"></i> <span>Setting</span></a></li>
+<li class="nav settings"><a href="{{ url('panel/settings') }}"><i class="fa fa-cog"></i> <span>Setting</span></a></li>

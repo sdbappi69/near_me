@@ -193,8 +193,6 @@ class SliderController extends Controller
 
                 if($request->hasFile('image')){
                     $slider->size_id = $request->size_id;
-
-                    $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
                     $size = Size::where('id', $request->size_id)->first();
                     $extension = $request->file('image')->getClientOriginalExtension();
 
