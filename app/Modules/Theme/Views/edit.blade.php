@@ -37,6 +37,10 @@
 			            			{{ Form::text('folder', null, array('class' => 'form-control input-lg', 'placeholder' => 'Folder', 'required' => 'required')) }}
 			            		</div>
 			            		<div class="form-group">
+			            			{{ Form::label('default', 'Default*') }}
+			            			{!! Form::select('default', ['0' => 'No', '1' => 'Yes'], null, ['class' => 'form-control input-lg', 'required' => 'required']) !!}
+			            		</div>
+			            		<div class="form-group">
 			            			{{ Form::label('status', 'Status*') }}
 			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], null, ['class' => 'form-control input-lg', 'required' => 'required']) !!}
 			            		</div>

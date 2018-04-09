@@ -250,7 +250,7 @@
 	            <div class="icon">
 	              <i class="fa fa-share-alt"></i>
 	            </div>
-	            <a href="{{ url('panel/settings') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
+	            <a href="{{ url('panel/socials') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
 	          </div>
 	        </div>
 	        <!-- ./col -->

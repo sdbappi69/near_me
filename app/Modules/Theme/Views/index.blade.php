@@ -61,6 +61,7 @@
 		                  	<th>Image</th>
 		                  	<th>Name</th>
 		                  	<th>Folder</th>
+		                  	<th>Default</th>
 		                  	<th>Status</th>
 		                  	<th>Actions</th>
 		                </tr>
@@ -75,6 +76,7 @@
 				                  	</td>
 				                  	<td>{{ $theme->name }}</td>
 				                  	<td>{{ $theme->folder }}</td>
+				                  	<td>@if($theme->default == 1) <i class="fa fa-check"></i> @endIf</td>
 				                  	<td>@if($theme->status == 1) Active @else Inactive @endIf</td>
 				                  	<td>
 				                  		<div class="btn-group">

@@ -10,6 +10,10 @@ use App\Modules\Album\Models\Album;
 use App\Modules\Photo\Models\PhotoAlbum;
 use App\Modules\Photo\Models\Photo;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+
 use Validator;
 use DB;
 use Session;
@@ -144,17 +148,6 @@ class AlbumController extends Controller
             Session::flash('message', $message);
             return Redirect('/panel/albums');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -582,5 +575,33 @@ class AlbumController extends Controller
             return Redirect::Back();
         }
 
+    }
+
+    public function view()
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        return view('templates.'.$theme->folder.'.album.index', compact('theme', 'setting', 'albums', 'socials', 'sliders'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $album = Album::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.album.show', compact('theme', 'setting', 'albums', 'socials', 'sliders', 'album'));
     }
 }

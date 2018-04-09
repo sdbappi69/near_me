@@ -15,3 +15,11 @@ Route::group(['module' => 'Album', 'middleware' => ['web', 'auth'], 'namespace' 
     Route::post('albums/photos', 'AlbumController@photos');
 
 });
+
+Route::group(['module' => 'Album', 'middleware' => ['web'], 'namespace' => 'App\Modules\Album\Controllers'], function() {
+
+    Route::get('albums', 'AlbumController@view');
+
+    Route::get('albums/{id}', 'AlbumController@show');
+
+});

@@ -30,8 +30,7 @@ Route::get('/clear-all-cache',function(){
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function() {
-
-	Route::get('/panel/home', 'HomeController@index')->name('home');
-	
+// Website
+Route::get('/', function () {
+    return redirect('/home');
 });

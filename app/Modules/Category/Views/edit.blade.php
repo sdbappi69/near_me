@@ -27,19 +27,8 @@
 			            			{{ Form::text('name', null, array('class' => 'form-control input-lg', 'required' => 'required', 'placeholder' => 'Name')) }}
 			            		</div>
 			            		<div class="form-group">
-			            			{{ Form::label('status', 'Status*') }}
-			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], null, ['class' => 'form-control input-lg', 'required' => 'required']) !!}
-			            		</div>
-			            		<div class="form-group">
 			            			{{ Form::label('default', 'Default*') }}
 			            			{!! Form::select('default', ['0' => 'No', '1' => 'Yes'], null, ['class' => 'form-control input-lg', 'required' => 'required']) !!}
-			            		</div>
-		              		</div>
-
-		              		<div class="col-md-6">
-			            		<div class="form-group">
-			            			{{ Form::label('description', 'Description') }}
-			            			{{ Form::text('description', null, array('class' => 'form-control input-lg', 'placeholder' => 'Description')) }}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('thumbnail_size_id', 'Thumbnail image size') }}
@@ -49,6 +38,17 @@
 			            			{{ Form::label('iamge', 'Image') }}
 			            			{{ Form::file('image', null, array('class' => 'form-control input-lg', 'id' => 'image')) }}
 			            			<p class="help-block">Maximum file size: 2 MB</p>
+			            		</div>
+		              		</div>
+
+		              		<div class="col-md-6">
+			            		<div class="form-group">
+			            			{{ Form::label('description', 'Description') }}
+			            			{{ Form::textarea('description', null, array('class' => 'form-control input-lg', 'placeholder' => 'Description')) }}
+			            		</div>
+			            		<div class="form-group">
+			            			{{ Form::label('status', 'Status*') }}
+			            			{!! Form::select('status', ['1' => 'Active', '0' => 'Inactive'], null, ['class' => 'form-control input-lg', 'required' => 'required']) !!}
 			            		</div>
 		              		</div>
 

@@ -78,10 +78,23 @@ class ThemeController extends Controller
         try {
             DB::beginTransaction();
 
+                $current_default_query = Theme::whereDefault(true);
+                if($current_default_query->count() == 0){
+                    $default = 1;
+                }else if($request->default == 1){
+                    $current_default = $current_default_query->first();
+                    $current_default->default = 0;
+                    $current_default->save();
+                    $default = 1;
+                }else{
+                    $default = 0;
+                }
+
                 $theme = new Theme;
                 $theme->name = $request->name;
                 $theme->folder = $request->folder;
                 $theme->status = $request->status;
+                $theme->default = $default;
                 $theme->description = $request->description;
 
                 $extension = $request->file('image')->getClientOriginalExtension();
@@ -165,10 +178,23 @@ class ThemeController extends Controller
         try {
             DB::beginTransaction();
 
+                $current_default_query = Theme::whereDefault(true);
+                if($current_default_query->count() == 0){
+                    $default = 1;
+                }else if($request->default == 1){
+                    $current_default = $current_default_query->first();
+                    $current_default->default = 0;
+                    $current_default->save();
+                    $default = 1;
+                }else{
+                    $default = 0;
+                }
+
                 $theme = Theme::findOrFail($id);
                 $theme->name = $request->name;
                 $theme->folder = $request->folder;
                 $theme->status = $request->status;
+                $theme->default = $default;
                 $theme->description = $request->description;
 
                 if($request->hasFile('image')){
@@ -217,7 +243,7 @@ class ThemeController extends Controller
         try {
             DB::beginTransaction();
 
-                $theme = Theme::where('id', $id)->delete();
+                $theme = Theme::whereDefault(false)->where('id', $id)->delete();
 
                 if($theme){
                     $message = array(
