@@ -7,7 +7,13 @@ use App\Http\Controllers\Controller;
 
 use App\Modules\Size\Models\Size;
 use App\Modules\PrintSale\Models\PrintSale;
+use App\Modules\PrintSale\Models\OrderPrintSale;
 use App\Modules\Category\Models\Category;
+
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+use App\Modules\Album\Models\Album;
 
 use Validator;
 use DB;
@@ -72,9 +78,11 @@ class PrintSaleController extends Controller
     {
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
+        if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_category = Category::whereStatus(true)->whereDefault(true)->first();
-        return view("PrintSale::create", compact('sizes', 'default_size', 'categories', 'default_category'));
+        if($default_category){ $default_category_id = $default_category->id; }else{ $default_category_id = null; }
+        return view("PrintSale::create", compact('sizes', 'default_size_id', 'categories', 'default_category_id'));
     }
 
     /**
@@ -174,17 +182,6 @@ class PrintSaleController extends Controller
             Session::flash('message', $message);
             return Redirect('/panel/print-sales');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -424,5 +421,36 @@ class PrintSaleController extends Controller
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    public function view()
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $photos = PrintSale::whereStatus(1)->orderBy('priority', 'asc')->paginate(12);
+        $categories = Category::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        return view('templates.'.$theme->folder.'.print-sale.index', compact('theme', 'setting', 'albums', 'socials', 'photos', 'categories'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $photo = PrintSale::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.print-sale.show', compact('theme', 'setting', 'albums', 'socials', 'photo'));
     }
 }

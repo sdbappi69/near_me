@@ -15,4 +15,9 @@ class PhotoAlbum extends Model {
         return $this->belongsTo('App\Modules\Photo\Models\Photo', 'photo_id', 'id');
     }
 
+    public function album()
+    {
+        return $this->belongsTo('App\Modules\Album\Models\Album', 'album_id', 'id');
+    }
+
 }

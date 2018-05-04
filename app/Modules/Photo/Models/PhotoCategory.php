@@ -15,4 +15,9 @@ class PhotoCategory extends Model {
         return $this->belongsTo('App\Modules\Photo\Models\Photo', 'photo_id', 'id');
     }
 
+    public function category()
+    {
+        return $this->belongsTo('App\Modules\Category\Models\Category', 'category_id', 'id');
+    }
+
 }

@@ -9,3 +9,11 @@ Route::group(['module' => 'Video', 'middleware' => ['web', 'auth'], 'namespace' 
     Route::get('videos/{id}/down', 'VideoController@down');
 
 });
+
+Route::group(['module' => 'Video', 'middleware' => ['web'], 'namespace' => 'App\Modules\Video\Controllers'], function() {
+
+    Route::get('videos', 'VideoController@view');
+
+    Route::get('videos/{id}', 'VideoController@show');
+
+});

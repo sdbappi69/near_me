@@ -35,11 +35,11 @@
 		            		</div>
 		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['thumbnail_size_id'])) { $_GET['thumbnail_size_id'] = null; } ?>
-		            			{!! Form::select('thumbnail_size_id', ['' => 'Thumbnail image size']+$sizes, $_GET['thumbnail_size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id']) !!}
+		            			{!! Form::select('thumbnail_size_id', ['' => 'All thumbnail image size']+$sizes, $_GET['thumbnail_size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id']) !!}
 		            		</div>
 		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['size_id'])) { $_GET['size_id'] = null; } ?>
-		            			{!! Form::select('size_id', ['' => 'Full image size']+$sizes, $_GET['size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id']) !!}
+		            			{!! Form::select('size_id', ['' => 'All full image size']+$sizes, $_GET['size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id']) !!}
 		            		</div>
 		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['status'])) { $_GET['status'] = null; } ?>

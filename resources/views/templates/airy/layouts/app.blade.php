@@ -26,6 +26,32 @@
 
 	<script src="{{ URL::asset('templates/airy/js/jquery.min.js') }}"></script>
 
+	<style type="text/css">
+		.jssocials-share-link { border-radius: 50%; font-size: 10px; }
+		.custom_share_icon{
+			text-align: center;
+			padding: 8px;
+			font-size: 15px;
+		}
+		.custom_share_icon:hover{
+			color: #FFFFFF;
+		}
+		.small{
+			padding-bottom: 0px;
+			margin-top: 20px;
+		}
+		.pagination{
+			text-align: center;
+			padding-left: 0px;
+		}
+		.pagination li{
+		    display: inline-block;
+		    padding: 8px 16px;
+		    text-decoration: none;
+		    background-color: #222222;
+		}
+	</style>
+
 </head>
 <body>
 
@@ -62,6 +88,8 @@
 							</li>
 						@endIf
 						<li class="main-menu print-sales"><a href="{{ url('print-sales') }}">Print Sell</a></li>
+						<li class="main-menu sales"><a href="{{ url('sales') }}">Sell</a></li>
+						<li class="main-menu tearsheets"><a href="{{ url('tearsheets') }}">Tearsheets</a></li>
 						<li class="main-menu biographies"><a href="{{ url('biographies') }}">Biography</a></li>
 						<li class="main-menu awards"><a href="{{ url('awards') }}">Awards</a></li>
 						<li class="main-menu testimonials"><a href="{{ url('testimonials') }}">Testimonials</a></li>
@@ -122,6 +150,19 @@
 		    $("."+menu_class).addClass("current_page_parent");
 		    $("."+sub_menu_class).addClass("current_page_parent");
 	  	}
+
+	  	// Alert
+	  	@if(Session::has('message'))
+	  		<?php $message = Session::get('message'); ?>
+	  		alert("{{ $message['text'] }}");
+	  	@endif
+
+	  	// Social Share Icons
+	  	$("#shareIcons").jsSocials({
+		    showLabel: false,
+		    showCount: false,
+		    shares: ["email", "twitter", "facebook", "googleplus", "linkedin", "pinterest", "stumbleupon", "whatsapp"]
+		});
 	</script>
 
 </body>

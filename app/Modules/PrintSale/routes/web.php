@@ -8,4 +8,16 @@ Route::group(['module' => 'PrintSale', 'middleware' => ['web', 'auth'], 'namespa
 
     Route::get('print-sales/{id}/down', 'PrintSaleController@down');
 
+    Route::resource('order-print-sales', 'OrderPrintSaleController');
+
+});
+
+Route::group(['module' => 'PrintSale', 'middleware' => ['web'], 'namespace' => 'App\Modules\PrintSale\Controllers'], function() {
+
+    Route::get('print-sales', 'PrintSaleController@view');
+
+    Route::get('print-sales/{id}', 'PrintSaleController@show');
+
+    Route::post('order-print-sales', 'OrderPrintSaleController@store');
+
 });

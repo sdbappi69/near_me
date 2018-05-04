@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Modules\Size\Models\Size;
 use App\Modules\Testimonial\Models\Testimonial;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+use App\Modules\Album\Models\Album;
+
 use Validator;
 use DB;
 use Session;
@@ -63,7 +68,8 @@ class TestimonialController extends Controller
     {
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
-        return view("Testimonial::create", compact('sizes', 'default_size'));
+        if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
+        return view("Testimonial::create", compact('sizes', 'default_size_id'));
     }
 
     /**
@@ -151,17 +157,6 @@ class TestimonialController extends Controller
             Session::flash('message', $message);
             return Redirect('/panel/testimonials');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -405,5 +400,35 @@ class TestimonialController extends Controller
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    public function view()
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $testimonials = Testimonial::whereStatus(1)->orderBy('priority', 'asc')->paginate(5);
+
+        return view('templates.'.$theme->folder.'.testimonial.index', compact('theme', 'setting', 'albums', 'socials', 'testimonials'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $testimonial = Testimonial::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.testimonial.show', compact('theme', 'setting', 'albums', 'socials', 'testimonial'));
     }
 }

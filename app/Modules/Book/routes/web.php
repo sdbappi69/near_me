@@ -9,3 +9,11 @@ Route::group(['module' => 'Book', 'middleware' => ['web', 'auth'], 'namespace' =
     Route::get('books/{id}/down', 'BookController@down');
 
 });
+
+Route::group(['module' => 'Book', 'middleware' => ['web'], 'namespace' => 'App\Modules\Book\Controllers'], function() {
+
+    Route::get('books', 'BookController@view');
+
+    Route::get('books/{id}', 'BookController@show');
+
+});

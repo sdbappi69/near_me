@@ -6,7 +6,7 @@
 	
 		<h2>Album Archive</h2>
 
-		@if(count($albums) > 0)
+		@if(count($album_list) > 0)
 
 		<nav id="grid-changer">
 			<ul>
@@ -29,7 +29,7 @@
 		<!-- Gallery __-->
 		<div class="gallery masonry-gallery">
 			
-			@foreach($albums AS $album)
+			@foreach($album_list AS $album)
 
 				<figure class="gallery-item">
 					<header class='gallery-icon'>
@@ -45,6 +45,10 @@
 			@endforeach
 			
 		</div>
+
+		<div class="pagination">
+            {{ $album_list->appends($_REQUEST)->render() }}
+        </div>
 
 		@endIf
 

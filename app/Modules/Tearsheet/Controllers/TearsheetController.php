@@ -9,6 +9,11 @@ use App\Modules\Size\Models\Size;
 use App\Modules\Tearsheet\Models\Tearsheet;
 use App\Modules\Category\Models\Category;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+use App\Modules\Album\Models\Album;
+
 use Validator;
 use DB;
 use Session;
@@ -72,9 +77,11 @@ class TearsheetController extends Controller
     {
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
+        if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_category = Category::whereStatus(true)->whereDefault(true)->first();
-        return view("Tearsheet::create", compact('sizes', 'default_size', 'categories', 'default_category'));
+        if($default_category){ $default_category_id = $default_category->id; }else{ $default_category_id = null; }
+        return view("PrintSale::create", compact('sizes', 'default_size_id', 'categories', 'default_category_id'));
     }
 
     /**
@@ -174,17 +181,6 @@ class TearsheetController extends Controller
             Session::flash('message', $message);
             return Redirect('/panel/tearsheets');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -295,13 +291,13 @@ class TearsheetController extends Controller
                     $message = array(
                         'class' => 'success',
                         'title' => 'Success',
-                        'text' => 'Successfully deleted the print sell',
+                        'text' => 'Successfully deleted the tearsheet',
                     );
                 }else{
                     $message = array(
                         'class' => 'warning',
                         'title' => 'Failed',
-                        'text' => "That print sell can't be delete",
+                        'text' => "That tearsheet can't be delete",
                     );
                 }
 
@@ -315,7 +311,7 @@ class TearsheetController extends Controller
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
-                'text' => 'Failed to delete the print sell',
+                'text' => 'Failed to delete the tearsheet',
             );
             Session::flash('message', $message);
             return Redirect('/panel/tearsheets');
@@ -346,14 +342,14 @@ class TearsheetController extends Controller
                     $message = array(
                         'class' => 'success',
                         'title' => 'Success',
-                        'text' => 'Successfully updated the print sell',
+                        'text' => 'Successfully updated the tearsheet',
                     );
 
                 }else{
                     $message = array(
                         'class' => 'warning',
                         'title' => 'Failed',
-                        'text' => "That print sell can't be up",
+                        'text' => "That tearsheet can't be up",
                     );
                 }
 
@@ -367,7 +363,7 @@ class TearsheetController extends Controller
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
-                'text' => 'Failed to up the print sell',
+                'text' => 'Failed to up the tearsheet',
             );
             Session::flash('message', $message);
             return Redirect::back();
@@ -398,14 +394,14 @@ class TearsheetController extends Controller
                     $message = array(
                         'class' => 'success',
                         'title' => 'Success',
-                        'text' => 'Successfully updated the print sell',
+                        'text' => 'Successfully updated the tearsheet',
                     );
 
                 }else{
                     $message = array(
                         'class' => 'warning',
                         'title' => 'Failed',
-                        'text' => "That print sell can't be down",
+                        'text' => "That tearsheet can't be down",
                     );
                 }
 
@@ -419,10 +415,41 @@ class TearsheetController extends Controller
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
-                'text' => 'Failed to down the print sell',
+                'text' => 'Failed to down the tearsheet',
             );
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    public function view()
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $photos = Tearsheet::whereStatus(1)->orderBy('priority', 'asc')->paginate(12);
+        $categories = Category::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        return view('templates.'.$theme->folder.'.tearsheet.index', compact('theme', 'setting', 'albums', 'socials', 'photos', 'categories'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $photo = Tearsheet::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.tearsheet.show', compact('theme', 'setting', 'albums', 'socials', 'photo'));
     }
 }

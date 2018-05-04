@@ -42,11 +42,11 @@
 		              		<div class="col-md-6">
 			            		<div class="form-group">
 			            			{{ Form::label('thumbnail_size_id', 'Thumbnail image size*') }}
-			            			{!! Form::select('thumbnail_size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('thumbnail_size_id', ['' => 'Select image size']+$sizes, $default_size_id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('size_id', 'Full image size*') }}
-			            			{!! Form::select('size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('size_id', ['' => 'Select image size']+$sizes, $default_size_id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('iamges', 'Images*') }}
@@ -55,11 +55,11 @@
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('album_ids', 'Albums*') }}
-			            			{!! Form::select('album_ids[]', $albums, $default_album->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'album_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
+			            			{!! Form::select('album_ids[]', $albums, $default_album_id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'album_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('category_ids', 'Categories*') }}
-			            			{!! Form::select('category_ids[]', $categories, $default_category->id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'category_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
+			            			{!! Form::select('category_ids[]', $categories, $default_category_id, ['class' => 'form-control js-example-basic-single input-lg select2', 'id' => 'category_ids', 'multiple' => 'multiple', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('status', 'Status*') }}

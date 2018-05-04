@@ -12,6 +12,10 @@ use App\Modules\Photo\Models\PhotoCategory;
 use App\Modules\Album\Models\Album;
 use App\Modules\Category\Models\Category;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+
 use Validator;
 use DB;
 use Session;
@@ -69,9 +73,12 @@ class PhotoController extends Controller
         $albums = Album::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
+        if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
         $default_album = Album::whereStatus(true)->whereDefault(true)->first();
+        if($default_album){ $default_album_id = $default_album->id; }else{ $default_album_id = null; }
         $default_category = Category::whereStatus(true)->whereDefault(true)->first();
-        return view("Photo::create", compact('sizes', 'albums', 'categories', 'default_size', 'default_album', 'default_category'));
+        if($default_category){ $default_category_id = $default_category->id; }else{ $default_category_id = null; }
+        return view("Photo::create", compact('sizes', 'albums', 'categories', 'default_size_id', 'default_album_id', 'default_category_id'));
     }
 
     /**
@@ -85,6 +92,7 @@ class PhotoController extends Controller
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
+            'price' => 'sometimes',
             'status' => 'required',
             'description' => 'sometimes',
             'thumbnail_size_id' => 'required',
@@ -114,6 +122,7 @@ class PhotoController extends Controller
                     $photo = new Photo;
                     $photo->name = $request->name;
                     $photo->product_id = $request->product_id;
+                    $photo->price = $request->price;
                     $photo->status = $request->status;
                     $photo->description = $request->description;
                     $photo->thumbnail_size_id = $request->thumbnail_size_id;
@@ -212,17 +221,6 @@ class PhotoController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -260,6 +258,7 @@ class PhotoController extends Controller
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
+            'price' => 'sometimes',
             'status' => 'required',
             'description' => 'sometimes',
             'thumbnail_size_id' => 'required',
@@ -279,6 +278,7 @@ class PhotoController extends Controller
                 $photo = Photo::findOrFail($id);
                 $photo->name = $request->name;
                 $photo->product_id = $request->product_id;
+                $photo->price = $request->price;
                 $photo->status = $request->status;
                 $photo->description = $request->description;
 
@@ -540,5 +540,23 @@ class PhotoController extends Controller
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $photo = Photo::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.photo.show', compact('theme', 'setting', 'albums', 'socials', 'photo'));
     }
 }

@@ -9,6 +9,7 @@ use App\Modules\Size\Models\Size;
 use App\Modules\Album\Models\Album;
 use App\Modules\Photo\Models\PhotoAlbum;
 use App\Modules\Photo\Models\Photo;
+use App\Modules\Category\Models\Category;
 
 use App\Modules\Theme\Models\Theme;
 use App\Modules\Social\Models\Social;
@@ -584,7 +585,9 @@ class AlbumController extends Controller
         $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
         $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
 
-        return view('templates.'.$theme->folder.'.album.index', compact('theme', 'setting', 'albums', 'socials', 'sliders'));
+        $album_list = Album::whereStatus(true)->orderBy('priority', 'asc')->paginate(12);
+
+        return view('templates.'.$theme->folder.'.album.index', compact('theme', 'setting', 'albums', 'socials', 'album_list'));
     }
 
     /**
@@ -601,7 +604,9 @@ class AlbumController extends Controller
         $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
 
         $album = Album::findOrFail($id);
+        $categories = Category::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $photos = PhotoAlbum::where('album_id', $id)->orderBy('priority', 'asc')->paginate(12);
 
-        return view('templates.'.$theme->folder.'.album.show', compact('theme', 'setting', 'albums', 'socials', 'sliders', 'album'));
+        return view('templates.'.$theme->folder.'.album.show', compact('theme', 'setting', 'albums', 'socials', 'album', 'categories', 'photos'));
     }
 }

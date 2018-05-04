@@ -9,3 +9,11 @@ Route::group(['module' => 'Testimonial', 'middleware' => ['web', 'auth'], 'names
     Route::get('testimonials/{id}/down', 'TestimonialController@down');
 
 });
+
+Route::group(['module' => 'Testimonial', 'middleware' => ['web'], 'namespace' => 'App\Modules\Testimonial\Controllers'], function() {
+
+    Route::get('testimonials', 'TestimonialController@view');
+
+    Route::get('testimonials/{id}', 'TestimonialController@show');
+
+});

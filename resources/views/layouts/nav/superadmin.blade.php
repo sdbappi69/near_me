@@ -89,6 +89,7 @@
     <ul class="treeview-menu">
       <li class="nav print-sales-add"><a href="{{ url('panel/print-sales/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
       <li class="nav print-sales-manage"><a href="{{ url('panel/print-sales') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
+      <li class="nav print-sales-order"><a href="{{ url('panel/order-print-sales') }}"><i class="fa fa-cart-plus"></i> Orders</a></li>
     </ul>
 </li>
 <li class="treeview nav sales">
@@ -101,6 +102,7 @@
     <ul class="treeview-menu">
       <li class="nav sales-add"><a href="{{ url('panel/sales/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
       <li class="nav sales-manage"><a href="{{ url('panel/sales') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
+      <li class="nav sales-order"><a href="{{ url('panel/order-sales') }}"><i class="fa fa-cart-plus"></i> Orders</a></li>
     </ul>
 </li>
 <li class="treeview nav tearsheets">
@@ -113,6 +115,7 @@
     <ul class="treeview-menu">
       <li class="nav tearsheets-add"><a href="{{ url('panel/tearsheets/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
       <li class="nav tearsheets-manage"><a href="{{ url('panel/tearsheets') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
+      <li class="nav tearsheets-order"><a href="{{ url('panel/order-tearsheets') }}"><i class="fa fa-cart-plus"></i> Orders</a></li>
     </ul>
 </li>
 

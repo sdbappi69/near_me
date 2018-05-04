@@ -122,11 +122,11 @@ body.fullscreen #header { position: absolute; }
 #header nav ul.sub-menu ul li { border-radius: 0 !important; }
  
 #header nav #menu-burger { display: none; float: right; position: relative; line-height: 36px; padding: 0 0 0 1.5em; z-index: 202; color: #555; vertical-align: middle; cursor: pointer; }
-#header nav #menu-burger:hover { color: #222; }
+#header nav #menu-burger:hover { color: #F7F6F5; }
 
 #header nav #searchicon {  float: right; position: relative; padding: 0 0 0 1em; z-index: 202; }
 #header nav #searchicon i { display: inline-block; font-size:.8em; color: #555; position: relative; cursor: pointer; z-index: 9; vertical-align: middle; padding: .4em 0 .2em 1em; } 
-#header nav #searchicon:hover i { color: #222; } 
+#header nav #searchicon:hover i { color: #F7F6F5; } 
 #header nav #searchicon form#searchbar { position: absolute; width: 0; right: 0; bottom: -1em; opacity: 0; }
 #header nav form#searchbar #searchbar-submit { visibility: hidden; }
 #header nav form#searchbar #searchbar-input {  }
@@ -236,8 +236,8 @@ article h2 { font-size: 1.6em; margin: .5em 0 .75em 0; }
 #gallery-filter { display: block; position: relative; top: 12px; }
 #gallery-filter ul {  list-style: none; padding: 0; margin: 0 0 .3em 0; font-size: .8em; letter-spacing: 0.05em; }
 #gallery-filter ul li { display: inline-block; vertical-align: bottom; margin: 0 2em 2em 0; }
-#gallery-filter ul li a { display: block; color: #222; position: relative; }
-#gallery-filter ul li a:hover {  }
+#gallery-filter ul li a { display: block; position: relative; }
+#gallery-filter ul li a:hover { color: #F7F6F5 }
 #gallery-filter ul li a.active {  }
 #gallery-filter ul li a::after { content: ""; display: block; border-bottom: 2px solid #EA8E00; width: 0; position: absolute; bottom: 0; left: 0; right: 0; 
 -webkit-transform: scale(0,1); transform: scale(0,1);
@@ -388,7 +388,7 @@ ol.comment-list li article { margin: 0; }
 .whistles-tabs-nav li a, ul.tabs li a { display: block; padding: 8px 18px 5px 18px; text-align: center; font-size: 0.9em; cursor: pointer; background: #EA8E00; border: 1px solid #222; border-bottom: 0; color: #F7F6F5; position: relative; top: 2px; white-space: nowrap; text-decoration: none; 
  -webkit-transition: background .4s ease; -moz-transition: background .4s ease; -ms-transition: background .4s ease; -o-transition: background .4s ease; transition: background .4s ease; }
 .whistles-tabs-nav li[aria-selected="true"] a, .whistles-tabs-nav li[aria-selected="true"] a:hover, ul.tabs li.active a:hover, ul.tabs li.active a { color: #222; background: transparent; border-bottom: 2px solid #F7F6F5; }
-.whistles-tabs-nav li a:hover, ul.tabs li a:hover { color: #222; background: transparent; }
+.whistles-tabs-nav li a:hover, ul.tabs li a:hover { color: #F7F6F5; background: transparent; }
 .whistles-tabs-wrap {}
 .whistles-tabs-wrap .whistle-content {}
 

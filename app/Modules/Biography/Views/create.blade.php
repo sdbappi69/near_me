@@ -63,11 +63,11 @@
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('thumbnail_size_id', 'Thumbnail image size*') }}
-			            			{!! Form::select('thumbnail_size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('thumbnail_size_id', ['' => 'Select image size']+$sizes, $default_size_id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('size_id', 'Full image size*') }}
-			            			{!! Form::select('size_id', $sizes, $default_size->id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
+			            			{!! Form::select('size_id', ['' => 'Select image size']+$sizes, $default_size_id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
 			            			{{ Form::label('iamge', 'Image*') }}

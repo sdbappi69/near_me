@@ -7,7 +7,7 @@
 
 		<div class="position-absolute">
 			<h2 class="big no-margin"><strong>{{ $setting->name }}</strong></h2>
-			<h2>{{ $setting->sub_title }}</h2><br />
+			<h2>{{ $setting->sub_title or '' }}</h2><br />
 		</div>
 		
 

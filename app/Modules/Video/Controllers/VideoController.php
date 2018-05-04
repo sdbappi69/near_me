@@ -8,6 +8,11 @@ use App\Http\Controllers\Controller;
 use App\Modules\Size\Models\Size;
 use App\Modules\Video\Models\Video;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Setting\Models\Setting;
+use App\Modules\Album\Models\Album;
+
 use Validator;
 use DB;
 use Session;
@@ -63,7 +68,8 @@ class VideoController extends Controller
     {
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
-        return view("Video::create", compact('sizes', 'default_size'));
+        if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
+        return view("Video::create", compact('sizes', 'default_size_id'));
     }
 
     /**
@@ -146,17 +152,6 @@ class VideoController extends Controller
             Session::flash('message', $message);
             return Redirect('/panel/videos');
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -395,5 +390,35 @@ class VideoController extends Controller
             Session::flash('message', $message);
             return Redirect::back();
         }
+    }
+
+    public function view()
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $videos = Video::whereStatus(1)->orderBy('priority', 'asc')->paginate(5);
+
+        return view('templates.'.$theme->folder.'.video.index', compact('theme', 'setting', 'albums', 'socials', 'videos'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        $video = Video::findOrFail($id);
+
+        return view('templates.'.$theme->folder.'.video.show', compact('theme', 'setting', 'albums', 'socials', 'video'));
     }
 }

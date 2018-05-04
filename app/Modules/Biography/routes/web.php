@@ -9,3 +9,11 @@ Route::group(['module' => 'Biography', 'middleware' => ['web', 'auth'], 'namespa
     Route::get('biographies/{id}/down', 'BiographyController@down');
 
 });
+
+Route::group(['module' => 'Biography', 'middleware' => ['web'], 'namespace' => 'App\Modules\Biography\Controllers'], function() {
+
+    Route::get('biographies', 'BiographyController@view');
+
+    Route::get('biographies/{id}', 'BiographyController@show');
+
+});

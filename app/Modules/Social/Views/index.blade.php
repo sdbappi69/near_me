@@ -26,7 +26,7 @@
 		            		</div>
 		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['size_id'])) { $_GET['size_id'] = null; } ?>
-		            			{!! Form::select('size_id', ['' => 'Full image size']+$sizes, $_GET['size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id']) !!}
+		            			{!! Form::select('size_id', ['' => 'All full image size']+$sizes, $_GET['size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id']) !!}
 		            		</div>
 		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['status'])) { $_GET['status'] = null; } ?>
