@@ -59,7 +59,7 @@
 
   <header class="main-header">
     <!-- Logo -->
-    <a href="{{ url('/') }}" class="logo">
+    <a href="{{ url('/panel/home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>{{ config('app.name', 'Photography')[0] }}</b>{{ config('app.name', 'Photography')[1] }}</span>
       <!-- logo for regular state and mobile devices -->

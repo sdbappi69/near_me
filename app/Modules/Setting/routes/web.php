@@ -5,3 +5,9 @@ Route::group(['module' => 'Setting', 'middleware' => ['web', 'auth'], 'namespace
     Route::resource('settings', 'SettingController');
 
 });
+
+Route::group(['module' => 'Setting', 'middleware' => ['web'], 'namespace' => 'App\Modules\Setting\Controllers'], function() {
+
+    Route::get('contacts', 'SettingController@show');
+
+});

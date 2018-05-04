@@ -8,6 +8,10 @@ use App\Http\Controllers\Controller;
 use App\Modules\Size\Models\Size;
 use App\Modules\Setting\Models\Setting;
 
+use App\Modules\Theme\Models\Theme;
+use App\Modules\Social\Models\Social;
+use App\Modules\Album\Models\Album;
+
 use Validator;
 use DB;
 use Session;
@@ -118,9 +122,14 @@ class SettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        //
+        $theme = Theme::where('status', 1)->where('default', 1)->first();
+        $setting = Setting::FindOrFail(1);
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->get();
+        $socials = Social::whereStatus(true)->orderBy('priority', 'asc')->get();
+
+        return view('templates.'.$theme->folder.'.contact.show', compact('theme', 'setting', 'albums', 'socials'));
     }
 
     /**
