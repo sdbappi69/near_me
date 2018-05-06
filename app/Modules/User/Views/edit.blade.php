@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($user, array('url' => '/users/'.$user->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
+		            {!! Form::model($user, array('url' => 'panel/users/'.$user->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
 
 		              	<div class="box-body">
 
@@ -71,7 +71,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		                	<a href="{{ url('users') }}" class="btn btn-default">Cancel</a>
+		                	<a href="{{ url('panel/users') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -86,7 +86,7 @@
     <div class="modal fade" id="password">
 	    <div class="modal-dialog">
 
-	    	{!! Form::model(null, array('url' => '/password/'.$user->id, 'method' => 'put')) !!}
+	    	{!! Form::model(null, array('url' => 'panel/password/'.$user->id, 'method' => 'put')) !!}
 
 		        <div class="modal-content">
 			        <div class="modal-header">
@@ -125,6 +125,11 @@
 		function escapeRegExp(str) {
 	      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 	    }
+
+	    $(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('users-manage', 'users', 'Users', 'Manage');
+		});
 
     </script>
 

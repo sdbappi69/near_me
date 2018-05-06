@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'users', 'enctype' => 'multipart/form-data')) }}
+		            {{ Form::open(array('url' => 'panel/users', 'enctype' => 'multipart/form-data')) }}
 
 		              	<div class="box-body">
 
@@ -89,6 +89,11 @@
 		function escapeRegExp(str) {
 	      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 	    }
+
+	    $(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('users-add', 'users', 'Users', 'Add');
+		});
 
     </script>
 

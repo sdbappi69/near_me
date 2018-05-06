@@ -25,7 +25,7 @@
 
           				<p class="text-muted text-center">{{ $user->email }}</p>
 
-          				<a href="{{ url('profile/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
+          				<a href="{{ url('panel/profile/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
 		                	<i class="fa fa-pencil"></i> Update
 		                </a>
 
@@ -78,7 +78,7 @@
     <div class="modal fade" id="password">
 	    <div class="modal-dialog">
 
-	    	{!! Form::model(null, array('url' => '/profile-password/'.$user->id, 'method' => 'put')) !!}
+	    	{!! Form::model(null, array('url' => 'panel/profile-password/'.$user->id, 'method' => 'put')) !!}
 
 		        <div class="modal-content">
 			        <div class="modal-header">

@@ -97,7 +97,7 @@
               <!-- Menu Footer-->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="{{ url('profile') }}" class="btn btn-default btn-flat">Profile</a>
+                  <a href="{{ url('panel/profile') }}" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-default btn-flat">Sign out</a>
@@ -131,7 +131,7 @@
       </div>
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
-        @include('layouts.nav.superadmin')
+        @include('layouts.nav')
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -74,8 +74,8 @@
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'users/'.$user->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
-							                    <a href="{{ url('users/'.$user->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
-					                      		<a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+							                    <a href="{{ url('panel/users/'.$user->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+					                      		<a href="{{ url('panel/users/'.$user->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
 							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
 							                {{ Form::close() }}
 					                    </div>
@@ -98,5 +98,14 @@
 	    </div>
 
     </section>
+
+    <script type="text/javascript">
+
+	    $(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('users-manage', 'users', 'Users', 'Manage');
+		});
+
+    </script>
 
 @endsection

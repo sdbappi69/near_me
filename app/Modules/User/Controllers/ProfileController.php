@@ -127,7 +127,7 @@ class ProfileController extends Controller
                 'text' => 'The profile is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
 
         } catch (Exception $e) {
             DB::rollBack();

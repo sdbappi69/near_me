@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($permission, array('url' => '/permissions/'.$permission->id, 'method' => 'put')) !!}
+		            {!! Form::model($permission, array('url' => '/panel/permissions/'.$permission->id, 'method' => 'put')) !!}
 
 		              	<div class="box-body">
 
@@ -38,7 +38,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		              		<a href="{{ url('permissions') }}" class="btn btn-default">Cancel</a>
+		              		<a href="{{ url('panel/permissions') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -51,6 +51,11 @@
     </section>
 
     <script type="text/javascript">
+
+    	$(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('permissions-manage', 'permissions', 'Permissions', 'Add');
+		});
 
     </script>
 

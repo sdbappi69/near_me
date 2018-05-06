@@ -161,7 +161,7 @@
 
 
 
-<!-- <li class="header">User Management</li>
+<li class="header">User Management</li>
 <li class="treeview nav users">
     <a href="#">
       <i class="fa fa-users"></i> <span>Users</span>
@@ -197,7 +197,7 @@
       <li class="nav permissions-add"><a href="{{ url('panel/permissions/create') }}"><i class="fa fa-plus"></i> Add new</a></li>
       <li class="nav permissions-manage"><a href="{{ url('panel/permissions') }}"><i class="fa fa-circle-o"></i> Manage</a></li>
     </ul>
-</li> -->
+</li>
 
 
 

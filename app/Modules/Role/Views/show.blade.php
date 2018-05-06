@@ -72,6 +72,11 @@
 
     <script type="text/javascript">
 
+    	$(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('roles-manage', 'roles', 'Roles', 'Add');
+		});
+
     </script>
 
 @endsection

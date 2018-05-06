@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['module' => 'User', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\User\Controllers'], function() {
+Route::group(['module' => 'User', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\User\Controllers', 'prefix' => 'panel'], function() {
 
     Route::resource('users', 'UserController');
 

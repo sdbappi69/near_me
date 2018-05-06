@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {{ Form::open(array('url' => 'roles')) }}
+		            {{ Form::open(array('url' => 'panel/roles')) }}
 
 		              	<div class="box-body">
 
@@ -81,6 +81,11 @@
 		    var display_name = $(this).val();
 		    var name = display_name.replace(/\s+/g, '').toLowerCase();
 		    $('#name').val(name);
+		});
+
+		$(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('roles-add', 'roles', 'Roles', 'Add');
 		});
 
     </script>

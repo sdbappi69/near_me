@@ -13,7 +13,7 @@
 		            </div>
 		            <!-- /.box-header -->
 		            <!-- form start -->
-		            {!! Form::model($user, array('url' => '/profile/'.$user->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
+		            {!! Form::model($user, array('url' => 'panel/profile/'.$user->id, 'method' => 'put', 'enctype' => 'multipart/form-data')) !!}
 
 		              	<div class="box-body">
 
@@ -43,7 +43,7 @@
 		              	</div>
 		              	<!-- /.box-body -->
 		              	<div class="box-footer">
-		                	<a href="{{ url('profile') }}" class="btn btn-default">Cancel</a>
+		                	<a href="{{ url('panel/profile') }}" class="btn btn-default">Cancel</a>
 		                	<input type="submit" class="btn btn-info pull-right"  value="Update">
 		              	</div>
 		              	<!-- /.box-footer -->
@@ -58,7 +58,7 @@
     <div class="modal fade" id="password">
 	    <div class="modal-dialog">
 
-	    	{!! Form::model(null, array('url' => '/profile-password/'.$user->id, 'method' => 'put')) !!}
+	    	{!! Form::model(null, array('url' => 'panel/profile-password/'.$user->id, 'method' => 'put')) !!}
 
 		        <div class="modal-content">
 			        <div class="modal-header">

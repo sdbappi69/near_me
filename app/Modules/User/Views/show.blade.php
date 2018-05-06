@@ -25,7 +25,7 @@
 
           				<p class="text-muted text-center">{{ $user->email }}</p>
 
-          				<a href="{{ url('users/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
+          				<a href="{{ url('panel/users/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
 		                	<i class="fa fa-pencil"></i> Update
 		                </a>
 
@@ -78,7 +78,7 @@
     <div class="modal fade" id="password">
 	    <div class="modal-dialog">
 
-	    	{!! Form::model(null, array('url' => '/password/'.$user->id, 'method' => 'put')) !!}
+	    	{!! Form::model(null, array('url' => 'panel/password/'.$user->id, 'method' => 'put')) !!}
 
 		        <div class="modal-content">
 			        <div class="modal-header">
@@ -117,6 +117,11 @@
     	function escapeRegExp(str) {
 	      return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 	    }
+
+	    $(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('users-manage', 'users', 'Users', 'Manage');
+		});
 
     </script>
 

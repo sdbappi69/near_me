@@ -108,7 +108,7 @@ class UserController extends Controller
                 'text' => 'A new user is created',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -118,7 +118,7 @@ class UserController extends Controller
                 'text' => 'Failed to create new user',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
         }
     }
 
@@ -212,7 +212,7 @@ class UserController extends Controller
                 'text' => 'The user is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -222,7 +222,7 @@ class UserController extends Controller
                 'text' => 'Failed to update the user',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
         }
     }
 
@@ -250,7 +250,7 @@ class UserController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -260,7 +260,7 @@ class UserController extends Controller
                 'text' => 'Failed to delete the user',
             );
             Session::flash('message', $message);
-            return Redirect('/users');
+            return Redirect('panel/users');
         }
     }
 }

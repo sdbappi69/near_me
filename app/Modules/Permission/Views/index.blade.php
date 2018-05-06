@@ -48,7 +48,7 @@
 		            <h3 class="box-title">Permissions</h3>
 
 		            <div class="box-tools">
-		                <a href="{{ url('permissions/create') }}" class="btn btn-block btn-success">
+		                <a href="{{ url('panel/permissions/create') }}" class="btn btn-block btn-success">
 		                	<i class="fa fa-plus"></i> Create new
 		                </a>
 	              	</div>
@@ -74,8 +74,8 @@
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'permissions/'.$permission->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
-							                    <a href="{{ url('permissions/'.$permission->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
-					                      		<a href="{{ url('permissions/'.$permission->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+							                    <a href="{{ url('panel/permissions/'.$permission->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
+					                      		<a href="{{ url('panel/permissions/'.$permission->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
 							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
 							                {{ Form::close() }}
 					                    </div>
@@ -98,5 +98,14 @@
 	    </div>
 
     </section>
+
+    <script type="text/javascript">
+    	
+    	$(document).ready(function () {
+		    // page_select(menu_class, sub_menu_class, title, sub_title)
+        	page_select('permissions-manage', 'permissions', 'Permissions', 'Add');
+		});
+    	
+    </script>
 
 @endsection
