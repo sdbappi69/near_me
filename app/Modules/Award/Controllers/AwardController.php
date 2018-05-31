@@ -91,7 +91,7 @@ class AwardController extends Controller
             'description' => 'sometimes',
             'thumbnail_size_id' => 'required',
             'size_id' => 'required',
-            'image' => 'required|image|max:2000'
+            'image' => 'sometimes|image|max:2000'
         ]);
 
         if($validation->fails()) {
@@ -122,15 +122,17 @@ class AwardController extends Controller
                 $award->size_id = $request->size_id;
                 $award->priority = $priority;
 
-                $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
-                $size = Size::where('id', $request->size_id)->first();
-                $extension = $request->file('image')->getClientOriginalExtension();
-                $fileName = str_replace(' ', '-', strtolower($request->name)).'-'.time().'.'.$extension;
-                $thumb_url = 'uploads/photos/thumb/';
-                $url = 'uploads/photos/full/';
-                $thumb = Image::make($request->file('image'))->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
-                $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
-                $award->image = $fileName;
+                if($request->hasFile('image')){
+                    $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
+                    $size = Size::where('id', $request->size_id)->first();
+                    $extension = $request->file('image')->getClientOriginalExtension();
+                    $fileName = str_replace(' ', '-', strtolower($request->name)).'-'.time().'.'.$extension;
+                    $thumb_url = 'uploads/photos/thumb/';
+                    $url = 'uploads/photos/full/';
+                    $thumb = Image::make($request->file('image'))->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
+                    $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
+                    $award->image = $fileName;
+                }
 
                 $award->created_by = Auth::id();
                 $award->updated_by = Auth::id();

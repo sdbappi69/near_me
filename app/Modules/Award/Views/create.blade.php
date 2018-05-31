@@ -70,8 +70,8 @@
 			            			{!! Form::select('size_id', ['' => 'Select image size']+$sizes, $default_size_id, ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'size_id', 'required' => 'required']) !!}
 			            		</div>
 			            		<div class="form-group">
-			            			{{ Form::label('iamge', 'Image*') }}
-			            			{{ Form::file('image', Input::old('image'), array('class' => 'form-control input-lg', 'id' => 'image', 'required' => 'required')) }}
+			            			{{ Form::label('iamge', 'Image') }}
+			            			{{ Form::file('image', Input::old('image'), array('class' => 'form-control input-lg', 'id' => 'image')) }}
 			            			<p class="help-block">Maximum file size: 2 MB</p>
 			            		</div>
 		              		</div>

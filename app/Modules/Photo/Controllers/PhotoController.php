@@ -36,30 +36,40 @@ class PhotoController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Photo::orderBy('priority', 'asc');
+        $query = Photo::orderBy('photos.priority', 'asc');
         if($request->has('name') && !empty($request->name)){
-            $query->where('name', 'like', '%'.$request->name.'%');
+            $query->where('photos.name', 'like', '%'.$request->name.'%');
         }
         if($request->has('product_id') && !empty($request->product_id)){
-            $query->where('product_id', 'like', '%'.$request->product_id.'%');
+            $query->where('photos.product_id', 'like', '%'.$request->product_id.'%');
         }
         if($request->has('price') && !empty($request->price)){
-            $query->where('price', 'like', '%'.$request->price.'%');
+            $query->where('photos.price', 'like', '%'.$request->price.'%');
         }
         if($request->has('status') && !empty($request->status)){
-            $query->where('status', $request->status);
+            $query->where('photos.status', $request->status);
         }
         if($request->has('thumbnail_size_id') && !empty($request->thumbnail_size_id)){
-            $query->where('thumbnail_size_id', $request->thumbnail_size_id);
+            $query->where('photos.thumbnail_size_id', $request->thumbnail_size_id);
+        }
+        if($request->has('album_id') && !empty($request->album_id)){
+            $query->join('photo_album', 'photo_album.photo_id', '=', 'photos.id');
+            $query->where('photo_album.album_id', $request->album_id);
+        }
+        if($request->has('category_id') && !empty($request->category_id)){
+            $query->join('photo_category', 'photo_category.photo_id', '=', 'photos.id');
+            $query->where('photo_category.category_id', $request->category_id);
         }
         if($request->has('size_id') && !empty($request->size_id)){
-            $query->where('size_id', $request->size_id);
+            $query->where('photos.size_id', $request->size_id);
         }
         $photos = $query->paginate(20);
 
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $categories = Category::whereStatus(true)->orderBy('priority', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $albums = Album::whereStatus(true)->orderBy('priority', 'asc')->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
-        return view("Photo::index", compact('photos', 'sizes'));
+        return view("Photo::index", compact('photos', 'sizes', 'categories', 'albums'));
     }
 
     /**

@@ -14,35 +14,35 @@
 
 			<div class="column column-span-1 column-push-0 column-first">
 				<figure class="image-with-caption">
-					<a href="{{ url('uploads/photos/full').'/'.$biography->image }}" class="popup"><img src="{{ url('uploads/photos/thumb').'/'.$biography->image }}" alt="{{ $biography->name or '' }}" /></a>
+					<a href="{{ url('uploads/photos/full').'/'.$testimonial->image }}" class="popup"><img src="{{ url('uploads/photos/thumb').'/'.$testimonial->image }}" alt="{{ $testimonial->name or '' }}" /></a>
 					<figcaption>
 						<div class="entry-summary">
-							<h3>{{ $biography->name or '' }}</h3>
+							<h3>{{ $testimonial->name or '' }}</h3>
 						</div>
 					</figcaption>
 				</figure>
-				@if(isset($biography->url) && $biography->url != '')
-					<a class="button" href="{{ $biography->url or '' }}">#Link</a>
+				@if(isset($testimonial->url) && $testimonial->url != '')
+					<a class="button" href="{{ $testimonial->url or '' }}">#Link</a>
 				@endIf
-				@if(isset($biography->video_url) && $biography->video_url != '')
-					<a class="button" href="{{ $biography->video_url or '' }}">#Video</a>
+				@if(isset($testimonial->video_url) && $testimonial->video_url != '')
+					<a class="button" href="{{ $testimonial->video_url or '' }}">#Video</a>
 				@endIf
-				@if(isset($biography->social_url) && $biography->social_url != '')
-					<a class="button" href="{{ $biography->social_url or '' }}">#Social</a>
+				@if(isset($testimonial->social_url) && $testimonial->social_url != '')
+					<a class="button" href="{{ $testimonial->social_url or '' }}">#Social</a>
 				@endIf
 			</div>
 
 			<div class="column column-span-2 column-push-0 column-last">
-				<h4><strong>{{ $biography->name or '' }}</strong></h4>
+				<h4><strong>{{ $testimonial->name or '' }}</strong></h4>
 
-				@if(isset($biography->date) && $biography->date != '')
-					<p class="small"><em>{{ $biography->date or '' }}</em></p>
+				@if(isset($testimonial->date) && $testimonial->date != '')
+					<p class="small"><em>{{ $testimonial->date or '' }}</em></p>
 				@endIf
 
-				<?php print $biography->description; ?>
+				<?php print $testimonial->description; ?>
 
-				@if(isset($biography->youtube) && $biography->youtube != '')
-					<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $biography->youtube }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+				@if(isset($testimonial->youtube) && $testimonial->youtube != '')
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/{{ $testimonial->youtube }}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 				@endIf
 
 			</div>
@@ -65,7 +65,7 @@
 
 		$(document).ready(function () {
 
-			page_select('biographies', 'biographies');
+			page_select('testimonials', 'testimonials');
 
 		});
 

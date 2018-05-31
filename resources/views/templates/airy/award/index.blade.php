@@ -26,8 +26,8 @@
 							$print = substr($description, 0, 1000);
 							if(strlen($description) > 1000){
 								$print = $print.'...';
+								$print = $print.' <a href="'.url("awards").'/'.$award->id.'">See more</a>';
 							}
-							$print = $print.' <a href="'.url("awards").'/'.$award->id.'">See more</a>';
 							print $print;
 						?>
 					</div>

@@ -29,6 +29,14 @@
 		            			<input value="{{ $_GET['price'] }}" class="form-control input-lg" name="price" type="text" placeholder="Price">
 		            		</div>
 		            		<div class="col-md-3">
+		            			<?php if (!isset($_GET['album_id'])) { $_GET['album_id'] = null; } ?>
+		            			{!! Form::select('album_id', ['' => 'All Album']+$albums, $_GET['album_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'album_id']) !!}
+		            		</div>
+		            		<div class="col-md-3">
+		            			<?php if (!isset($_GET['category_id'])) { $_GET['category_id'] = null; } ?>
+		            			{!! Form::select('category_id', ['' => 'All Category']+$categories, $_GET['category_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'category_id']) !!}
+		            		</div>
+		            		<div class="col-md-3">
 		            			<?php if (!isset($_GET['thumbnail_size_id'])) { $_GET['thumbnail_size_id'] = null; } ?>
 		            			{!! Form::select('thumbnail_size_id', ['' => 'All thumbnail image size']+$sizes, $_GET['thumbnail_size_id'], ['class' => 'form-control js-example-basic-single input-lg', 'id' => 'thumbnail_size_id']) !!}
 		            		</div>

@@ -55,59 +55,7 @@
 	        </div>
 	        <!-- ./col -->
 
-	        <div class="col-md-2  animated bounceInDown">
-	          <!-- small box -->
-	          <div class="small-box bg-green">
-	            <div class="inner">
-	              <h3>{{ $testimonial }}</h3>
-
-	              <p>Testimonials</p>
-	            </div>
-	            <div class="icon">
-	              <i class="fa fa-certificate"></i>
-	            </div>
-	            <a href="{{ url('panel/testimonials') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-	          </div>
-	        </div>
-	        <!-- ./col -->
-
-	        <div class="col-md-2  animated bounceInDown">
-	          <!-- small box -->
-	          <div class="small-box bg-green">
-	            <div class="inner">
-	              <h3>{{ $book }}</h3>
-
-	              <p>Books</p>
-	            </div>
-	            <div class="icon">
-	              <i class="fa fa-book"></i>
-	            </div>
-	            <a href="{{ url('panel/books') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-	          </div>
-	        </div>
-	        <!-- ./col -->
-
-	        <div class="col-md-2  animated bounceInDown">
-	          <!-- small box -->
-	          <div class="small-box bg-green">
-	            <div class="inner">
-	              <h3>{{ $video }}</h3>
-
-	              <p>Videos</p>
-	            </div>
-	            <div class="icon">
-	              <i class="fa fa-video-camera"></i>
-	            </div>
-	            <a href="{{ url('panel/videos') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-	          </div>
-	        </div>
-	        <!-- ./col -->
-
-    	</div>
-
-    	<div class="row">
-
-    		<div class="col-md-2  animated bounceInLeft">
+	        <div class="col-md-2  animated bounceInLeft">
 	          <!-- small box -->
 	          <div class="small-box bg-aqua">
 	            <div class="inner">
@@ -127,22 +75,6 @@
 	          <!-- small box -->
 	          <div class="small-box bg-aqua">
 	            <div class="inner">
-	              <h3>{{ $sale }}</h3>
-
-	              <p>Sell</p>
-	            </div>
-	            <div class="icon">
-	              <i class="fa fa-shopping-cart"></i>
-	            </div>
-	            <a href="{{ url('panel/sales') }}" class="small-box-footer">Detail <i class="fa fa-arrow-circle-right"></i></a>
-	          </div>
-	        </div>
-	        <!-- ./col -->
-
-	        <div class="col-md-2  animated bounceInLeft">
-	          <!-- small box -->
-	          <div class="small-box bg-aqua">
-	            <div class="inner">
 	              <h3>{{ $tearsheet }}</h3>
 
 	              <p>Tearsheets</p>
@@ -154,6 +86,10 @@
 	          </div>
 	        </div>
 	        <!-- ./col -->
+
+    	</div>
+
+    	<div class="row">
 
 	        <div class="col-md-2  animated bounceInRight">
 	          <!-- small box -->
@@ -203,11 +139,7 @@
 	        </div>
 	        <!-- ./col -->
 
-    	</div>
-
-    	<div class="row">
-
-    		<div class="col-md-2 animated bounceInUp">
+	        <div class="col-md-2 animated bounceInUp">
 	          <!-- small box -->
 	          <div class="small-box bg-red">
 	            <div class="inner">

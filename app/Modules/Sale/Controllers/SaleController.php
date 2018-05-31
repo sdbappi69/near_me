@@ -81,7 +81,7 @@ class SaleController extends Controller
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_category = Category::whereStatus(true)->whereDefault(true)->first();
         if($default_category){ $default_category_id = $default_category->id; }else{ $default_category_id = null; }
-        return view("PrintSale::create", compact('sizes', 'default_size_id', 'categories', 'default_category_id'));
+        return view("Tearsheet::create", compact('sizes', 'default_size_id', 'categories', 'default_category_id'));
     }
 
     /**

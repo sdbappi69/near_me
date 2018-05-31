@@ -89,7 +89,9 @@
 		                		<tr>
 		                			<td>
 				                  		<div class="user-block">
-						                    <img class="img-circle img-bordered-sm" src="{{ url('uploads/photos/thumb').'/'.$award->image }}" alt="{{ $award->name }}">
+				                  			@if(isset($award->image) && $award->image != null)
+						                    	<img class="img-circle img-bordered-sm" src="{{ url('uploads/photos/thumb').'/'.$award->image }}" alt="{{ $award->name }}">
+						                    @endIf
 						                </div>
 				                  	</td>
 				                  	<td>{{ $award->name }}</td>

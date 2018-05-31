@@ -72,6 +72,7 @@
 		                  	<th>Client's email</th>
 		                  	<th>Client's contact</th>
 		                  	<th>Client's notes</th>
+		                  	<th>Actions</th>
 		                </tr>
 
 		                @if(count($orders) > 0)
@@ -91,6 +92,14 @@
 				                  	<td>{{ $order->email or '' }}</td>
 				                  	<td>{{ $order->contact or '' }}</td>
 				                  	<td>{{ $order->description or '' }}</td>
+				                  	<td>
+				                  		<div class="btn-group">
+					                      	{{ Form::open(array('url' => 'panel/order-print-sales/'.$order->id)) }}
+							                    {{ Form::hidden('_method', 'DELETE') }}
+							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                {{ Form::close() }}
+					                    </div>
+				                  	</td>
 				                </tr>
 
 		                	@endforeach

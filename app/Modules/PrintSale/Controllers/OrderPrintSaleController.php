@@ -148,6 +148,40 @@ class OrderPrintSaleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+                $print_sale = OrderPrintSale::where('id', $id)->delete();
+
+                if($print_sale){
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully deleted the order',
+                    );
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That order can't be delete",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect('/panel/order-print-sales');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to delete the order',
+            );
+            Session::flash('message', $message);
+            return Redirect('/panel/order-print-sales');
+        }
     }
 }

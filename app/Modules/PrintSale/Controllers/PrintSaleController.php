@@ -309,6 +309,7 @@ class PrintSaleController extends Controller
 
         } catch (Exception $e) {
             DB::rollBack();
+            dd($e->getMessage());
             $message = array(
                 'class' => 'danger',
                 'title' => 'Failed',
