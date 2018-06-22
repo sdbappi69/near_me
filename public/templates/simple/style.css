@@ -260,6 +260,7 @@ h2.post-title {
 }
 h4.post-title {
     margin-bottom: 3px;
+    color: #dba63c;
 }
 .image-grid h4.post-title {
 	margin: 0;
@@ -1939,7 +1940,7 @@ video {
     padding-bottom: 15px;
 }
 .box {
-    background: #FFF;
+    background: #2f2f2f;
     padding: 30px;
     box-shadow: 0 2px 0 rgba(29,29,33,0.07);
 }
