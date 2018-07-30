@@ -5,12 +5,13 @@ namespace App\Modules\Permission\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Permission;
+use App\Modules\Permission\Models\Permission;
 
 use Validator;
 use DB;
 use Session;
 use Redirect;
+use Entrust;
 
 class PermissionController extends Controller
 {
@@ -22,6 +23,8 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('permission-view')) { abort(403); }
+
         $query = Permission::orderBy('display_name', 'asc');
         if($request->has('name')){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -43,6 +46,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('permission-create')) { abort(403); }
+
         return view("Permission::create");
     }
 
@@ -54,6 +59,8 @@ class PermissionController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('permission-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required|unique:permissions',
             'display_name' => 'required',
@@ -83,7 +90,7 @@ class PermissionController extends Controller
                 'text' => 'A new permission is created',
             );
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -93,7 +100,7 @@ class PermissionController extends Controller
                 'text' => 'Failed to create new permission',
             );
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
         }
     }
 
@@ -105,6 +112,8 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
+        if(!Entrust::can('permission-view')) { abort(403); }
+
         $permission = Permission::findOrFail($id);
         return view("Permission::show", compact('permission'));
     }
@@ -117,6 +126,8 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('permission-update')) { abort(403); }
+
         $permission = Permission::findOrFail($id);
         return view("Permission::edit", compact('permission'));
     }
@@ -130,6 +141,8 @@ class PermissionController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('permission-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required|unique:permissions,name,'.$id,
             'display_name' => 'required',
@@ -159,7 +172,7 @@ class PermissionController extends Controller
                 'text' => 'The permission is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -169,7 +182,7 @@ class PermissionController extends Controller
                 'text' => 'Failed to update the permission',
             );
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
         }
     }
 
@@ -181,6 +194,8 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('permission-delete')) { abort(403); }
+        
         try {
             DB::beginTransaction();
 
@@ -205,7 +220,7 @@ class PermissionController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -215,7 +230,7 @@ class PermissionController extends Controller
                 'text' => 'Failed to delete the permission',
             );
             Session::flash('message', $message);
-            return Redirect('/permissions');
+            return Redirect('panel/permissions');
         }
     }
 }

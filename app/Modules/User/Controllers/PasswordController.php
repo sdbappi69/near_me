@@ -5,12 +5,13 @@ namespace App\Modules\User\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\User;
+use App\Modules\User\Models\User;
 
 use Validator;
 use DB;
 use Session;
 use Redirect;
+use Entrust;
 
 class PasswordController extends Controller
 {
@@ -77,7 +78,8 @@ class PasswordController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Entrust::can('user---update')) { abort(403); }
+        if(!Entrust::can('user-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'password' => 'required|min:6|confirmed',
             'password_confirmation' => 'required|min:6'

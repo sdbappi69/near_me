@@ -19,6 +19,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class CategoryController extends Controller
 {
@@ -30,6 +31,8 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('category-view')) { abort(403); }
+
         $query = Category::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -57,6 +60,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('category-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         return view("Category::create", compact('sizes', 'default_size'));
@@ -70,6 +75,8 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('category-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -165,6 +172,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         $category = Category::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $photos = Photo::whereStatus(true)->orderBy('priority', 'asc')->get();
@@ -184,6 +193,8 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -261,6 +272,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('category-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -297,7 +310,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -349,7 +365,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -401,7 +420,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function photo_up($photo_id, $category_id){
+    public function photo_up($photo_id, $category_id)
+    {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -454,7 +476,10 @@ class CategoryController extends Controller
         }
     }
 
-    public function photo_down($photo_id, $category_id){
+    public function photo_down($photo_id, $category_id)
+    {
+        if(!Entrust::can('category-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -506,7 +531,9 @@ class CategoryController extends Controller
         }
     }
 
-    public function photos(Request $request){
+    public function photos(Request $request)
+    {
+        if(!Entrust::can('category-update')) { abort(403); }
 
         $validation = Validator::make($request->all(), [
             'category_id' => 'required',

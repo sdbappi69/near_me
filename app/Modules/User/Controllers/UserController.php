@@ -5,9 +5,9 @@ namespace App\Modules\User\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Role;
-use App\RoleUser;
-use App\User;
+use App\Modules\Role\Models\Role;
+use App\Modules\Role\Models\RoleUser;
+use App\Modules\User\Models\User;
 
 use Validator;
 use DB;
@@ -27,6 +27,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('user-view')) { abort(403); }
+
         $query = User::orderBy('name', 'asc');
         if($request->has('name')){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -45,7 +47,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        // if(!Entrust::can('user-create')) { abort(403); }
+        if(!Entrust::can('user-create')) { abort(403); }
 
         $roles = Role::orderBy('display_name', 'asc')->get();
         return view("User::create", compact('roles'));
@@ -59,6 +61,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('user-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -130,6 +134,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        if(!Entrust::can('user-view')) { abort(403); }
+
         $user = User::findOrFail($id);
         return view("User::show", compact('user'));
     }
@@ -142,6 +148,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('user-update')) { abort(403); }
+
         $user = User::findOrFail($id);
 
         $roles = Role::orderBy('display_name')->get();
@@ -165,6 +173,8 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('user-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -234,6 +244,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('user-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

@@ -2,6 +2,7 @@
 <html lang="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8">
+  <link rel="Shortcut Icon" type="image/ico" href="favicon.ico" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{{ config('app.name') }}</title>
 

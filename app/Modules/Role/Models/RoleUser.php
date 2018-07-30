@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modules\Role\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class RoleUser extends Model {
 
     public function role()
     {
-        return $this->belongsTo('App\Role', 'role_id', 'id');
+        return $this->belongsTo('App\Modules\Role\Models\Role', 'role_id', 'id');
     }
 
 }

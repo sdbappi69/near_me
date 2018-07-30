@@ -19,6 +19,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class OrderPrintSaleController extends Controller
 {
@@ -30,6 +31,8 @@ class OrderPrintSaleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('orderprintsell-view')) { abort(403); }
+
         $query = OrderPrintSale::orderBy('id', 'desc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -148,6 +151,8 @@ class OrderPrintSaleController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('orderprintsell-delete')) { abort(403); }
+        
         try {
             DB::beginTransaction();
 

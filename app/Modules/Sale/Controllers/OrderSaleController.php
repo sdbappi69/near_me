@@ -19,6 +19,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class OrderSaleController extends Controller
 {
@@ -30,6 +31,8 @@ class OrderSaleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('ordersell-view')) { abort(403); }
+
         $query = OrderSale::orderBy('id', 'desc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -148,6 +151,42 @@ class OrderSaleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(!Entrust::can('ordersell-delete')) { abort(403); }
+
+        try {
+            DB::beginTransaction();
+
+                $print_sale = OrderSale::where('id', $id)->delete();
+
+                if($print_sale){
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully deleted the order',
+                    );
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That order can't be delete",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect('/panel/order-sales');
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            dd($e->getMessage());
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to delete the order',
+            );
+            Session::flash('message', $message);
+            return Redirect('/panel/order-sales');
+        }
     }
 }

@@ -21,6 +21,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class SettingController extends Controller
 {
@@ -32,6 +33,8 @@ class SettingController extends Controller
      */
     public function index()
     {
+        if(!Entrust::can('setting')) { abort(403); }
+
         $setting = Setting::first();
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Setting::index", compact('setting', 'sizes'));
@@ -55,6 +58,8 @@ class SettingController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('setting')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'sub_title' => 'sometimes',

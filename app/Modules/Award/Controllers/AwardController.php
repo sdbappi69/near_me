@@ -22,6 +22,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class AwardController extends Controller
 {
@@ -33,6 +34,8 @@ class AwardController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('award-view')) { abort(403); }
+
         $query = Award::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -66,6 +69,8 @@ class AwardController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('award-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
@@ -80,6 +85,8 @@ class AwardController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('award-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -169,6 +176,8 @@ class AwardController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('award-update')) { abort(403); }
+
         $award = Award::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Award::edit", compact('award', 'sizes'));
@@ -183,6 +192,8 @@ class AwardController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('award-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -264,6 +275,8 @@ class AwardController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('award-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -300,7 +313,10 @@ class AwardController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('award-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -352,7 +368,10 @@ class AwardController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('award-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

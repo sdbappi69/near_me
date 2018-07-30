@@ -22,6 +22,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class VideoController extends Controller
 {
@@ -33,6 +34,8 @@ class VideoController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('video-view')) { abort(403); }
+
         $query = Video::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -66,6 +69,8 @@ class VideoController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('video-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
@@ -80,6 +85,8 @@ class VideoController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('video-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -162,6 +169,8 @@ class VideoController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('video-update')) { abort(403); }
+
         $video = Video::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Video::edit", compact('video', 'sizes'));
@@ -176,6 +185,8 @@ class VideoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('video-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -252,6 +263,8 @@ class VideoController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('video-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -288,7 +301,10 @@ class VideoController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('video-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -340,7 +356,10 @@ class VideoController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('video-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -401,7 +420,7 @@ class VideoController extends Controller
 
         $videos = Video::whereStatus(1)->orderBy('priority', 'asc')->paginate(5);
 
-        return view('templates.'.$theme->folder.'.video.index', compact('theme', 'setting', 'albums', 'socials', 'videos'));
+        return view('templates.'.$video->folder.'.video.index', compact('theme', 'setting', 'albums', 'socials', 'videos'));
     }
 
     /**
@@ -419,6 +438,6 @@ class VideoController extends Controller
 
         $video = Video::findOrFail($id);
 
-        return view('templates.'.$theme->folder.'.video.show', compact('theme', 'setting', 'albums', 'socials', 'video'));
+        return view('templates.'.$video->folder.'.video.show', compact('theme', 'setting', 'albums', 'socials', 'video'));
     }
 }

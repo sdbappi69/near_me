@@ -17,6 +17,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class SocialController extends Controller
 {
@@ -28,6 +29,8 @@ class SocialController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('social-view')) { abort(403); }
+
         $query = Social::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -55,6 +58,8 @@ class SocialController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('social-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         return view("Social::create", compact('sizes', 'default_size'));
@@ -68,6 +73,8 @@ class SocialController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('social-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'sometimes',
@@ -153,6 +160,8 @@ class SocialController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('social-update')) { abort(403); }
+
         $social = Social::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Social::edit", compact('social', 'sizes'));
@@ -167,6 +176,8 @@ class SocialController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('social-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'sometimes',
@@ -234,6 +245,8 @@ class SocialController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('social-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -270,7 +283,10 @@ class SocialController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('social-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -322,7 +338,10 @@ class SocialController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('social-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

@@ -17,6 +17,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class ThemeController extends Controller
 {
@@ -28,6 +29,8 @@ class ThemeController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('theme-view')) { abort(403); }
+
         $query = Theme::orderBy('name', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -52,6 +55,8 @@ class ThemeController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('theme-create')) { abort(403); }
+
         return view("Theme::create");
     }
 
@@ -63,6 +68,8 @@ class ThemeController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('theme-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -149,6 +156,8 @@ class ThemeController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('theme-update')) { abort(403); }
+
         $theme = Theme::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Theme::edit", compact('theme', 'sizes'));
@@ -163,6 +172,8 @@ class ThemeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('theme-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'folder' => 'required',
@@ -240,6 +251,8 @@ class ThemeController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('theme-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

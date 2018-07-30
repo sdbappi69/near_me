@@ -25,6 +25,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class PhotoController extends Controller
 {
@@ -36,6 +37,8 @@ class PhotoController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('photo-view')) { abort(403); }
+
         $query = Photo::orderBy('photos.priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('photos.name', 'like', '%'.$request->name.'%');
@@ -79,6 +82,8 @@ class PhotoController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('photo-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $albums = Album::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
@@ -99,6 +104,8 @@ class PhotoController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('photo-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -238,6 +245,8 @@ class PhotoController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('photo-update')) { abort(403); }
+
         $photo = Photo::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $albums = Album::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
@@ -265,6 +274,8 @@ class PhotoController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('photo-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -408,6 +419,8 @@ class PhotoController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('photo-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -448,7 +461,10 @@ class PhotoController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('photo-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -500,7 +516,10 @@ class PhotoController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('photo-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

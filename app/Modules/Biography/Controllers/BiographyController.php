@@ -22,6 +22,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class BiographyController extends Controller
 {
@@ -33,6 +34,8 @@ class BiographyController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('biography-view')) { abort(403); }
+
         $query = Biography::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -66,6 +69,8 @@ class BiographyController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('biography-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
@@ -80,6 +85,8 @@ class BiographyController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('biography-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -167,6 +174,8 @@ class BiographyController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('biography-update')) { abort(403); }
+
         $biography = Biography::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Biography::edit", compact('biography', 'sizes'));
@@ -181,6 +190,8 @@ class BiographyController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('biography-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'date' => 'sometimes',
@@ -262,6 +273,8 @@ class BiographyController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('biography-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -298,7 +311,10 @@ class BiographyController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('biography-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -350,7 +366,10 @@ class BiographyController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('biography-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

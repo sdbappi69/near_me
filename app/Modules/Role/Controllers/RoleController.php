@@ -5,14 +5,15 @@ namespace App\Modules\Role\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Role;
-use App\PermissionRole;
-use App\Permission;
+use App\Modules\Role\Models\Role;
+use App\Modules\Permission\Models\PermissionRole;
+use App\Modules\Permission\Models\Permission;
 
 use Validator;
 use DB;
 use Session;
 use Redirect;
+use Entrust;
 
 class RoleController extends Controller
 {
@@ -24,6 +25,8 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('role-view')) { abort(403); }
+
         $query = Role::orderBy('display_name', 'asc');
         if($request->has('name')){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -45,6 +48,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('role-create')) { abort(403); }
+
         $permissions = Permission::orderBy('display_name', 'asc')->get();
         return view("Role::create", compact('permissions'));
     }
@@ -57,6 +62,8 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('role-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required|unique:roles',
             'display_name' => 'required',
@@ -96,7 +103,7 @@ class RoleController extends Controller
                 'text' => 'A new role is created',
             );
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -106,7 +113,7 @@ class RoleController extends Controller
                 'text' => 'Failed to create new role',
             );
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
         }
     }
 
@@ -118,6 +125,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        if(!Entrust::can('role-view')) { abort(403); }
+
         $role = Role::findOrFail($id);
         return view("Role::show", compact('role'));
     }
@@ -130,6 +139,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('role-update')) { abort(403); }
+
         $role = Role::findOrFail($id);
 
         $permissions = Permission::orderBy('display_name')->get();
@@ -151,6 +162,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('role-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required|unique:roles,name,'.$id,
             'display_name' => 'required',
@@ -193,7 +206,7 @@ class RoleController extends Controller
                 'text' => 'The role is updated',
             );
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -203,7 +216,7 @@ class RoleController extends Controller
                 'text' => 'Failed to update the role',
             );
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
         }
     }
 
@@ -215,6 +228,8 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('role-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -240,7 +255,7 @@ class RoleController extends Controller
             DB::commit();
 
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
 
         } catch (Exception $e) {
             DB::rollBack();
@@ -250,7 +265,7 @@ class RoleController extends Controller
                 'text' => 'Failed to delete the role',
             );
             Session::flash('message', $message);
-            return Redirect('/roles');
+            return Redirect('panel/roles');
         }
     }
 }

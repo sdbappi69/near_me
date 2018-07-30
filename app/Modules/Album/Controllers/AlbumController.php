@@ -24,6 +24,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class AlbumController extends Controller
 {
@@ -35,6 +36,8 @@ class AlbumController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('album-view')) { abort(403); }
+
         $query = Album::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -62,6 +65,8 @@ class AlbumController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('album-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         return view("Album::create", compact('sizes', 'default_size'));
@@ -75,6 +80,8 @@ class AlbumController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('album-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -159,6 +166,8 @@ class AlbumController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('album-update')) { abort(403); }
+
         $album = Album::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $photos = Photo::whereStatus(true)->orderBy('priority', 'asc')->get();
@@ -178,6 +187,8 @@ class AlbumController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('album-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -255,6 +266,8 @@ class AlbumController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('album-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -291,7 +304,10 @@ class AlbumController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('album-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -343,7 +359,10 @@ class AlbumController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('album-update')) { abort(403); }
+        
         try {
             DB::beginTransaction();
 
@@ -395,7 +414,10 @@ class AlbumController extends Controller
         }
     }
 
-    public function photo_up($photo_id, $album_id){
+    public function photo_up($photo_id, $album_id)
+    {
+        if(!Entrust::can('album-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -448,7 +470,10 @@ class AlbumController extends Controller
         }
     }
 
-    public function photo_down($photo_id, $album_id){
+    public function photo_down($photo_id, $album_id)
+    {
+        if(!Entrust::can('album-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -500,7 +525,9 @@ class AlbumController extends Controller
         }
     }
 
-    public function photos(Request $request){
+    public function photos(Request $request)
+    {
+        if(!Entrust::can('album-update')) { abort(403); }
 
         $validation = Validator::make($request->all(), [
             'album_id' => 'required',

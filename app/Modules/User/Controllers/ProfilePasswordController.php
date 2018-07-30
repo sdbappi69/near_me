@@ -5,7 +5,7 @@ namespace App\Modules\User\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\User;
+use App\Modules\User\Models\User;
 
 use Validator;
 use DB;

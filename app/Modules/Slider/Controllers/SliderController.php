@@ -17,6 +17,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class SliderController extends Controller
 {
@@ -28,6 +29,8 @@ class SliderController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('slider-view')) { abort(403); }
+
         $query = Slider::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -55,6 +58,8 @@ class SliderController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('slider-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         return view("Slider::create", compact('sizes', 'default_size'));
@@ -68,6 +73,8 @@ class SliderController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('slider-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'sometimes',
@@ -106,7 +113,7 @@ class SliderController extends Controller
                 $thumb_url = 'uploads/photos/thumb/';
                 $url = 'uploads/photos/full/';
                 $thumb = Image::make($request->file('image'))->resize(100, 100)->save($thumb_url.$fileName);
-                $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
+                $img = Image::make($request->file('image'))->resize($slider->width, $slider->height)->save($url.$fileName);
                 $slider->image = $fileName;
 
                 $slider->created_by = Auth::id();
@@ -155,6 +162,8 @@ class SliderController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('slider-update')) { abort(403); }
+
         $slider = Slider::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         return view("Slider::edit", compact('slider', 'sizes'));
@@ -169,6 +178,8 @@ class SliderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('slider-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'url' => 'sometimes',
@@ -200,7 +211,7 @@ class SliderController extends Controller
                     $thumb_url = 'uploads/photos/thumb/';
                     $url = 'uploads/photos/full/';
                     $thumb = Image::make($request->file('image'))->resize(100, 100)->save($thumb_url.$fileName);
-                    $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
+                    $img = Image::make($request->file('image'))->resize($slider->width, $slider->height)->save($url.$fileName);
 
                     $slider->image = $fileName;
                 }
@@ -238,6 +249,8 @@ class SliderController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('slider-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -274,7 +287,10 @@ class SliderController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('slider-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -326,7 +342,10 @@ class SliderController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('slider-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

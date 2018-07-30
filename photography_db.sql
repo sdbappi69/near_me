@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 06, 2018 at 08:01 PM
+-- Generation Time: Jul 30, 2018 at 07:08 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -215,7 +215,6 @@ CREATE TABLE `orders_print_sales` (
 --
 
 INSERT INTO `orders_print_sales` (`id`, `name`, `order_id`, `print_sale_id`, `email`, `description`, `contact`, `status`, `created_at`, `updated_at`, `updated_by`) VALUES
-(1, 'SD', '1524224659', 3, 'admin@domain.com', 'asfdsdfsdfsde', '01681692786', 1, '2018-04-20 11:44:19', '2018-04-20 11:44:19', NULL),
 (2, 'dsfdsf', '1524224836', 3, 'admin@domain.com', 'sdfsfsf', '01681692786', 1, '2018-04-20 11:47:16', '2018-04-20 11:47:16', NULL),
 (3, 'sadsad', '1524224927', 1, 'sdbappi69@gmail.com', 'sadsadasd', '01681692786', 1, '2018-04-20 11:48:47', '2018-04-20 11:48:47', NULL),
 (4, 'Test 2', '1524229453', 3, 'sdbappi69@gmail.com', 'fdsfdsf', '01681692786', 1, '2018-04-20 13:04:13', '2018-04-20 13:04:13', NULL);
@@ -245,7 +244,8 @@ CREATE TABLE `orders_sales` (
 --
 
 INSERT INTO `orders_sales` (`id`, `name`, `order_id`, `sale_id`, `email`, `description`, `contact`, `status`, `created_at`, `updated_at`, `updated_by`) VALUES
-(1, 'sasadsad', '1524229468', 1, 'bappi@lolonader.com', 'sadsadsad', '01681692786', 1, '2018-04-20 13:04:28', '2018-04-20 13:04:28', NULL);
+(1, 'sasadsad', '1524229468', 1, 'bappi@lolonader.com', 'sadsadsad', '01681692786', 1, '2018-04-20 13:04:28', '2018-04-20 13:04:28', NULL),
+(2, 'Test', '1527693793', 1, 'sdbappi69@gmail.com', 'dsfdsfsdf', '01681692786', 1, '2018-05-30 15:23:13', '2018-05-30 15:23:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -287,7 +287,85 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`id`, `name`, `display_name`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'user-create', 'User - Create', 'Do not delete', '2018-03-26 04:17:54', '2018-03-26 04:17:54');
+(1, 'user-create', 'User - Create', NULL, '2018-03-26 04:17:54', '2018-07-30 09:10:11'),
+(2, 'user-view', 'User - View', NULL, '2018-07-30 08:01:43', '2018-07-30 09:10:17'),
+(3, 'user-update', 'User - Update', NULL, '2018-07-30 09:10:02', '2018-07-30 09:10:02'),
+(4, 'user-delete', 'User - Delete', NULL, '2018-07-30 09:10:35', '2018-07-30 09:10:35'),
+(5, 'album-create', 'Album - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(6, 'album-view', 'Album - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(7, 'album-update', 'Album - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(8, 'album-delete', 'Album - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(9, 'award-create', 'Award - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(10, 'award-view', 'Award - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(11, 'award-update', 'Award - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(12, 'award-delete', 'Award - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(13, 'biography-create', 'Biography - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(14, 'biography-view', 'Biography - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(15, 'biography-update', 'Biography - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(16, 'biography-delete', 'Biography - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(17, 'book-create', 'Book - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(18, 'book-view', 'Book - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(19, 'book-update', 'Book - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(20, 'book-delete', 'Book - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(21, 'category-create', 'Category - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(22, 'category-view', 'Category - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(23, 'category-update', 'Category - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(24, 'category-delete', 'Category - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(25, 'permission-create', 'Permission - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(26, 'permission-view', 'Permission - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(27, 'permission-update', 'Permission - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(28, 'permission-delete', 'Permission - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(29, 'photo-create', 'Photo - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(30, 'photo-view', 'Photo - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(31, 'photo-update', 'Photo - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(32, 'photo-delete', 'Photo - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(33, 'printsell-create', 'PrintSell - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 10:21:50'),
+(34, 'printsell-view', 'PrintSell - View', NULL, '2018-07-30 08:01:00', '2018-07-30 10:21:56'),
+(35, 'printsell-update', 'PrintSell - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 10:21:54'),
+(36, 'printsell-delete', 'PrintSell - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 10:21:52'),
+(37, 'role-create', 'Role - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(38, 'role-view', 'Role - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(39, 'role-update', 'Role - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(40, 'role-delete', 'Role - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(41, 'sell-create', 'Sell - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 10:18:30'),
+(42, 'sell-view', 'Sell - View', NULL, '2018-07-30 08:01:00', '2018-07-30 10:19:55'),
+(43, 'sell-update', 'Sell - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 10:20:01'),
+(44, 'sell-delete', 'Sell - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 10:20:17'),
+(45, 'size-create', 'Size - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(46, 'size-view', 'Size - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(47, 'size-update', 'Size - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(48, 'size-delete', 'Size - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(49, 'slider-create', 'Slider - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(50, 'slider-view', 'Slider - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(51, 'slider-update', 'Slider - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(52, 'slider-delete', 'Slider - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(53, 'social-create', 'Social - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(54, 'social-view', 'Social - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(55, 'social-update', 'Social - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(56, 'social-delete', 'Social - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(57, 'tearsheet-create', 'Tearsheet - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(58, 'tearsheet-view', 'Tearsheet - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(59, 'tearsheet-update', 'Tearsheet - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(60, 'tearsheet-delete', 'Tearsheet - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(61, 'testimonial-create', 'Testimonial - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(62, 'testimonial-view', 'Testimonial - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(63, 'testimonial-update', 'Testimonial - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(64, 'testimonial-delete', 'Testimonial - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(65, 'theme-create', 'Theme - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(66, 'theme-view', 'Theme - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(67, 'theme-update', 'Theme - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(68, 'theme-delete', 'Theme - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(69, 'video-create', 'Video - Create', NULL, '2018-03-26 04:17:00', '2018-07-30 09:10:00'),
+(70, 'video-view', 'Video - View', NULL, '2018-07-30 08:01:00', '2018-07-30 09:10:00'),
+(71, 'video-update', 'Video - Update', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(72, 'video-delete', 'Video - Delete', NULL, '2018-07-30 09:10:00', '2018-07-30 09:10:00'),
+(73, 'orderprintsell-view', 'Order PrintSell - View', NULL, '2018-07-30 10:16:57', '2018-07-30 10:23:04'),
+(74, 'orderprintsell-delete', 'Order PrintSell - Delete', NULL, '2018-07-30 10:17:08', '2018-07-30 10:23:02'),
+(75, 'ordersell-view', 'Order Sell - View', NULL, '2018-07-30 10:17:29', '2018-07-30 10:23:59'),
+(76, 'ordersell-delete', 'Order Sell - Delete', NULL, '2018-07-30 10:17:41', '2018-07-30 10:23:52'),
+(77, 'setting', 'Site Setting', NULL, '2018-07-30 10:44:02', '2018-07-30 10:45:36'),
+(78, 'ordertearsheet-view', 'Order Tearsheet - View', NULL, '2018-07-30 10:55:16', '2018-07-30 10:55:16'),
+(79, 'ordertearsheet-delete', 'Order Tearsheet - Delete', NULL, '2018-07-30 10:55:30', '2018-07-30 10:55:30');
 
 -- --------------------------------------------------------
 
@@ -305,7 +383,84 @@ CREATE TABLE `permission_role` (
 --
 
 INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
-(1, 5);
+(1, 5),
+(2, 5),
+(3, 5),
+(4, 5),
+(5, 5),
+(6, 5),
+(7, 5),
+(8, 5),
+(9, 5),
+(10, 5),
+(11, 5),
+(12, 5),
+(13, 5),
+(14, 5),
+(15, 5),
+(16, 5),
+(17, 5),
+(18, 5),
+(19, 5),
+(20, 5),
+(21, 5),
+(22, 5),
+(23, 5),
+(24, 5),
+(25, 5),
+(26, 5),
+(27, 5),
+(28, 5),
+(29, 5),
+(30, 5),
+(31, 5),
+(32, 5),
+(33, 5),
+(34, 5),
+(35, 5),
+(36, 5),
+(37, 5),
+(38, 5),
+(39, 5),
+(40, 5),
+(41, 5),
+(42, 5),
+(43, 5),
+(44, 5),
+(45, 5),
+(46, 5),
+(47, 5),
+(48, 5),
+(49, 5),
+(50, 5),
+(51, 5),
+(52, 5),
+(53, 5),
+(54, 5),
+(55, 5),
+(56, 5),
+(57, 5),
+(58, 5),
+(59, 5),
+(60, 5),
+(61, 5),
+(62, 5),
+(63, 5),
+(64, 5),
+(65, 5),
+(66, 5),
+(67, 5),
+(68, 5),
+(69, 5),
+(70, 5),
+(71, 5),
+(72, 5),
+(73, 5),
+(74, 5),
+(75, 5),
+(76, 5),
+(78, 5),
+(79, 5);
 
 -- --------------------------------------------------------
 
@@ -335,10 +490,8 @@ CREATE TABLE `photos` (
 --
 
 INSERT INTO `photos` (`id`, `name`, `product_id`, `image`, `thumbnail_size_id`, `size_id`, `description`, `price`, `priority`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Photo 1', 'P-1', 'photo-1-1524068981.jpg', 9, 6, 'Here the description will go', NULL, 1, 1, '2018-04-18 16:23:03', 1, '2018-04-20 02:27:29', 1),
-(2, 'Photo 2', 'P-2', 'photo-2-1524070696.jpg', 7, 8, 'Here the description will go', '6000 BDT', 2, 1, '2018-04-18 16:31:16', 1, '2018-04-18 10:58:17', 1),
-(3, 'Photo 3', 'P-3', 'photo-3-1524069118.jpg', 7, 8, 'Here the description will go', '4000 BDT', 4, 1, '2018-04-18 16:31:59', 1, '2018-04-18 10:56:28', 1),
-(4, 'Photo 4', 'P-4', 'photo-4-1524069868.jpg', 9, 6, 'Here the Description will go', '8000 BDT', 3, 1, '2018-04-18 16:44:28', 1, '2018-04-18 10:56:28', 1);
+(1, 'Photo 1', 'P-1', 'photo-1-1524068981.jpg', 9, 6, 'Here the description will go', NULL, 1, 1, '2018-04-18 16:23:03', 1, '2018-06-09 09:19:10', 1),
+(4, 'Photo 4', 'P-4', 'photo-4-1524069868.jpg', 9, 6, 'Here the Description will go', '8000 BDT', 3, 1, '2018-04-18 16:44:28', 1, '2018-06-09 09:19:10', 1);
 
 -- --------------------------------------------------------
 
@@ -366,12 +519,6 @@ INSERT INTO `photo_album` (`id`, `photo_id`, `album_id`, `priority`, `created_at
 (2, 1, 3, 2, '2018-04-18 16:23:03', 1, '2018-04-18 16:23:03', 1),
 (3, 1, 4, 3, '2018-04-18 16:23:03', 1, '2018-04-18 16:23:03', 1),
 (4, 1, 5, 4, '2018-04-18 16:23:03', 1, '2018-04-18 16:23:03', 1),
-(5, 2, 2, 5, '2018-04-18 16:31:16', 1, '2018-04-18 16:31:16', 1),
-(6, 2, 3, 6, '2018-04-18 16:31:16', 1, '2018-04-18 16:31:16', 1),
-(7, 2, 4, 7, '2018-04-18 16:31:16', 1, '2018-04-18 16:31:16', 1),
-(8, 2, 5, 8, '2018-04-18 16:31:16', 1, '2018-04-18 16:31:16', 1),
-(9, 3, 2, 11, '2018-04-18 16:31:59', 1, '2018-04-18 16:56:52', 1),
-(10, 3, 4, 10, '2018-04-18 16:31:59', 1, '2018-04-18 16:31:59', 1),
 (11, 4, 2, 9, '2018-04-18 16:44:28', 1, '2018-04-18 16:56:52', 1),
 (12, 4, 3, 12, '2018-04-18 16:44:28', 1, '2018-04-18 16:44:28', 1);
 
@@ -397,18 +544,12 @@ CREATE TABLE `photo_category` (
 --
 
 INSERT INTO `photo_category` (`id`, `photo_id`, `category_id`, `priority`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(2, 2, 1, 2, '2018-04-18 16:31:16', 1, '2018-04-18 16:31:16', 1),
-(3, 3, 1, 3, '2018-04-18 16:31:59', 1, '2018-04-18 16:31:59', 1),
 (4, 4, 1, 4, '2018-04-18 16:44:29', 1, '2018-04-18 16:44:29', 1),
 (5, 1, 2, 5, '2018-04-20 07:24:28', 1, '2018-04-20 07:24:28', 1),
-(6, 2, 2, 6, '2018-04-20 07:24:28', 1, '2018-04-20 07:24:28', 1),
 (7, 4, 2, 7, '2018-04-20 07:24:28', 1, '2018-04-20 07:24:28', 1),
-(8, 2, 3, 8, '2018-04-20 07:24:50', 1, '2018-04-20 07:24:50', 1),
 (9, 4, 3, 9, '2018-04-20 07:24:50', 1, '2018-04-20 07:24:50', 1),
-(10, 3, 3, 10, '2018-04-20 07:24:50', 1, '2018-04-20 07:24:50', 1),
 (11, 1, 4, 11, '2018-04-20 07:25:06', 1, '2018-04-20 07:25:06', 1),
-(12, 4, 4, 12, '2018-04-20 07:25:06', 1, '2018-04-20 07:25:06', 1),
-(13, 3, 4, 13, '2018-04-20 07:25:06', 1, '2018-04-20 07:25:06', 1);
+(12, 4, 4, 12, '2018-04-20 07:25:06', 1, '2018-04-20 07:25:06', 1);
 
 -- --------------------------------------------------------
 
@@ -440,7 +581,6 @@ CREATE TABLE `print_sales` (
 
 INSERT INTO `print_sales` (`id`, `name`, `product_id`, `category_id`, `image`, `thumbnail_size_id`, `size_id`, `description`, `price`, `priority`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 'Print Photo 1', 'PP-1', 3, 'print-photo-1-1524213507.jpg', 9, 6, 'Here the description will go', '5000 BDT', 1, 1, '2018-04-20 08:35:16', 1, '2018-04-20 02:38:27', 1),
-(2, 'Print Photo 2', 'PP-2', 4, 'print-photo-2-1524213545.jpg', 9, 6, 'Here the description will go', '5000 BDT', 3, 1, '2018-04-20 08:35:16', 1, '2018-04-20 02:45:51', 1),
 (3, 'Print Photo 3', 'PP-3', 2, 'print-photo-3-1524214291.jpg', 7, 8, 'Here the description will go', '8000 BDT', 2, 1, '2018-04-20 08:44:56', 1, '2018-04-20 02:51:32', 1),
 (4, 'Print Photo 4', 'PP-4', 3, 'print-photo-4-1524214310.jpg', 7, 8, 'Here the description will go', '8000 BDT', 4, 1, '2018-04-20 08:44:56', 1, '2018-04-20 02:51:50', 1);
 
@@ -464,7 +604,7 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `name`, `display_name`, `description`, `created_at`, `updated_at`) VALUES
-(5, 'superadministrator', 'Super Administrator', 'Do not delete', '2018-03-26 04:22:36', '2018-03-26 04:22:36');
+(5, 'superadministrator', 'Super Administrator', NULL, '2018-03-26 04:22:36', '2018-07-30 09:39:09');
 
 -- --------------------------------------------------------
 
@@ -543,7 +683,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `name`, `sub_title`, `email`, `phone`, `description`, `image`, `size_id`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Photography', 'Here the sub-title will go', 'sdbappi69@gmail.com', '+8801681692786', '<p>Here the description will go<br></p>', 'photography-1523022011.png', 2, '2018-04-03 16:53:42', 1, '2018-04-06 07:52:47', 1);
+(1, 'Photography', 'Here the sub-title will go', 'sdbappi69@gmail.com', '+8801681692786', '<p><b>Here the description will go</b></p><p><b><br></b></p><p>Hello</p><p><br></p><p><i>Hi</i><i></i><br></p><br><br><br>', 'photography-1523022011.png', 2, '2018-04-03 16:53:42', 1, '2018-05-26 00:46:41', 1);
 
 -- --------------------------------------------------------
 
@@ -661,6 +801,13 @@ CREATE TABLE `tearsheets` (
   `updated_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `tearsheets`
+--
+
+INSERT INTO `tearsheets` (`id`, `name`, `product_id`, `category_id`, `image`, `thumbnail_size_id`, `size_id`, `description`, `price`, `priority`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(3, 'Test Photo', 'P-1', 2, 'test-photo-1527693998.jpg', 9, 6, NULL, NULL, 1, 1, '2018-05-30 15:26:39', 1, '2018-05-30 09:26:39', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -712,7 +859,8 @@ CREATE TABLE `themes` (
 --
 
 INSERT INTO `themes` (`id`, `name`, `image`, `description`, `folder`, `default`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Airy', 'airy-1523015251.png', NULL, 'airy', 1, 1, '2018-04-06 11:47:31', 1, '2018-04-06 06:34:12', 1);
+(1, 'Airy', 'airy-1523015251.png', NULL, 'airy', 1, 1, '2018-04-06 11:47:31', 1, '2018-07-30 07:31:18', 1),
+(2, 'Simple', 'simple-1527682223.png', NULL, 'simple', 0, 1, '2018-05-30 12:10:23', 1, '2018-07-23 09:47:04', 1);
 
 -- --------------------------------------------------------
 
@@ -736,7 +884,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 'sdbappi69@gmail.com', '$2y$10$Ti9fZqHdxmQ5W2lRQenClusQ1yEs9xtNvq.DHsn.cwriwVbmNUY8a', 'default_avatar.png', 'tx4hsXK931elqeelt6Khwi59JwBUe5OIcFbNVCDyntIzJ4VRxD4O0VdiswKh', '2018-03-25 18:00:00', '2018-05-06 10:53:59');
+(1, 'Super Admin', 'sdbappi69@gmail.com', '$2y$10$Ti9fZqHdxmQ5W2lRQenClusQ1yEs9xtNvq.DHsn.cwriwVbmNUY8a', 'default_avatar.png', '87LsZg4ePOumhfK9UObZI50qoIcU11jc10QpunhqixhTOtBNWD9yzpSxtcIg', '2018-03-25 18:00:00', '2018-05-06 10:53:59');
 
 -- --------------------------------------------------------
 
@@ -1024,7 +1172,7 @@ ALTER TABLE `orders_print_sales`
 -- AUTO_INCREMENT for table `orders_sales`
 --
 ALTER TABLE `orders_sales`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders_tearsheets`
@@ -1036,7 +1184,7 @@ ALTER TABLE `orders_tearsheets`
 -- AUTO_INCREMENT for table `permissions`
 --
 ALTER TABLE `permissions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=80;
 
 --
 -- AUTO_INCREMENT for table `photos`
@@ -1054,7 +1202,7 @@ ALTER TABLE `photo_album`
 -- AUTO_INCREMENT for table `photo_category`
 --
 ALTER TABLE `photo_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `print_sales`
@@ -1102,7 +1250,7 @@ ALTER TABLE `socials`
 -- AUTO_INCREMENT for table `tearsheets`
 --
 ALTER TABLE `tearsheets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `testimonials`
@@ -1114,7 +1262,7 @@ ALTER TABLE `testimonials`
 -- AUTO_INCREMENT for table `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Modules\Permission\Models;
 
 use Zizaco\Entrust\EntrustPermission;
 use Zizaco\Entrust\Traits\EntrustUserTrait;

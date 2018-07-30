@@ -15,6 +15,7 @@ use File;
 use Auth;
 use Storage;
 use Exception;
+use Entrust;
 
 class SizeController extends Controller
 {
@@ -26,6 +27,8 @@ class SizeController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('size-view')) { abort(403); }
+
         $query = Size::orderBy('name', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -50,6 +53,8 @@ class SizeController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('size-create')) { abort(403); }
+
         return view("Size::create");
     }
 
@@ -61,6 +66,8 @@ class SizeController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('size-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -138,6 +145,8 @@ class SizeController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('size-update')) { abort(403); }
+
         $size = Size::findOrFail($id);
         return view("Size::edit", compact('size'));
     }
@@ -151,6 +160,8 @@ class SizeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('size-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -216,6 +227,8 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('size-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

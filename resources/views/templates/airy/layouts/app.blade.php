@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	
-	<link rel="Shortcut Icon" type="image/ico" href="imgs/favicon.ico" />
+	<link rel="Shortcut Icon" type="image/ico" href="favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
   
 	<title>{{ $setting->name }}</title>

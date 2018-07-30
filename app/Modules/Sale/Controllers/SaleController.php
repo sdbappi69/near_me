@@ -23,6 +23,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class SaleController extends Controller
 {
@@ -34,6 +35,8 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('sale-view')) { abort(403); }
+
         $query = Sale::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -75,6 +78,8 @@ class SaleController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('sale-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
@@ -92,6 +97,8 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('sale-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -191,6 +198,8 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('sale-update')) { abort(403); }
+
         $sale = Sale::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
@@ -206,6 +215,8 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('sale-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -282,6 +293,8 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('sale-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -318,7 +331,10 @@ class SaleController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('sale-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -370,7 +386,10 @@ class SaleController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('sale-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 

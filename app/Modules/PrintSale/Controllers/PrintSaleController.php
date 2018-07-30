@@ -24,6 +24,7 @@ use Auth;
 use Storage;
 use Image;
 use Exception;
+use Entrust;
 
 class PrintSaleController extends Controller
 {
@@ -35,6 +36,8 @@ class PrintSaleController extends Controller
      */
     public function index(Request $request)
     {
+        if(!Entrust::can('printsell-view')) { abort(403); }
+
         $query = PrintSale::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
@@ -76,6 +79,8 @@ class PrintSaleController extends Controller
      */
     public function create()
     {
+        if(!Entrust::can('printsell-create')) { abort(403); }
+
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
         if($default_size){ $default_size_id = $default_size->id; }else{ $default_size_id = null; }
@@ -93,6 +98,8 @@ class PrintSaleController extends Controller
      */
     public function store(Request $request)
     {
+        if(!Entrust::can('printsell-create')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -117,21 +124,21 @@ class PrintSaleController extends Controller
                     $last_photo_count = PrintSale::orderBy('priority', 'desc')->count();
                     if($last_photo_count > 0){
                         $last_photo = PrintSale::orderBy('priority', 'desc')->first();
-                        $priority = $last_photo->priority + 1;
+                        $priority = $last_printsell->priority + 1;
                     }else{
                         $priority = 1;
                     }
 
                     $photo = new PrintSale;
-                    $photo->name = $request->name;
-                    $photo->product_id = $request->product_id;
-                    $photo->price = $request->price;
-                    $photo->status = $request->status;
-                    $photo->description = $request->description;
-                    $photo->thumbnail_size_id = $request->thumbnail_size_id;
-                    $photo->size_id = $request->size_id;
-                    $photo->category_id = $request->category_id;
-                    $photo->priority = $priority;
+                    $printsell->name = $request->name;
+                    $printsell->product_id = $request->product_id;
+                    $printsell->price = $request->price;
+                    $printsell->status = $request->status;
+                    $printsell->description = $request->description;
+                    $printsell->thumbnail_size_id = $request->thumbnail_size_id;
+                    $printsell->size_id = $request->size_id;
+                    $printsell->category_id = $request->category_id;
+                    $printsell->priority = $priority;
 
                     $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
                     $size = Size::where('id', $request->size_id)->first();
@@ -153,11 +160,11 @@ class PrintSaleController extends Controller
                     $url = 'uploads/photos/full/';
                     $thumb = Image::make($image)->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
                     $img = Image::make($image)->resize($size->width, $size->height)->save($url.$fileName);
-                    $photo->image = $fileName;
+                    $printsell->image = $fileName;
 
-                    $photo->created_by = Auth::id();
-                    $photo->updated_by = Auth::id();
-                    $photo->save();
+                    $printsell->created_by = Auth::id();
+                    $printsell->updated_by = Auth::id();
+                    $printsell->save();
 
                 }
 
@@ -192,6 +199,8 @@ class PrintSaleController extends Controller
      */
     public function edit($id)
     {
+        if(!Entrust::can('printsell-update')) { abort(403); }
+
         $print_sale = PrintSale::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $categories = Category::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
@@ -207,6 +216,8 @@ class PrintSaleController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!Entrust::can('printsell-update')) { abort(403); }
+
         $validation = Validator::make($request->all(), [
             'name' => 'required',
             'product_id' => 'sometimes',
@@ -226,16 +237,16 @@ class PrintSaleController extends Controller
             DB::beginTransaction();
 
                 $photo = PrintSale::findOrFail($id);
-                $photo->name = $request->name;
-                $photo->product_id = $request->product_id;
-                $photo->price = $request->price;
-                $photo->status = $request->status;
-                $photo->description = $request->description;
-                $photo->category_id = $request->category_id;
+                $printsell->name = $request->name;
+                $printsell->product_id = $request->product_id;
+                $printsell->price = $request->price;
+                $printsell->status = $request->status;
+                $printsell->description = $request->description;
+                $printsell->category_id = $request->category_id;
 
                 if($request->hasFile('image')){
-                    $photo->thumbnail_size_id = $request->thumbnail_size_id;
-                    $photo->size_id = $request->size_id;
+                    $printsell->thumbnail_size_id = $request->thumbnail_size_id;
+                    $printsell->size_id = $request->size_id;
 
                     $thumb_size = Size::where('id', $request->thumbnail_size_id)->first();
                     $size = Size::where('id', $request->size_id)->first();
@@ -246,11 +257,11 @@ class PrintSaleController extends Controller
                     $url = 'uploads/photos/full/';
                     $thumb = Image::make($request->file('image'))->resize($thumb_size->width, $thumb_size->height)->save($thumb_url.$fileName);
                     $img = Image::make($request->file('image'))->resize($size->width, $size->height)->save($url.$fileName);
-                    $photo->image = $fileName;
+                    $printsell->image = $fileName;
                 }
 
-                $photo->updated_by = Auth::id();
-                $photo->save();
+                $printsell->updated_by = Auth::id();
+                $printsell->save();
 
             DB::commit();
 
@@ -283,6 +294,8 @@ class PrintSaleController extends Controller
      */
     public function destroy($id)
     {
+        if(!Entrust::can('printsell-delete')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -320,7 +333,10 @@ class PrintSaleController extends Controller
         }
     }
 
-    public function up($id){
+    public function up($id)
+    {
+        if(!Entrust::can('printsell-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
@@ -372,7 +388,10 @@ class PrintSaleController extends Controller
         }
     }
 
-    public function down($id){
+    public function down($id)
+    {
+        if(!Entrust::can('printsell-update')) { abort(403); }
+
         try {
             DB::beginTransaction();
 
