@@ -35,7 +35,7 @@ class SaleController extends Controller
      */
     public function index(Request $request)
     {
-        if(!Entrust::can('sale-view')) { abort(403); }
+        if(!Entrust::can('sell-view')) { abort(403); }
 
         $query = Sale::orderBy('priority', 'asc');
         if($request->has('name') && !empty($request->name)){
@@ -78,7 +78,7 @@ class SaleController extends Controller
      */
     public function create()
     {
-        if(!Entrust::can('sale-create')) { abort(403); }
+        if(!Entrust::can('sell-create')) { abort(403); }
 
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $default_size = Size::whereStatus(true)->whereDefault(true)->first();
@@ -97,7 +97,7 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Entrust::can('sale-create')) { abort(403); }
+        if(!Entrust::can('sell-create')) { abort(403); }
 
         $validation = Validator::make($request->all(), [
             'name' => 'required',
@@ -198,7 +198,7 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
-        if(!Entrust::can('sale-update')) { abort(403); }
+        if(!Entrust::can('sell-update')) { abort(403); }
 
         $sale = Sale::findOrFail($id);
         $sizes = Size::whereStatus(true)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
@@ -215,7 +215,7 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(!Entrust::can('sale-update')) { abort(403); }
+        if(!Entrust::can('sell-update')) { abort(403); }
 
         $validation = Validator::make($request->all(), [
             'name' => 'required',
@@ -293,7 +293,7 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
-        if(!Entrust::can('sale-delete')) { abort(403); }
+        if(!Entrust::can('sell-delete')) { abort(403); }
 
         try {
             DB::beginTransaction();
@@ -333,27 +333,27 @@ class SaleController extends Controller
 
     public function up($id)
     {
-        if(!Entrust::can('sale-update')) { abort(403); }
+        if(!Entrust::can('sell-update')) { abort(403); }
 
         try {
             DB::beginTransaction();
 
                 $temp_sale = Sale::whereStatus(true)->where('id', $id)->first();
-                $exchange_sale = Sale::whereStatus(true)->where('priority', '<', $temp_sale->priority)->orderBy('priority', 'desc')->first();
+                $exchange_sale = Sale::whereStatus(true)->where('priority', '<', $temp_sell->priority)->orderBy('priority', 'desc')->first();
 
                 if($exchange_sale && $temp_sale){
-                    $sale_priority = $temp_sale->priority;
-                    $exchange_sale_priority = $exchange_sale->priority;
+                    $sale_priority = $temp_sell->priority;
+                    $exchange_sale_priority = $exchange_sell->priority;
 
-                    $temp_sale->priority = 0;
-                    $temp_sale->save();
+                    $temp_sell->priority = 0;
+                    $temp_sell->save();
 
-                    $exchange_sale->priority = $sale_priority;
-                    $exchange_sale->save();
+                    $exchange_sell->priority = $sale_priority;
+                    $exchange_sell->save();
 
                     $sale = Sale::findOrFail($id);
-                    $sale->priority = $exchange_sale_priority;
-                    $sale->save();
+                    $sell->priority = $exchange_sale_priority;
+                    $sell->save();
 
                     $message = array(
                         'class' => 'success',
@@ -388,27 +388,27 @@ class SaleController extends Controller
 
     public function down($id)
     {
-        if(!Entrust::can('sale-update')) { abort(403); }
+        if(!Entrust::can('sell-update')) { abort(403); }
 
         try {
             DB::beginTransaction();
 
                 $temp_sale = Sale::whereStatus(true)->where('id', $id)->first();
-                $exchange_sale = Sale::whereStatus(true)->where('priority', '>', $temp_sale->priority)->orderBy('priority', 'asc')->first();
+                $exchange_sale = Sale::whereStatus(true)->where('priority', '>', $temp_sell->priority)->orderBy('priority', 'asc')->first();
 
                 if($exchange_sale && $temp_sale){
-                    $sale_priority = $temp_sale->priority;
-                    $exchange_sale_priority = $exchange_sale->priority;
+                    $sale_priority = $temp_sell->priority;
+                    $exchange_sale_priority = $exchange_sell->priority;
 
-                    $temp_sale->priority = 0;
-                    $temp_sale->save();
+                    $temp_sell->priority = 0;
+                    $temp_sell->save();
 
-                    $exchange_sale->priority = $sale_priority;
-                    $exchange_sale->save();
+                    $exchange_sell->priority = $sale_priority;
+                    $exchange_sell->save();
 
                     $sale = Sale::findOrFail($id);
-                    $sale->priority = $exchange_sale_priority;
-                    $sale->save();
+                    $sell->priority = $exchange_sale_priority;
+                    $sell->save();
 
                     $message = array(
                         'class' => 'success',
