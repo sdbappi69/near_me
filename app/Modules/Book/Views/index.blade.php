@@ -80,7 +80,9 @@
 		                  	<th>date</th>
 		                  	<th>URL</th>
 		                  	<th>Status</th>
-		                  	<th>Priority</th>
+		                  	@permission('book-update')
+		                  		<th>Priority</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -96,19 +98,25 @@
 				                  	<td>{{ $book->date }}</td>
 				                  	<td>{{ $book->url }}</td>
 				                  	<td>@if($book->status == 1) Active @else Inactive @endIf</td>
-				                  	<td>
-				                  		@if($book->status == 1)
-					                  		<a href="{{ url('panel/books/'.$book->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('panel/books/'.$book->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
-				                  		@endIf
-				                  	</td>
+				                  	@permission('book-update')
+					                  	<td>
+					                  		@if($book->status == 1)
+						                  		<a href="{{ url('panel/books/'.$book->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+						                  		<a href="{{ url('panel/books/'.$book->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		@endIf
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/books/'.$book->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/books/'.$book->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/books/'.$book->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('book-update')
+					                      			<a href="{{ url('panel/books/'.$book->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('book-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

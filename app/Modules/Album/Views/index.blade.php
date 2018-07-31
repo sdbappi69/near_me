@@ -67,7 +67,9 @@
 		                  	<th>Description</th>
 		                  	<th>Default</th>
 		                  	<th>Status</th>
-		                  	<th>Priority</th>
+		                  	@permission('album-update')
+		                  		<th>Priority</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -83,19 +85,25 @@
 				                  	<td>{{ $album->description }}</td>
 				                  	<td>@if($album->default == 1) <i class="fa fa-check"></i> @endIf</td>
 				                  	<td>@if($album->status == 1) Active @else Inactive @endIf</td>
-				                  	<td>
-				                  		@if($album->status == 1)
-					                  		<a href="{{ url('panel/albums/'.$album->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('panel/albums/'.$album->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
-				                  		@endIf
-				                  	</td>
+				                  	@permission('album-update')
+					                  	<td>
+					                  		@if($album->status == 1)
+						                  		<a href="{{ url('panel/albums/'.$album->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+						                  		<a href="{{ url('panel/albums/'.$album->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		@endIf
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/albums/'.$album->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/albums/'.$album->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/albums/'.$album->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('album-update')
+					                      			<a href="{{ url('panel/albums/'.$album->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('album-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

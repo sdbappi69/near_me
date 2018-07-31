@@ -72,6 +72,9 @@
 		                  	<th>Client's email</th>
 		                  	<th>Client's contact</th>
 		                  	<th>Client's notes</th>
+		                  	@permission('tearsheet-delete')
+		                  		<th>Actions</th>
+		                  	@endpermission
 		                </tr>
 
 		                @if(count($orders) > 0)
@@ -91,6 +94,16 @@
 				                  	<td>{{ $order->email or '' }}</td>
 				                  	<td>{{ $order->contact or '' }}</td>
 				                  	<td>{{ $order->description or '' }}</td>
+				                  	@permission('tearsheet-delete')
+					                  	<td>
+					                  		<div class="btn-group">
+						                      	{{ Form::open(array('url' => 'panel/order-tearsheets/'.$order->id)) }}
+								                    {{ Form::hidden('_method', 'DELETE') }}
+								                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+								                {{ Form::close() }}
+						                    </div>
+					                  	</td>
+				                  	@endpermission
 				                </tr>
 
 		                	@endforeach

@@ -83,8 +83,12 @@
 					                      	{{ Form::open(array('url' => 'panel/themes/'.$theme->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/themes/'.$theme->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/themes/'.$theme->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('theme-update')
+					                      			<a href="{{ url('panel/themes/'.$theme->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('theme-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

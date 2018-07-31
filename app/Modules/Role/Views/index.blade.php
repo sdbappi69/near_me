@@ -75,8 +75,12 @@
 					                      	{{ Form::open(array('url' => 'panel/roles/'.$role->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <a href="{{ url('panel/roles/'.$role->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a>
-					                      		<a href="{{ url('panel/roles/'.$role->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('role-update')
+					                      			<a href="{{ url('panel/roles/'.$role->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('role-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

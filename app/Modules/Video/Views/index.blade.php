@@ -76,7 +76,9 @@
 		                  	<th>date</th>
 		                  	<th>URL</th>
 		                  	<th>Status</th>
-		                  	<th>Priority</th>
+		                  	@permission('video-update')
+		                  		<th>Priority</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -92,19 +94,25 @@
 				                  	<td>{{ $video->date }}</td>
 				                  	<td>{{ $video->url }}</td>
 				                  	<td>@if($video->status == 1) Active @else Inactive @endIf</td>
-				                  	<td>
-				                  		@if($video->status == 1)
-					                  		<a href="{{ url('panel/videos/'.$video->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('panel/videos/'.$video->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
-				                  		@endIf
-				                  	</td>
+				                  	@permission('video-update')
+					                  	<td>
+					                  		@if($video->status == 1)
+						                  		<a href="{{ url('panel/videos/'.$video->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+						                  		<a href="{{ url('panel/videos/'.$video->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		@endIf
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/videos/'.$video->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/videos/'.$video->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/videos/'.$video->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('video-update')
+					                      			<a href="{{ url('panel/videos/'.$video->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('video-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

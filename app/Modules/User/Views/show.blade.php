@@ -25,13 +25,17 @@
 
           				<p class="text-muted text-center">{{ $user->email }}</p>
 
-          				<a href="{{ url('panel/users/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
-		                	<i class="fa fa-pencil"></i> Update
-		                </a>
+          				@permission('user-update')
+	          				<a href="{{ url('panel/users/'.$user->id.'/edit') }}" class="btn btn-block btn-primary">
+			                	<i class="fa fa-pencil"></i> Update
+			                </a>
+		                @endpermission
 
-		                <a type="button" data-toggle="modal" data-target="#password" href="javascript:void(0)" class="btn btn-block btn-primary">
-		                	<i class="fa fa-key"></i> Change Password
-		                </a>
+		                @permission('user-update')
+			                <a type="button" data-toggle="modal" data-target="#password" href="javascript:void(0)" class="btn btn-block btn-primary">
+			                	<i class="fa fa-key"></i> Change Password
+			                </a>
+		                @endpermission
 
 	              	</div>
 		        </div>

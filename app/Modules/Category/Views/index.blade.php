@@ -67,7 +67,9 @@
 		                  	<th>Description</th>
 		                  	<th>Default</th>
 		                  	<th>Status</th>
-		                  	<th>Priority</th>
+		                  	@permission('category-update')
+		                  		<th>Priority</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -83,19 +85,25 @@
 				                  	<td>{{ $category->description }}</td>
 				                  	<td>@if($category->default == 1) <i class="fa fa-check"></i> @endIf</td>
 				                  	<td>@if($category->status == 1) Active @else Inactive @endIf</td>
-				                  	<td>
-				                  		@if($category->status == 1)
-					                  		<a href="{{ url('panel/categories/'.$category->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('panel/categories/'.$category->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
-				                  		@endIf
-				                  	</td>
+				                  	@permission('category-update')
+					                  	<td>
+					                  		@if($category->status == 1)
+						                  		<a href="{{ url('panel/categories/'.$category->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+						                  		<a href="{{ url('panel/categories/'.$category->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		@endIf
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/categories/'.$category->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/categories/'.$category->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/categories/'.$category->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('category-update')
+					                      			<a href="{{ url('panel/categories/'.$category->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('category-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>

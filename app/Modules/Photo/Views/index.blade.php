@@ -83,7 +83,9 @@
 		                  	<th>Product id</th>
 		                  	<th>Price</th>
 		                  	<th>Status</th>
-		                  	<th>Priority</th>
+		                  	@permission('photo-update')
+		                  		<th>Priority</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -99,19 +101,25 @@
 				                  	<td>{{ $photo->product_id }}</td>
 				                  	<td>{{ $photo->price }}</td>
 				                  	<td>@if($photo->status == 1) Active @else Inactive @endIf</td>
-				                  	<td>
-				                  		@if($photo->status == 1)
-					                  		<a href="{{ url('panel/photos/'.$photo->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
-					                  		<a href="{{ url('panel/photos/'.$photo->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
-				                  		@endIf
-				                  	</td>
+				                  	@permission('photo-update')
+					                  	<td>
+					                  		@if($photo->status == 1)
+						                  		<a href="{{ url('panel/photos/'.$photo->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+						                  		<a href="{{ url('panel/photos/'.$photo->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  		@endIf
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/photos/'.$photo->id)) }}
 							                    {{ Form::hidden('_method', 'DELETE') }}
 							                    <!-- <a href="{{ url('panel/photos/'.$photo->id) }}" class="btn btn-default"><i class="fa fa-eye"></i></a> -->
-					                      		<a href="{{ url('panel/photos/'.$photo->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
-							                    <button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+					                      		@permission('photo-update')
+					                      			<a href="{{ url('panel/photos/'.$photo->id.'/edit') }}" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+					                      		@endpermission
+							                    @permission('photo-delete')
+							                    	<button type="submit" class="btn btn-default"><i class="fa fa-times"></i></button>
+							                    @endpermission
 							                {{ Form::close() }}
 					                    </div>
 				                  	</td>
