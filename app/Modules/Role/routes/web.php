@@ -4,4 +4,8 @@ Route::group(['module' => 'Role', 'middleware' => ['web', 'auth'], 'namespace' =
 
     Route::resource('roles', 'RoleController');
 
+    Route::get('roles/{id}/up', 'RoleController@up');
+
+    Route::get('roles/{id}/down', 'RoleController@down');
+
 });

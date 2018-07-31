@@ -61,6 +61,9 @@
 		                  	<th>Display Name</th>
 		                  	<th>Name</th>
 		                  	<th>Description</th>
+		                  	@permission('role-update')
+		                  		<th>Rank</th>
+		                  	@endpermission
 		                  	<th>Actions</th>
 		                </tr>
 
@@ -70,6 +73,12 @@
 				                  	<td>{{ $role->display_name }}</td>
 				                  	<td>{{ $role->name }}</td>
 				                  	<td>{{ $role->description }}</td>
+				                  	@permission('role-update')
+					                  	<td>
+					                  		<a href="{{ url('panel/roles/'.$role->id.'/up') }}" class="btn btn-default"><i class="fa fa-arrow-up"></i></a>
+					                  		<a href="{{ url('panel/roles/'.$role->id.'/down') }}" class="btn btn-default"><i class="fa fa-arrow-down"></i></a>
+					                  	</td>
+				                  	@endpermission
 				                  	<td>
 				                  		<div class="btn-group">
 					                      	{{ Form::open(array('url' => 'panel/roles/'.$role->id)) }}

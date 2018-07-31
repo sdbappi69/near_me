@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 30, 2018 at 07:08 PM
+-- Generation Time: Jul 31, 2018 at 06:53 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -48,7 +48,7 @@ CREATE TABLE `albums` (
 --
 
 INSERT INTO `albums` (`id`, `name`, `description`, `image`, `thumbnail_size_id`, `priority`, `default`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'Default Album', NULL, 'default-album-1522681961.jpg', 1, 1, 0, 0, '2018-04-02 15:12:42', 1, '2018-04-18 10:12:37', 1),
+(1, 'Default Album', NULL, 'default-album-1522681961.jpg', 1, 1, 1, 0, '2018-04-02 15:12:42', 1, '2018-07-31 09:33:42', 1),
 (2, 'Album 1', 'Here the description will go', 'album-1-1523080734.jpg', 3, 2, 0, 1, '2018-04-07 05:55:30', 1, '2018-05-04 01:55:51', 1),
 (3, 'Album 2', 'Here the description will go', 'album-2-1523080742.jpg', 3, 3, 0, 1, '2018-04-07 05:55:55', 1, '2018-04-06 23:59:02', 1),
 (4, 'Album 3', 'Here the description will go', 'album-3-1523080748.jpg', 3, 4, 0, 1, '2018-04-07 05:56:15', 1, '2018-04-06 23:59:08', 1),
@@ -384,45 +384,85 @@ CREATE TABLE `permission_role` (
 
 INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (1, 5),
+(1, 6),
 (2, 5),
+(2, 6),
 (3, 5),
+(3, 6),
 (4, 5),
+(4, 6),
 (5, 5),
+(5, 6),
 (6, 5),
+(6, 6),
 (7, 5),
+(7, 6),
 (8, 5),
+(8, 6),
 (9, 5),
+(9, 6),
 (10, 5),
+(10, 6),
 (11, 5),
+(11, 6),
 (12, 5),
+(12, 6),
 (13, 5),
+(13, 6),
 (14, 5),
+(14, 6),
 (15, 5),
+(15, 6),
 (16, 5),
+(16, 6),
 (17, 5),
+(17, 6),
 (18, 5),
+(18, 6),
 (19, 5),
+(19, 6),
 (20, 5),
+(20, 6),
 (21, 5),
+(21, 6),
 (22, 5),
+(22, 6),
 (23, 5),
+(23, 6),
 (24, 5),
+(24, 6),
 (25, 5),
+(25, 6),
 (26, 5),
+(26, 6),
 (27, 5),
+(27, 6),
 (28, 5),
+(28, 6),
 (29, 5),
+(29, 6),
 (30, 5),
+(30, 6),
 (31, 5),
+(31, 6),
 (32, 5),
+(32, 6),
 (33, 5),
+(33, 6),
 (34, 5),
+(34, 6),
 (35, 5),
+(35, 6),
 (36, 5),
+(36, 6),
 (37, 5),
+(37, 6),
 (38, 5),
+(38, 6),
 (39, 5),
+(39, 6),
 (40, 5),
+(40, 6),
 (41, 5),
 (42, 5),
 (43, 5),
@@ -456,11 +496,18 @@ INSERT INTO `permission_role` (`permission_id`, `role_id`) VALUES
 (71, 5),
 (72, 5),
 (73, 5),
+(73, 6),
 (74, 5),
+(74, 6),
 (75, 5),
+(75, 6),
 (76, 5),
+(76, 6),
+(77, 5),
 (78, 5),
-(79, 5);
+(78, 6),
+(79, 5),
+(79, 6);
 
 -- --------------------------------------------------------
 
@@ -595,6 +642,7 @@ CREATE TABLE `roles` (
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `priority` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -603,8 +651,9 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `name`, `display_name`, `description`, `created_at`, `updated_at`) VALUES
-(5, 'superadministrator', 'Super Administrator', NULL, '2018-03-26 04:22:36', '2018-07-30 09:39:09');
+INSERT INTO `roles` (`id`, `name`, `display_name`, `description`, `priority`, `created_at`, `updated_at`) VALUES
+(5, 'superadministrator', 'Super Administrator', NULL, 1, '2018-03-26 04:22:36', '2018-07-31 10:48:28'),
+(6, 'administrator', 'Administrator', NULL, 2, '2018-07-31 10:31:47', '2018-07-31 10:48:28');
 
 -- --------------------------------------------------------
 
@@ -622,7 +671,8 @@ CREATE TABLE `role_user` (
 --
 
 INSERT INTO `role_user` (`user_id`, `role_id`) VALUES
-(1, 5);
+(1, 5),
+(2, 6);
 
 -- --------------------------------------------------------
 
@@ -884,7 +934,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `image`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Super Admin', 'sdbappi69@gmail.com', '$2y$10$Ti9fZqHdxmQ5W2lRQenClusQ1yEs9xtNvq.DHsn.cwriwVbmNUY8a', 'default_avatar.png', '87LsZg4ePOumhfK9UObZI50qoIcU11jc10QpunhqixhTOtBNWD9yzpSxtcIg', '2018-03-25 18:00:00', '2018-05-06 10:53:59');
+(1, 'Super Admin', 'sdbappi69@gmail.com', '$2y$10$Ti9fZqHdxmQ5W2lRQenClusQ1yEs9xtNvq.DHsn.cwriwVbmNUY8a', 'default_avatar.png', 'Bac4CTHlLpW7P1TYWVymffV7TdCCQP7pahstEkKXiAXW9RhyFzwXSbNl1PnZ', '2018-03-25 18:00:00', '2018-05-06 10:53:59'),
+(2, 'Administrator', 'bappi_ifci@yahoo.com', '$2y$10$.gcjC0s4Wsfd7JR8gHxo1OGG.nh2RBmmH80Uc/XVhnJXAjaPBo6gO', 'default_avatar.png', NULL, '2018-07-31 10:32:22', '2018-07-31 10:32:22');
 
 -- --------------------------------------------------------
 
@@ -1038,7 +1089,8 @@ ALTER TABLE `print_sales`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `roles_name_unique` (`name`);
+  ADD UNIQUE KEY `roles_name_unique` (`name`),
+  ADD UNIQUE KEY `priority` (`priority`);
 
 --
 -- Indexes for table `role_user`
@@ -1214,7 +1266,7 @@ ALTER TABLE `print_sales`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sales`
@@ -1262,13 +1314,13 @@ ALTER TABLE `testimonials`
 -- AUTO_INCREMENT for table `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `videos`

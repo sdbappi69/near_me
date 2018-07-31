@@ -27,7 +27,7 @@ class RoleController extends Controller
     {
         if(!Entrust::can('role-view')) { abort(403); }
 
-        $query = Role::orderBy('display_name', 'asc');
+        $query = Role::orderBy('priority', 'asc');
         if($request->has('name')){
             $query->where('name', 'like', '%'.$request->name.'%');
         }
@@ -78,9 +78,18 @@ class RoleController extends Controller
         try {
             DB::beginTransaction();
 
+                $last_photo_count = Role::orderBy('priority', 'desc')->count();
+                if($last_photo_count > 0){
+                    $last_photo = Role::orderBy('priority', 'desc')->first();
+                    $priority = $last_role->priority + 1;
+                }else{
+                    $priority = 1;
+                }
+
                 $role = new Role;
                 $role->name = $request->name;
                 $role->display_name = $request->display_name;
+                $role->priority = $priority;
                 if($request->has('description')){
                     $role->description = $request->description;
                 }
@@ -266,6 +275,116 @@ class RoleController extends Controller
             );
             Session::flash('message', $message);
             return Redirect('panel/roles');
+        }
+    }
+
+    public function up($id)
+    {
+        if(!Entrust::can('role-update')) { abort(403); }
+
+        try {
+            DB::beginTransaction();
+
+                $temp_role = Role::where('id', $id)->first();
+                $exchange_role = Role::where('priority', '<', $temp_role->priority)->orderBy('priority', 'desc')->first();
+
+                if($exchange_role && $temp_role){
+                    $role_priority = $temp_role->priority;
+                    $exchange_role_priority = $exchange_role->priority;
+
+                    $temp_role->priority = 0;
+                    $temp_role->save();
+
+                    $exchange_role->priority = $role_priority;
+                    $exchange_role->save();
+
+                    $role = Role::findOrFail($id);
+                    $role->priority = $exchange_role_priority;
+                    $role->save();
+
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully updated the role',
+                    );
+
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That role can't be up",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect::back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to up the role',
+            );
+            Session::flash('message', $message);
+            return Redirect::back();
+        }
+    }
+
+    public function down($id)
+    {
+        if(!Entrust::can('role-update')) { abort(403); }
+
+        try {
+            DB::beginTransaction();
+
+                $temp_role = Role::where('id', $id)->first();
+                $exchange_role = Role::where('priority', '>', $temp_role->priority)->orderBy('priority', 'asc')->first();
+
+                if($exchange_role && $temp_role){
+                    $role_priority = $temp_role->priority;
+                    $exchange_role_priority = $exchange_role->priority;
+
+                    $temp_role->priority = 0;
+                    $temp_role->save();
+
+                    $exchange_role->priority = $role_priority;
+                    $exchange_role->save();
+
+                    $role = Role::findOrFail($id);
+                    $role->priority = $exchange_role_priority;
+                    $role->save();
+
+                    $message = array(
+                        'class' => 'success',
+                        'title' => 'Success',
+                        'text' => 'Successfully updated the role',
+                    );
+
+                }else{
+                    $message = array(
+                        'class' => 'warning',
+                        'title' => 'Failed',
+                        'text' => "That role can't be down",
+                    );
+                }
+
+            DB::commit();
+
+            Session::flash('message', $message);
+            return Redirect::back();
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            $message = array(
+                'class' => 'danger',
+                'title' => 'Failed',
+                'text' => 'Failed to down the role',
+            );
+            Session::flash('message', $message);
+            return Redirect::back();
         }
     }
 }
