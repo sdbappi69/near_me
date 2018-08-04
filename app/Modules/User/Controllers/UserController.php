@@ -29,7 +29,7 @@ class UserController extends Controller
     {
         if(!Entrust::can('user-view')) { abort(403); }
 
-        $query = User::orderBy('name', 'asc');
+        $query = User::orderBy('name', 'asc')->where('id', '!=', Auth::id());
         if($request->has('name')){
             $query->where('name', 'like', '%'.$request->name.'%');
         }
@@ -152,14 +152,14 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
-        $roles = Role::orderBy('display_name')->get();
-
         $containing_roles = array();
         if(count($user->roles) > 0){
             foreach ($user->roles as $role_user) {
                 $containing_roles[] = $role_user->role_id;
             }
         }
+
+        $roles = Role::orderBy('display_name')->get();
 
         return view("User::edit", compact('user', 'roles', 'containing_roles'));
     }

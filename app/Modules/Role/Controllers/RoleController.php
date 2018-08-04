@@ -78,9 +78,9 @@ class RoleController extends Controller
         try {
             DB::beginTransaction();
 
-                $last_photo_count = Role::orderBy('priority', 'desc')->count();
-                if($last_photo_count > 0){
-                    $last_photo = Role::orderBy('priority', 'desc')->first();
+                $last_role_count = Role::orderBy('priority', 'desc')->count();
+                if($last_role_count > 0){
+                    $last_role = Role::orderBy('priority', 'desc')->first();
                     $priority = $last_role->priority + 1;
                 }else{
                     $priority = 1;
