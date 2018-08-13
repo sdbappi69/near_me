@@ -39,7 +39,7 @@ class SizeController extends Controller
         if($request->has('width') && !empty($request->width)){
             $query->where('width', 'like', '%'.$request->width.'%');
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('status', $request->status);
         }
         $sizes = $query->paginate(20);

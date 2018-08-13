@@ -46,7 +46,7 @@ class VideoController extends Controller
         if($request->has('description') && !empty($request->description)){
             $query->where('description', 'like', '%'.$request->description.'%');
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('status', $request->status);
         }
         if($request->has('thumbnail_size_id') && !empty($request->thumbnail_size_id)){

@@ -54,7 +54,7 @@ class PrintSaleController extends Controller
         if($request->has('category_id') && !empty($request->category_id)){
             $query->where('category_id', $request->category_id);
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('status', $request->status);
         }
         if($request->has('thumbnail_size_id') && !empty($request->thumbnail_size_id)){

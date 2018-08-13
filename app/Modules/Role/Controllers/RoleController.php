@@ -28,13 +28,13 @@ class RoleController extends Controller
         if(!Entrust::can('role-view')) { abort(403); }
 
         $query = Role::orderBy('priority', 'asc');
-        if($request->has('name')){
+        if($request->has('name') && !empty($request->name)){
             $query->where('name', 'like', '%'.$request->name.'%');
         }
-        if($request->has('display_name')){
+        if($request->has('display_name') && !empty($request->display_name)){
             $query->where('display_name', 'like', '%'.$request->display_name.'%');
         }
-        if($request->has('description')){
+        if($request->has('description') && !empty($request->description)){
             $query->where('description', 'like', '%'.$request->description.'%');
         }
         $roles = $query->paginate(20);

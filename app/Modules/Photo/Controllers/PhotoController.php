@@ -39,7 +39,7 @@ class PhotoController extends Controller
     {
         if(!Entrust::can('photo-view')) { abort(403); }
 
-        $query = Photo::orderBy('photos.priority', 'asc');
+        $query = Photo::select('photos.*')->orderBy('photos.priority', 'asc');
         if($request->has('name') && !empty($request->name)){
             $query->where('photos.name', 'like', '%'.$request->name.'%');
         }
@@ -49,7 +49,7 @@ class PhotoController extends Controller
         if($request->has('price') && !empty($request->price)){
             $query->where('photos.price', 'like', '%'.$request->price.'%');
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('photos.status', $request->status);
         }
         if($request->has('thumbnail_size_id') && !empty($request->thumbnail_size_id)){

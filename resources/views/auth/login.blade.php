@@ -20,6 +20,15 @@
 
   <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
 
+  <!-- Custom Theme -->
+  <link rel="stylesheet" href="{{ URL::asset('css/skin-black-custom.css') }}">
+
+  <style type="text/css">
+    html, body{
+      height: auto;
+    }
+  </style>
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>

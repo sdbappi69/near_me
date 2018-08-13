@@ -38,7 +38,7 @@ class SliderController extends Controller
         if($request->has('description') && !empty($request->description)){
             $query->where('description', 'like', '%'.$request->description.'%');
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('status', $request->status);
         }
         if($request->has('size_id') && !empty($request->size_id)){

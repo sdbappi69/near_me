@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{ URL::asset('dist/css/AdminLTE.min.css') }}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{ URL::asset('dist/css/skins/_all-skins.min.css') }}">
+  <link rel="stylesheet" href="{{ URL::asset('dist/css/skins/skin-black.min.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ URL::asset('assets/select2/dist/css/select2.min.css') }}">
   <!-- bootstrap datepicker -->
@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{{ URL::asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css') }}">
   <!-- Animation -->
   <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
+  <!-- Custom Theme -->
+  <link rel="stylesheet" href="{{ URL::asset('css/skin-black-custom.css') }}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -54,7 +56,7 @@
     }
   </style>
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 

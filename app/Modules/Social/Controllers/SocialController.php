@@ -38,7 +38,7 @@ class SocialController extends Controller
         if($request->has('url') && !empty($request->url)){
             $query->where('url', 'like', '%'.$request->url.'%');
         }
-        if($request->has('status') && !empty($request->status)){
+        if($request->has('status') && isset($request->status)){
             $query->where('status', $request->status);
         }
         if($request->has('size_id') && !empty($request->size_id)){
