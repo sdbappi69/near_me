@@ -153,8 +153,8 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         $containing_roles = array();
-        if(count($user->roles) > 0){
-            foreach ($user->roles as $role_user) {
+        if(count($user->user_roles) > 0){
+            foreach ($user->user_roles as $role_user) {
                 $containing_roles[] = $role_user->role_id;
             }
         }

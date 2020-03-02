@@ -27,23 +27,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        $photo = Photo::whereStatus(true)->count();
-        $biography = Biography::whereStatus(true)->count();
-        $award = Award::whereStatus(true)->count();
-        $testimonial = Testimonial::whereStatus(true)->count();
-        $book = Book::whereStatus(true)->count();
-        $video = Video::whereStatus(true)->count();
-        $printsale = PrintSale::whereStatus(true)->count();
-        $sale = Sale::whereStatus(true)->count();
-        $tearsheet = Tearsheet::whereStatus(true)->count();
-        $size = Size::whereStatus(true)->count();
-        $category = Category::whereStatus(true)->count();
-        $album = Album::whereStatus(true)->count();
-        $slider = Slider::whereStatus(true)->count();
-        $theme = Theme::whereStatus(true)->count();
-        $social = Social::whereStatus(true)->count();
-
-        return view('Home::dashboard', compact('photo', 'biography', 'award', 'testimonial', 'book', 'video', 'printsale', 'sale', 'tearsheet', 'size', 'category', 'album', 'slider', 'theme', 'social'));
+        return view('Home::dashboard');
     }
 
     public function view()

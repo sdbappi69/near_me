@@ -52,9 +52,9 @@
 			                  <th>Roles</th>
 			                </tr>
 
-			                @if(count($user->roles) > 0)
+			                @if(count($user->user_roles) > 0)
 
-			                	@foreach($user->roles as $data)
+			                	@foreach($user->user_roles as $data)
 
 			                		<tr>
 					                  <td><i class="fa fa-check"></i></td>

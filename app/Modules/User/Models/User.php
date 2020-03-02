@@ -29,7 +29,7 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function roles()
+    public function user_roles()
     {
         return $this->hasMany('App\Modules\Role\Models\RoleUser');
     }

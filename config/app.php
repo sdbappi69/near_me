@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'NearMe'),
 
     /*
     |--------------------------------------------------------------------------
@@ -218,5 +218,7 @@ return [
         'Image' => Intervention\Image\Facades\Image::class
 
     ],
+
+    'log' => 'daily',
 
 ];
