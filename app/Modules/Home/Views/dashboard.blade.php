@@ -40,9 +40,9 @@
     						<div id="map"></div>
 		              	</div>
 		              	<!-- /.box-body -->
-		              	<div class="box-footer">
+		              	<!-- <div class="box-footer">
 		                	<button class="btn btn-info" style="width: 100%">Update</button>
-		              	</div>
+		              	</div> -->
 		              	<!-- /.box-footer -->
 		        </div>
 	        </div>
@@ -57,9 +57,9 @@
 		});
 
 		// Initialize and add the map
-		function initMap() {
-			var user_lat = "{{ Auth::user()->latitude }}";
-			var user_lng = "{{ Auth::user()->longitude }}";
+		function initMap(user_lat = "{{ Auth::user()->latitude }}", user_lng = "{{ Auth::user()->longitude }}") {
+			// var user_lat = "{{ Auth::user()->latitude }}";
+			// var user_lng = "{{ Auth::user()->longitude }}";
 			var user_lat = parseFloat(user_lat);
 			var user_lng = parseFloat(user_lng);
 
@@ -67,10 +67,9 @@
 		  	var uluru = {lat: user_lat, lng: user_lng};
 		  	// The map, centered at Uluru
 		  	var map = new google.maps.Map(
-		      	document.getElementById('map'), {zoom: 4, center: uluru});
+		      	document.getElementById('map'), {zoom: 15, center: uluru});
 		  	// The marker, positioned at Uluru
 		  	var marker = new google.maps.Marker({position: uluru, map: map});
-
 
 		  	// Auto Complete
 		  	var infowindow = new google.maps.InfoWindow();
@@ -116,23 +115,98 @@
             	// console.log(marker.getPosition());
                 var lat = marker.getPosition().lat();
                 var lng = marker.getPosition().lng();
-                $('#geo_location').val(lat+','+lng);
+                var geo_location = lat+','+lng;
+                $('#geo_location').val(geo_location);
+                updateLocation(geo_location);
             });
 
 
-            // On Change GEO Location
-            $("#geo_location").change(function() {
-			    var geo_location = $('#geo_location').val();
-			    var geo_array = geo_location.split(",");
-			    var latitude = geo_array[0].split(' ').join('');
-				var longitude = geo_array[1].split(' ').join('');
-				alert(latitude);
-			})
+            // Click Event
+            google.maps.event.addListener(map, "click", function (e) {
+			    //lat and lng is available in e object
+			    var lat = e.latLng.lat();
+			    var lng = e.latLng.lng();
+
+	   			var latlng = new google.maps.LatLng(lat, lng);
+	            var geocoder = geocoder = new google.maps.Geocoder();
+	            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+	                if (status == google.maps.GeocoderStatus.OK) {
+	                    if (results[1]) {
+	                        // alert("Location: " + results[1].formatted_address);
+	                        $('#address').val(results[1].formatted_address);
+	                    }
+	                }
+	            });
+
+	            var geo_location = lat+','+lng;
+	   			$('#geo_location').val(geo_location);
+	   			updateLocation(geo_location);
+	   			initMap(lat, lng);
+
+			});
 
 		}
+
+		// On Change GEO Location Directly
+        $("#geo_location").change(function() {
+		    var geo_location = $('#geo_location').val();
+		    var geo_array = geo_location.split(",");
+		    var latitude = geo_array[0].split(' ').join('');
+			var longitude = geo_array[1].split(' ').join('');
+
+			latitude = parseFloat(latitude);
+			longitude = parseFloat(longitude);
+
+			var latlng = new google.maps.LatLng(latitude, longitude);
+            var geocoder = geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[1]) {
+                        // alert("Location: " + results[1].formatted_address);
+                        $('#address').val(results[1].formatted_address);
+                    }
+                }
+            });
+
+            updateLocation(geo_location);
+			initMap(latitude, longitude);
+		});
+
+		function updateLocation(new_location){
+		    var new_array = new_location.split(",");
+		    var new_lat = new_array[0].split(' ').join('');
+			var new_lon = new_array[1].split(' ').join('');
+			new_lat = parseFloat(new_lat);
+			new_lon = parseFloat(new_lon);
+
+			user_lat = "{{ Auth::user()->latitude }}";
+			user_lng = "{{ Auth::user()->longitude }}";
+			user_lat = parseFloat(user_lat);
+			user_lng = parseFloat(user_lng);
+
+			if(new_lat != user_lat || new_lon != user_lng){
+				
+				var formData = {
+	                'address': $('#address').val(),
+	                'latitude': new_lat,
+	                'longitude': new_lon
+	            };
+	            console.log(formData);
+
+	            $.ajax({
+	                url: "{{ url('/') }}/update-location",
+	                type: "post",
+	                data: formData,
+	                success: function(d) {
+	                    alert(d);
+	                }
+	            });
+
+			}
+		}
+
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASbittvWIRzn6dxO24gC7gV3T6AwHWzac&libraries=places&callback=initMap&sensor=true">
-    </script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASbittvWIRzn6dxO24gC7gV3T6AwHWzac&libraries=places&callback=initMap"></script>
 
 @endsection
