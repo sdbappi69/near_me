@@ -1,4 +1,4 @@
-<li class="nav dashboard active"><a href="{{ url('panel/home') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+<li class="nav dashboard active"><a href="{{ url('panel/home') }}"><i class="fa fa-dashboard"></i> <span>Home</span></a></li>
 
 
 <li class="header">User Management</li>

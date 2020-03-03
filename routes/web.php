@@ -32,5 +32,8 @@ Auth::routes();
 
 // Website
 Route::get('/', function () {
-    return redirect('/home');
+    return redirect('/login');
+});
+Route::get('/home', function () {
+    return redirect('/login');
 });

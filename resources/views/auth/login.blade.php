@@ -90,13 +90,13 @@
       </div>
     </form>
 
-    <a href="{{ route('password.request') }}">I forgot my password</a>
+    <!-- <a href="{{ route('password.request') }}">I forgot my password</a> -->
 
-    <div class="social-auth-links text-center">
+    <!-- <div class="social-auth-links text-center">
       <p>- Credential -</p>
       <p>Email: sdbappi69@gmail.com</p>
       <p>Password: 123456</p>
-    </div>
+    </div> -->
     <!-- /.social-auth-links -->
 
   </div>

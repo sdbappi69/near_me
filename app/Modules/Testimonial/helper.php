@@ -1,5 +1,0 @@
-<?php
-
-/**
- *	Testimonial Helper  
- */

@@ -56,7 +56,7 @@
     }
   </style>
 </head>
-<body class="hold-transition skin-black sidebar-mini">
+<body class="hold-transition skin-black sidebar-mini sidebar-collapse">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -64,7 +64,7 @@
     <!-- Logo -->
     <a href="{{ url('/panel/home') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>{{ config('app.name', 'Photography')[0] }}</b>{{ config('app.name', 'Photography')[1] }}</span>
+      <span class="logo-mini"><b>N</b>M</span>
       <!-- logo for regular state and mobile devices -->
       <span class="logo-lg"><b>{{ config('app.name') }}</b></span>
     </a>

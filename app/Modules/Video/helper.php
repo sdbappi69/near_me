@@ -1,5 +1,0 @@
-<?php
-
-/**
- *	Video Helper  
- */

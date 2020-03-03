@@ -1,7 +1,0 @@
-<?php
-
-Route::group(['module' => 'Video', 'middleware' => ['api'], 'namespace' => 'App\Modules\Video\Controllers'], function() {
-
-    Route::resource('Video', 'VideoController');
-
-});

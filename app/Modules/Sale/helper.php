@@ -1,5 +1,0 @@
-<?php
-
-/**
- *	Sale Helper  
- */

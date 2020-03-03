@@ -1,5 +1,0 @@
-<?php
-
-/**
- *	Book Helper  
- */
