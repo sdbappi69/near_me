@@ -99,7 +99,7 @@ a:hover{
     background-image: url("../images/transparent_background_white.png");
     /*border-color: #383838 !important;*/
 }
-.form-control{
+.form-control, .select2-container--default .select2-selection--single{
 	background-color: #454545;
 	border-color: #535353;
 	color: #f0f0f0;
@@ -177,7 +177,7 @@ a:hover{
 }
 .modal-content{
 	background: none;
-    background-image: url("../images/transparent_background_black.png");
+    background-image: url("../images/transparent_background_white.png");
 }
 .close{
 	color: #FFFFFF !important;
@@ -190,7 +190,7 @@ a:hover{
 }
 .login-page, .register-page{
 	background-color: #282828;
-	background-image: url("../images/background.jpg");
+	background-image: url("../images/background.png");
 }
 .login-logo a, .register-logo a{
 	color: #f0f0f0;
@@ -201,4 +201,56 @@ a:hover{
 }
 .login-box-body, .register-box-body{
 	color: #f0f0f0;;
+}
+.content-header > .breadcrumb > li > a{
+	color: #FFFFFF;
+}
+.form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control{
+	background-color: #454545;
+	border-color: #535353;
+	color: #f0f0f0;
+}
+.input-group-btn{
+	color: #666666;
+}
+.nav-stacked > li.active > a, .nav-stacked > li.active > a:hover{
+	color: #FFFFFF;
+}
+.nav-stacked > li > a{
+	color: #FFFFFF;
+}
+#accordion .box{
+    background-image: url("../images/transparent_background_black.png");
+    /*border-color: #383838 !important;*/
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+	color: #FFFFFF;
+	line-height: 38px;
+}
+.select2-container .select2-selection--single, .select2-container--default .select2-selection--single, .select2-selection .select2-selection--single{
+	height: 45px;
+	border-radius: 0;
+}
+.date-picker .btn{
+	padding: 12px 12px;
+	background-color: #454545;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+	height: 40px;
+}
+span.select2.select2-container{width:100%!important;}
+#tab-response .box{
+	background: none;
+    background-image: url("../images/transparent_background_black.png");
+}
+#tab-response .widget-user .widget-user-username, .widget-user-desc{
+	padding: 10px;
+	padding-left: 20px;
+}
+#tab-response li{
+	border-top: 1px solid #666;
+}
+
+.select2-container--default.select2-container--disabled .select2-selection--single{
+    background: transparent;
 }

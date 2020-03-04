@@ -221,4 +221,6 @@ return [
 
     'log' => 'daily',
 
+    'google_api_key' => 'AIzaSyASbittvWIRzn6dxO24gC7gV3T6AwHWzac',
+
 ];

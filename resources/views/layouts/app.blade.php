@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <link rel="Shortcut Icon" type="image/ico" href="favicon.ico" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>{{ config('app.name') }}</title>
 
   <!-- Tell the browser to be responsive to screen width -->
@@ -226,5 +227,6 @@
     $(".sub_title").html(sub_title);
   }
 </script>
+
 </body>
 </html>

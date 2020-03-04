@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        'update_location'
+        '/panel/update_location',
+        '/telescope/*',
     ];
 }

@@ -16,6 +16,27 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`near_me` /*!40100 DEFAULT CHARACTER SET
 
 USE `near_me`;
 
+/*Table structure for table `histories` */
+
+DROP TABLE IF EXISTS `histories`;
+
+CREATE TABLE `histories` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `radius` float DEFAULT NULL,
+  `type` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `keyword` varchar(256) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `latitude` decimal(11,7) DEFAULT NULL,
+  `longitude` decimal(11,7) DEFAULT NULL,
+  `response` longtext COLLATE utf8mb4_unicode_ci,
+  `created_at` datetime DEFAULT NULL,
+  `created_by` int DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+/*Data for the table `histories` */
+
 /*Table structure for table `migrations` */
 
 DROP TABLE IF EXISTS `migrations`;
@@ -142,7 +163,7 @@ CREATE TABLE `users` (
 
 /*Data for the table `users` */
 
-insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`image`,`client_id`,`status`,`created_at`,`updated_at`,`address`,`latitude`,`longitude`) values (1,'Super Admin','sdbappi69@gmail.com',NULL,'$2y$10$zVF6XoJpDiARqvw93v6LHOxjb7o1KaP1CIWp2XfL.AotmbyuO6o2S','516DkFRvSRVMyX3zE03xmEFixPpDeySkiCgWOz5i2JK8WS8B6h6T7nBmtvjG','default_avatar.png',NULL,1,'2019-09-09 09:41:46','2019-12-22 09:51:09',NULL,-25.3440000,131.0360000);
+insert  into `users`(`id`,`name`,`email`,`email_verified_at`,`password`,`remember_token`,`image`,`client_id`,`status`,`created_at`,`updated_at`,`address`,`latitude`,`longitude`) values (1,'Super Admin','sdbappi69@gmail.com',NULL,'$2y$10$zVF6XoJpDiARqvw93v6LHOxjb7o1KaP1CIWp2XfL.AotmbyuO6o2S','516DkFRvSRVMyX3zE03xmEFixPpDeySkiCgWOz5i2JK8WS8B6h6T7nBmtvjG','default_avatar.png',NULL,1,'2019-09-09 09:41:46','2020-03-04 09:44:52','Dhaka, Bangladesh',23.8150827,90.4184408);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

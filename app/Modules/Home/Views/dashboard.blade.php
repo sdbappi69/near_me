@@ -16,8 +16,8 @@
 	<!-- Main content -->
     <section class="content">
 
-    	<div class="row animated bounceInLeft">
-	        <div class="col-md-4">
+    	<div class="row">
+	        <div class="col-md-4 animated bounceInLeft">
 	    		<div class="box box-info">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">Your Location</h3>
@@ -28,12 +28,12 @@
 		              	<div class="box-body">
 		              		<div class="form-group">
 		              			{{ Form::label('address', 'Address') }}
-			              		{!! Form::text('address', Auth::user()->address, ['class' => 'form-control', 'placeholder' => 'Address', 'required' => 'required', 'id' => 'address']) !!}
+			              		{!! Form::text('address', Auth::user()->address, ['class' => 'form-control input-lg', 'placeholder' => 'Address', 'required' => 'required', 'id' => 'address']) !!}
 			              	</div>
 		              		<div class="form-group">
 		              			<?php $geo_location = Auth::user()->latitude.",".Auth::user()->longitude; ?>
 		              			{{ Form::label('geo_location', 'GEO Location') }}
-			              		{!! Form::text('geo_location', $geo_location, ['class' => 'form-control', 'placeholder' => 'Latitude,Longitude', 'required' => 'required', 'id' => 'geo_location']) !!}
+			              		{!! Form::text('geo_location', $geo_location, ['class' => 'form-control input-lg', 'placeholder' => 'Latitude,Longitude', 'required' => 'required', 'id' => 'geo_location']) !!}
 			              	</div>
 
 		            		<!--The div element for the map -->
@@ -44,6 +44,49 @@
 		                	<button class="btn btn-info" style="width: 100%">Update</button>
 		              	</div> -->
 		              	<!-- /.box-footer -->
+		        </div>
+	        </div>
+
+	        <div class="col-xs-8 animated bounceInRight">
+	    		<div class="box box-info">
+		            <div class="box-header with-border">
+		              <h3 class="box-title">Search</h3>
+		            </div>
+		            <!-- /.box-header -->
+		            <!-- form start -->
+		            {!! Form::open(array('method' => 'get')) !!}
+
+		            	<input value="{{ Auth::user()->latitude }}" name="latitude" type="hidden" required="required" id="latitude">
+		            	<input value="{{ Auth::user()->longitude }}" name="longitude" type="hidden" required="required" id="longitude">
+
+		              	<div class="box-body">
+		            		<div class="col-md-4">
+		            			{{ Form::label('radius', 'Enter Radius*') }}
+		            			<?php if (!isset($_GET['radius'])) { $_GET['radius'] = null; } ?>
+		            			<input value="{{ $_GET['radius'] }}" class="form-control input-lg" name="radius" type="number" placeholder="Enter Radius" required="required">
+		            		</div>
+
+					        <div class="col-md-4">
+					        	<?php $types = array("1" => "T 1","2" => "T 1"); ?>
+					        	{{ Form::label('type', 'Select Type*') }}
+					        	<?php if(!isset($_GET['type'])){$_GET['type'] = null;} ?>
+					            {!! Form::select('type', ['' => 'Select Type']+$types, null, ['class' => 'form-control input-lg select2','id' => 'type','required' => 'required']) !!}
+					        </div>
+
+		            		<div class="col-md-4">
+		            			{{ Form::label('keyword', 'Enter Keyword') }}
+		            			<?php if (!isset($_GET['keyword'])) { $_GET['keyword'] = null; } ?>
+		            			<input value="{{ $_GET['keyword'] }}" class="form-control input-lg" name="keyword" type="text" placeholder="Enter Keyword">
+		            		</div>
+		              	</div>
+		              	<!-- /.box-body -->
+		              	<div class="box-footer">
+		                	<input type="reset" class="btn btn-default" value="Reset">
+		                	<input type="submit" class="btn btn-info pull-right"  value="Search">
+		              	</div>
+		              	<!-- /.box-footer -->
+
+		            {!! Form::close() !!}
 		        </div>
 	        </div>
 	    </div>
@@ -179,34 +222,43 @@
 			new_lat = parseFloat(new_lat);
 			new_lon = parseFloat(new_lon);
 
+			$('#latitude').val(new_lat);
+			$('#longitude').val(new_lon);
+
 			user_lat = "{{ Auth::user()->latitude }}";
 			user_lng = "{{ Auth::user()->longitude }}";
 			user_lat = parseFloat(user_lat);
 			user_lng = parseFloat(user_lng);
 
 			if(new_lat != user_lat || new_lon != user_lng){
+
+				$.ajaxSetup({
+			      headers: {
+			            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			        }
+			    });
 				
 				var formData = {
 	                'address': $('#address').val(),
 	                'latitude': new_lat,
 	                'longitude': new_lon
 	            };
-	            console.log(formData);
+	            // console.log(formData);
 
-	            $.ajax({
-	                url: "{{ url('/') }}/update-location",
-	                type: "post",
-	                data: formData,
-	                success: function(d) {
-	                    alert(d);
-	                }
-	            });
+	            var update_location_url = "{{ url('/') }}/panel/update-location";
+
+	            $.post(update_location_url, formData,
+				function(data, status){
+				    console.log(data);
+				});
 
 			}
 		}
 
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASbittvWIRzn6dxO24gC7gV3T6AwHWzac&libraries=places&callback=initMap"></script>
+    <?php $maps_url = "https://maps.googleapis.com/maps/api/js?key=".config('app.google_api_key')."&libraries=places&callback=initMap"; ?>
+
+    <script async defer src="{{ $maps_url }}"></script>
 
 @endsection
