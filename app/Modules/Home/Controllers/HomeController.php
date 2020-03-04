@@ -6,22 +6,27 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Modules\User\Models\User;
+use App\Modules\History\Models\History;
+use App\Modules\Type\Models\Type;
 
 class HomeController extends Controller
 {
 
     public function index(Request $request)
     {
+
+        $types = Type::whereStatus(true)->orderBy('title', 'asc')->pluck('title', 'id')->toArray();
+
     	if($request->has('radius')){
             $radius = $request->radius;
         }else{
         	$radius = 0;
         }
 
-        if($request->has('type')){
-            $type = $request->type;
+        if($request->has('type_id')){
+            $type_id = $request->type_id;
         }else{
-        	$type = "";
+        	$type_id = "";
         }
 
         if($request->has('keyword')){
@@ -42,30 +47,60 @@ class HomeController extends Controller
         	$longitude = auth()->user()->longitude;
         }
 
-        if($request->has('radius') && $request->has('type')){
+        if($request->has('radius') && $request->has('type_id')){
 
         	$curl = curl_init();
 
-			curl_setopt_array($curl, array(
-			  CURLOPT_URL => "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$latitude.",".$latitude."&radius=".$radius."&type=".$type."&keyword=".$keyword."&key=".config('app.google_api_key'),
-			  CURLOPT_RETURNTRANSFER => true,
-			  CURLOPT_ENCODING => "",
-			  CURLOPT_MAXREDIRS => 10,
-			  CURLOPT_TIMEOUT => 0,
-			  CURLOPT_FOLLOWLOCATION => true,
-			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			  CURLOPT_CUSTOMREQUEST => "GET",
-			));
+            $type = Type::findOrFail($type_id);
+            $type_title = str_replace(" ", "_", strtolower($type->title));
+            $place_api = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$latitude.",".$longitude."&radius=".$radius."&type=".$type_title."&keyword=".$keyword."&key=".config('app.google_api_key');
 
-			$response = curl_exec($curl);
+            try {
 
-			curl_close($curl);
+                curl_setopt_array($curl, array(
+                  CURLOPT_URL => $place_api,
+                  CURLOPT_RETURNTRANSFER => true,
+                  CURLOPT_ENCODING => "",
+                  CURLOPT_MAXREDIRS => 10,
+                  CURLOPT_TIMEOUT => 0,
+                  CURLOPT_FOLLOWLOCATION => true,
+                  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                  CURLOPT_CUSTOMREQUEST => "GET",
+                ));
 
-			
+                $response = curl_exec($curl);
+
+                curl_close($curl);
+
+                DB::beginTransaction();
+
+                    $history = new History;
+                    $history->radius = $radius;
+                    $history->type_id = $type_id;
+                    $history->keyword = $keyword;
+                    $history->latitude = $latitude;
+                    $history->longitude = $longitude;
+                    $history->response = $response;
+                    $history->created_at = date("Y-m-d H:i:s");
+                    $history->created_by = auth()->user()->id;
+                    $history->updated_by = auth()->user()->id;
+                    $history->save();
+
+                DB::commit();
+
+                return view('Home::dashboard', compact('types', 'response'));
+                
+            } catch (Exception $e) {
+
+                DB::rollBack();
+                
+                return view('Home::dashboard', compact('types'));
+
+            }
 
         }else{
 
-        	return view('Home::dashboard');
+        	return view('Home::dashboard', compact('types'));
 
         }
 

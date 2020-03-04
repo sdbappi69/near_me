@@ -67,10 +67,9 @@
 		            		</div>
 
 					        <div class="col-md-4">
-					        	<?php $types = array("1" => "T 1","2" => "T 1"); ?>
-					        	{{ Form::label('type', 'Select Type*') }}
-					        	<?php if(!isset($_GET['type'])){$_GET['type'] = null;} ?>
-					            {!! Form::select('type', ['' => 'Select Type']+$types, null, ['class' => 'form-control input-lg select2','id' => 'type','required' => 'required']) !!}
+					        	{{ Form::label('type_id', 'Select Type*') }}
+					        	<?php if(!isset($_GET['type_id'])){$_GET['type_id'] = null;} ?>
+					            {!! Form::select('type_id', ['' => 'Select Type']+$types, null, ['class' => 'form-control input-lg select2','id' => 'type_id','required' => 'required']) !!}
 					        </div>
 
 		            		<div class="col-md-4">
@@ -89,6 +88,21 @@
 		            {!! Form::close() !!}
 		        </div>
 	        </div>
+
+	        <div class="col-xs-8 animated bounceInUp">
+	    		<div class="box box-info">
+		            <div class="box-header with-border">
+		              <h3 class="box-title">Places</h3>
+		            </div>
+		            <!-- /.box-header -->
+
+	              	<div class="box-body">
+	            		
+	              	</div>
+	              	<!-- /.box-body -->
+		        </div>
+	        </div>
+
 	    </div>
 
     </section>
