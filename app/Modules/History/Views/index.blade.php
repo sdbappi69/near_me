@@ -17,15 +17,15 @@
 
 		              	<div class="box-body">
 		            		<div class="col-md-4">
-		            			{{ Form::label('radius', 'Enter Radius*') }}
+		            			{{ Form::label('radius', 'Enter Radius') }}
 		            			<?php if (!isset($_GET['radius'])) { $_GET['radius'] = null; } ?>
-		            			<input value="{{ $_GET['radius'] }}" class="form-control input-lg" name="radius" type="number" placeholder="Enter Radius" required="required">
+		            			<input value="{{ $_GET['radius'] }}" class="form-control input-lg" name="radius" type="number" placeholder="Enter Radius">
 		            		</div>
 
 					        <div class="col-md-4">
-					        	{{ Form::label('type_id', 'Select Type*') }}
+					        	{{ Form::label('type_id', 'Select Type') }}
 					        	<?php if(!isset($_GET['type_id'])){$_GET['type_id'] = null;} ?>
-					            {!! Form::select('type_id', ['' => 'Select Type']+$types, $_GET['type_id'], ['class' => 'form-control input-lg select2','id' => 'type_id','required' => 'required']) !!}
+					            {!! Form::select('type_id', ['' => 'Select Type']+$types, $_GET['type_id'], ['class' => 'form-control input-lg select2','id' => 'type_id']) !!}
 					        </div>
 
 		            		<div class="col-md-4">
@@ -35,7 +35,7 @@
 		            		</div>
 
 		            		<div class="col-md-4">
-		            			<label class="control-label">Updated From</label>
+		            			<label class="control-label">From</label>
 		            			<?php if (!isset($_GET['start_date'])) { $_GET['start_date'] = null; } ?>
 		            			<div class="input-group input-medium date date-picker input-full" data-date-format="yyyy-mm-dd" >
 		                            <span class="input-group-btn">
@@ -47,7 +47,7 @@
 		                        </div>
 		            		</div>
 		            		<div class="col-md-4">
-		            			<label class="control-label">Updated To</label>
+		            			<label class="control-label">To</label>
 		            			<?php if (!isset($_GET['end_date'])) { $_GET['end_date'] = null; } ?>
 		            			<div class="input-group input-medium date date-picker input-full" data-date-format="yyyy-mm-dd" >
 		                            <span class="input-group-btn">

@@ -32,21 +32,21 @@ class HistoryController extends Controller
         $types = Type::whereStatus(true)->orderBy('title', 'asc')->pluck('title', 'id')->toArray();
 
         $query = History::orderBy('id', 'desc');
-        if($request->has('radius')){
+        if($request->has('radius') && $request->radius != null){
             $query->where('radius', $request->radius);
         }
-        if($request->has('type_id')){
+        if($request->has('type_id') && $request->type_id != null){
             $query->where('type_id', $request->type_id);
         }
-        if($request->has('keyword')){
+        if($request->has('keyword') && $request->keyword != null){
             $query->where('keyword', 'like', '%'.$request->keyword.'%');
         }
-        if($request->has('start_date')){
+        if($request->has('start_date') && $request->start_date != null){
             $start_date = $request->start_date;
         }else{
             $start_date = '2020-01-01';
         }
-        if($request->has('end_date')){
+        if($request->has('end_date') && $request->end_date != null){
             $end_date = $request->end_date;
         }else{
             $end_date = date('Y-m-d');

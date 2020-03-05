@@ -68,7 +68,7 @@
 		              	<div class="box-body">
 		            		<div class="col-md-4">
 		            			{{ Form::label('radius', 'Enter Radius*') }}
-		            			<?php if (!isset($_GET['radius'])) { $_GET['radius'] = null; } ?>
+		            			<?php if (!isset($_GET['radius'])) { $_GET['radius'] = 1500; } ?>
 		            			<input value="{{ $_GET['radius'] }}" class="form-control input-lg" name="radius" type="number" placeholder="Enter Radius" required="required">
 		            		</div>
 
@@ -98,7 +98,7 @@
 	        @if(isset($response))
 
 		        <div class="col-md-8 animated bounceInUp">
-		    		<div class="box box-info">
+		    		<div class="box box-success">
 			            <div class="box-header with-border">
 			              <h3 class="box-title">Places</h3>
 			            </div>
