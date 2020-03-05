@@ -15,4 +15,9 @@ class History extends Model {
         return $this->belongsTo('App\Modules\User\Models\User', 'created_by', 'id');
     }
 
+    public function type()
+    {
+        return $this->belongsTo('App\Modules\Type\Models\Type', 'type_id', 'id');
+    }
+
 }

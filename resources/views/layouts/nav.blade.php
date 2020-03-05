@@ -1,5 +1,8 @@
+<li class="header">Application</li>
 <li class="nav dashboard active"><a href="{{ url('panel/home') }}"><i class="fa fa-dashboard"></i> <span>Home</span></a></li>
-
+@permission('history-view')
+  <li class="nav history active"><a href="{{ url('panel/history') }}"><i class="fa fa-history"></i> <span>History</span></a></li>
+@endpermission
 
 <li class="header">User Management</li>
 @permission('user-view')

@@ -31,7 +31,13 @@
 			              		{!! Form::text('address', Auth::user()->address, ['class' => 'form-control input-lg', 'placeholder' => 'Address', 'required' => 'required', 'id' => 'address']) !!}
 			              	</div>
 		              		<div class="form-group">
-		              			<?php $geo_location = Auth::user()->latitude.",".Auth::user()->longitude; ?>
+		              			<?php 
+		              				if(Auth::user()->latitude != null && Auth::user()->longitude != null){
+		              					$geo_location = Auth::user()->latitude.",".Auth::user()->longitude; 
+		              				}else{
+		              					$geo_location = "";
+		              				}
+		              			?>
 		              			{{ Form::label('geo_location', 'GEO Location') }}
 			              		{!! Form::text('geo_location', $geo_location, ['class' => 'form-control input-lg', 'placeholder' => 'Latitude,Longitude', 'required' => 'required', 'id' => 'geo_location']) !!}
 			              	</div>
@@ -47,7 +53,7 @@
 		        </div>
 	        </div>
 
-	        <div class="col-xs-8 animated bounceInRight">
+	        <div class="col-md-8 animated bounceInRight">
 	    		<div class="box box-info">
 		            <div class="box-header with-border">
 		              <h3 class="box-title">Search</h3>
@@ -69,13 +75,13 @@
 					        <div class="col-md-4">
 					        	{{ Form::label('type_id', 'Select Type*') }}
 					        	<?php if(!isset($_GET['type_id'])){$_GET['type_id'] = null;} ?>
-					            {!! Form::select('type_id', ['' => 'Select Type']+$types, null, ['class' => 'form-control input-lg select2','id' => 'type_id','required' => 'required']) !!}
+					            {!! Form::select('type_id', ['' => 'Select Type']+$types, $_GET['type_id'], ['class' => 'form-control input-lg select2','id' => 'type_id','required' => 'required']) !!}
 					        </div>
 
 		            		<div class="col-md-4">
 		            			{{ Form::label('keyword', 'Enter Keyword') }}
 		            			<?php if (!isset($_GET['keyword'])) { $_GET['keyword'] = null; } ?>
-		            			<input value="{{ $_GET['keyword'] }}" class="form-control input-lg" name="keyword" type="text" placeholder="Enter Keyword">
+		            			<input value="{{ str_replace('+', ' ', $_GET['keyword']) }}" class="form-control input-lg" name="keyword" type="text" placeholder="Enter Keyword">
 		            		</div>
 		              	</div>
 		              	<!-- /.box-body -->
@@ -89,19 +95,70 @@
 		        </div>
 	        </div>
 
-	        <div class="col-xs-8 animated bounceInUp">
-	    		<div class="box box-info">
-		            <div class="box-header with-border">
-		              <h3 class="box-title">Places</h3>
-		            </div>
-		            <!-- /.box-header -->
+	        @if(isset($response))
 
-	              	<div class="box-body">
-	            		
-	              	</div>
-	              	<!-- /.box-body -->
+		        <div class="col-md-8 animated bounceInUp">
+		    		<div class="box box-info">
+			            <div class="box-header with-border">
+			              <h3 class="box-title">Places</h3>
+			            </div>
+			            <!-- /.box-header -->
+
+		              	<div class="box-body table-responsive">
+		            		
+		              		<table id="example1" class="table table-bordered table-striped example1">
+				                <thead>
+					                <tr>
+					                  	<th>Icon</th>
+					                  	<th>Name</th>
+					                  	<th>Address</th>
+					                  	<th>Open</th>
+					                  	<th>Location</th>
+					                </tr>
+				                </thead>
+				                <tbody>
+				                	<?php $response = json_decode($response); ?>
+				                	@foreach($response->results AS $result)
+					                <tr>
+					                  	<td style="text-align: center;">
+					                  		<img style="width: 30px; background-color: #FFFFFF; padding: 5px;" src="{{ $result->icon }}" alt="{{ $result->name }}">
+					                  	</td>
+					                  	<td>{{ $result->name or '' }}</td>
+					                  	<td>{{ $result->vicinity or '' }}</td>
+					                  	<td>
+					                  		@if(isset($result->opening_hours))
+						                  		@foreach($result->opening_hours as $opening_hour)
+						                  			@if(isset($opening_hour) && $opening_hour == true)
+						                  				Yes
+						                  			@else
+						                  				No
+						                  			@endif
+						                  		@endforeach
+					                  		@endif
+					                  	</td>
+					                  	<td>
+					                  		@if(isset($result->geometry))
+						                  		@foreach($result->geometry as $geometry)
+						                  			@if(isset($geometry->lat) && isset($geometry->lng))
+						                  				<a href="https://www.google.com/maps/search/?api=1&query={{ $geometry->lat }},{{ $geometry->lng }}" target="_blank" class="btn btn-success">
+						                  					Location
+						                  				</a>
+						                  				<span style="display: none;">{{ $geometry->lat }},{{ $geometry->lng }}</span>
+						                  			@endif
+						                  		@endforeach
+					                  		@endif
+					                  	</td>
+					                </tr>
+					                @endforeach
+					            </tbody>
+				            </table>
+
+		              	</div>
+		              	<!-- /.box-body -->
+			        </div>
 		        </div>
-	        </div>
+
+	        @endif
 
 	    </div>
 

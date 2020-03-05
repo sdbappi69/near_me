@@ -1,7 +1,7 @@
 <?php
 
-Route::group(['module' => 'History', 'middleware' => ['web'], 'namespace' => 'App\Modules\History\Controllers'], function() {
+Route::group(['module' => 'History', 'middleware' => ['web', 'auth'], 'namespace' => 'App\Modules\History\Controllers', 'prefix' => 'panel'], function() {
 
-    Route::resource('History', 'HistoryController');
+    Route::resource('history', 'HistoryController');
 
 });

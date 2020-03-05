@@ -44,7 +44,7 @@
 		            <h3 class="box-title">Users</h3>
 
 		            <div class="box-tools">
-		                <a href="{{ url('users/create') }}" class="btn btn-block btn-success">
+		                <a href="{{ url('panel/users/create') }}" class="btn btn-block btn-success">
 		                	<i class="fa fa-plus"></i> Create new
 		                </a>
 	              	</div>

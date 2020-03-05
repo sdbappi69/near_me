@@ -5,6 +5,18 @@ namespace App\Modules\History\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Modules\User\Models\User;
+use App\Modules\History\Models\History;
+use App\Modules\Type\Models\Type;
+
+use Validator;
+use DB;
+use Session;
+use Redirect;
+use Image;
+use Auth;
+use Entrust;
+
 class HistoryController extends Controller
 {
 
@@ -13,9 +25,36 @@ class HistoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view("History::index");
+        if(!Entrust::can('history-view')) { abort(403); }
+
+        $types = Type::whereStatus(true)->orderBy('title', 'asc')->pluck('title', 'id')->toArray();
+
+        $query = History::orderBy('id', 'desc');
+        if($request->has('radius')){
+            $query->where('radius', $request->radius);
+        }
+        if($request->has('type_id')){
+            $query->where('type_id', $request->type_id);
+        }
+        if($request->has('keyword')){
+            $query->where('keyword', 'like', '%'.$request->keyword.'%');
+        }
+        if($request->has('start_date')){
+            $start_date = $request->start_date;
+        }else{
+            $start_date = '2020-01-01';
+        }
+        if($request->has('end_date')){
+            $end_date = $request->end_date;
+        }else{
+            $end_date = date('Y-m-d');
+        }
+        $histories = $query->WhereBetween('created_at', array($start_date.' 00:00:01',$end_date.' 23:59:59'))
+                        ->paginate(20);
+
+        return view("History::index", compact('histories', 'types'));
     }
 
     /**
@@ -47,7 +86,12 @@ class HistoryController extends Controller
      */
     public function show($id)
     {
-        //
+        if(!Entrust::can('history-view')) { abort(403); }
+
+        $history = History::findOrFail($id);
+
+        return view("History::view", compact('history'));
+
     }
 
     /**

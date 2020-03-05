@@ -30,6 +30,9 @@
   <link rel="stylesheet" href="{{ URL::asset('css/animate.css') }}">
   <!-- Custom Theme -->
   <link rel="stylesheet" href="{{ URL::asset('css/skin-black-custom.css') }}">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{{ URL::asset('assets/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.1/css/buttons.dataTables.min.css">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -197,6 +200,18 @@
 <!-- Bootstrap WYSIHTML5 -->
 <script src="{{ URL::asset('plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') }}"></script>
 
+<!-- DataTables -->
+<script src="{{ URL::asset('assets/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ URL::asset('assets/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
+
 <script>
   $(document).ready(function () {
     $('.sidebar-menu').tree();
@@ -214,6 +229,33 @@
       toolbar: {
         "image": false, // Button to insert an image.
       }
+    });
+
+    // $('#example1').DataTable()
+    $('#example2').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+
+    $('.example1').DataTable( {
+        dom: 'Blfrtip',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
+    });
+
+    //Date picker
+    $('#datepicker').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
+    });
+    $('.datepicker').datepicker({
+        autoclose: true,
+        format: 'yyyy-mm-dd'
     });
     
   });

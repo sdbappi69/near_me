@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Modules\User\Models\User;
 use App\Modules\History\Models\History;
 use App\Modules\Type\Models\Type;
+use DB;
 
 class HomeController extends Controller
 {
@@ -53,7 +54,7 @@ class HomeController extends Controller
 
             $type = Type::findOrFail($type_id);
             $type_title = str_replace(" ", "_", strtolower($type->title));
-            $place_api = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$latitude.",".$longitude."&radius=".$radius."&type=".$type_title."&keyword=".$keyword."&key=".config('app.google_api_key');
+            $place_api = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=".$latitude.",".$longitude."&radius=".$radius."&type=".$type_title."&keyword=".str_replace(" ", "+", $keyword)."&key=".config('app.google_api_key');
 
             try {
 
